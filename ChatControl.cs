@@ -15,9 +15,10 @@ namespace AIBAM
         {
             rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Bold);
             rTxtChat.AppendText("VOCÊ" + Environment.NewLine);
-            rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Regular);
-            rTxtChat.AppendText( userMessage + Environment.NewLine);
+            rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Italic);
+            rTxtChat.AppendText(userMessage + Environment.NewLine);
         }
+
 
         // Método para exibir a resposta (mensagem do bot)
         public void AddBotResponse(string botResponse, bool isFirst=true)
@@ -26,7 +27,7 @@ namespace AIBAM
             {
                 rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Bold);
                 rTxtChat.AppendText("AIBAM" + Environment.NewLine);
-                rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Italic);
+                rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Regular);
                 // Verifica se a resposta já contém quebra de linha
                 if (!botResponse.Contains("\n") && !botResponse.Contains("\r\n"))
                 {
@@ -40,7 +41,7 @@ namespace AIBAM
             }
             else
             {
-                rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Italic);
+                rTxtChat.SelectionFont = new System.Drawing.Font(rTxtChat.Font, System.Drawing.FontStyle.Regular);
                 rTxtChat.AppendText(botResponse + Environment.NewLine);
             }
         }

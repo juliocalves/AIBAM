@@ -37,8 +37,10 @@
             rTxtChat.Location = new Point(0, 0);
             rTxtChat.Name = "rTxtChat";
             rTxtChat.ReadOnly = true;
+            rTxtChat.RightToLeft = RightToLeft.No;
             rTxtChat.Size = new Size(831, 415);
             rTxtChat.TabIndex = 0;
+            rTxtChat.TabStop = false;
             rTxtChat.Text = "";
             // 
             // ChatControl
