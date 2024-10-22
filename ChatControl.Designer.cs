@@ -36,6 +36,7 @@
             rTxtChat.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rTxtChat.Location = new Point(0, 0);
             rTxtChat.Name = "rTxtChat";
+            rTxtChat.ReadOnly = true;
             rTxtChat.Size = new Size(831, 415);
             rTxtChat.TabIndex = 0;
             rTxtChat.Text = "";

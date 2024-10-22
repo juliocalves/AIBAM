@@ -36,7 +36,17 @@ namespace AIBAM
             chatControl.AddUserMessage(txtPrompt.Text);
 
             // Processamento da saída em streaming
-            await ReadOutputAsync();
+            bool first = true;
+            while (!process.StandardOutput.EndOfStream)
+            {
+                string fragment = await process.StandardOutput.ReadLineAsync();
+                if (!string.IsNullOrWhiteSpace(fragment))
+                {
+                    // Adiciona fragmentos da resposta do bot conforme são recebidos
+                    chatControl.AddBotResponse(fragment, first);
+                    first = false;
+                }
+            }
 
             // Captura e exibe erros, se houver
             string errorOutput = await process.StandardError.ReadToEndAsync();
@@ -49,25 +59,8 @@ namespace AIBAM
             txtPrompt.Focus(); // Foca no campo de entrada
         }
 
-        // Método separado para ler a saída do processo
-        private async Task ReadOutputAsync()
-        {
-            bool first = true;
-
-            while (!process.StandardOutput.EndOfStream)
-            {
-                string fragment = await process.StandardOutput.ReadLineAsync();
-                if (!string.IsNullOrWhiteSpace(fragment))
-                {
-                    // Adiciona fragmentos da resposta do bot conforme são recebidos
-                    chatControl.AddBotResponse(fragment, first);
-                    first = false;
-                }
-            }
-        }
-
         // Detecta Enter para enviar o prompt
-        private async void txtPrompt_KeyDown(object sender, KeyEventArgs e)
+        private void txtPrompt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -75,15 +68,11 @@ namespace AIBAM
                 e.SuppressKeyPress = true;
                 toolStripProgressBar1.Visible = true;
                 toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
-
-                // Execute the Python chat asynchronously
-                await ExecutePythonChat();
-
+                ExecutePythonChat();
                 toolStripProgressBar1.Visible = false;
                 AtualizaCursor(false);
             }
         }
-
 
         // Função para salvar a conversa
         private void btnSalvar_Click(object sender, EventArgs e)

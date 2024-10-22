@@ -76,6 +76,7 @@
             // chatControl
             // 
             chatControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            chatControl.BackColor = Color.White;
             chatControl.Location = new Point(12, 34);
             chatControl.Name = "chatControl";
             chatControl.Size = new Size(831, 415);
