@@ -73,6 +73,16 @@ namespace AIBAM.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap adicionar__1_ {
+            get {
+                object obj = ResourceManager.GetObject("adicionar (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap anexar_arquivo {
             get {
                 object obj = ResourceManager.GetObject("anexar-arquivo", resourceCulture);
@@ -96,6 +106,26 @@ namespace AIBAM.Properties {
         internal static System.Drawing.Bitmap conversando {
             get {
                 object obj = ResourceManager.GetObject("conversando", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap data {
+            get {
+                object obj = ResourceManager.GetObject("data", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap importar {
+            get {
+                object obj = ResourceManager.GetObject("importar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

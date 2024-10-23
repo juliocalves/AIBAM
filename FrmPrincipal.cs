@@ -464,5 +464,14 @@ namespace AIBAM
             }
         }
 
+        private void nEntonacao_Enter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(nEntonacao, " 1-Pouco Informal e 10-Muito Formal");
+        }
+
+        private void nOriginalidade_Enter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
+        }
     }
 }
