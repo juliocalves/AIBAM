@@ -235,25 +235,30 @@ namespace AIBAM
             toolMenu.DisplayStyle = toolMenu.Checked ? ToolStripItemDisplayStyle.ImageAndText : ToolStripItemDisplayStyle.Image;
             splitContainer1.SplitterDistance = toolMenu.Checked ? 200 : 25;
         }
-
         private void toolChatLivre_Click(object sender, EventArgs e)
         {
+            toolChatLivre.CheckState = CheckState.Checked;
             toolChatParametrizado.Checked = !toolChatLivre.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
             splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
+            toolChatParametrizado.CheckState = CheckState.Unchecked;
+            toolChatLivre.CheckState = CheckState.Checked;
         }
 
         private void toolChatParametrizado_Click(object sender, EventArgs e)
         {
+            toolChatParametrizado.CheckState = CheckState.Checked;
             toolChatLivre.Checked = !toolChatParametrizado.Checked;
-            splitContainer2.Panel1Collapsed = !toolChatLivre.Checked;
-            splitContainer2.Panel2Collapsed = !toolChatParametrizado.Checked;
+            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked; 
+            splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
+            toolChatLivre.CheckState = CheckState.Unchecked;
+            toolChatParametrizado.CheckState = CheckState.Checked;
         }
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
+            toolChatLivre.Checked = !toolChatParametrizado.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
         }
-
     }
 }
