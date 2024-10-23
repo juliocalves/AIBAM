@@ -9,7 +9,7 @@ namespace AIBAM.Classes
     /// <summary>
     /// Classe representativa de Pesona ou Personas Publico Alvo
     /// </summary>
-    public class PubicoAlvo
+    public class PublicoAlvo
     {
         public int IdadeInicial {  get; set; }
         public int IdadeFinal { get; set; }

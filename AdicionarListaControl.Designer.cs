@@ -31,7 +31,7 @@
             btnSalvarLista = new Button();
             btnCarregarLista = new Button();
             btnAdicionar = new Button();
-            txtInteresse = new TextBox();
+            txtItem = new TextBox();
             lblDescricao = new Label();
             ckList = new CheckedListBox();
             SuspendLayout();
@@ -39,36 +39,38 @@
             // btnSalvarLista
             // 
             btnSalvarLista.Image = Properties.Resources.data;
-            btnSalvarLista.Location = new Point(255, 17);
+            btnSalvarLista.Location = new Point(261, 13);
             btnSalvarLista.Name = "btnSalvarLista";
-            btnSalvarLista.Size = new Size(25, 25);
-            btnSalvarLista.TabIndex = 12;
+            btnSalvarLista.Size = new Size(30, 30);
+            btnSalvarLista.TabIndex = 4;
             btnSalvarLista.UseVisualStyleBackColor = true;
             // 
             // btnCarregarLista
             // 
             btnCarregarLista.Image = Properties.Resources.importar;
-            btnCarregarLista.Location = new Point(231, 17);
+            btnCarregarLista.Location = new Point(233, 13);
             btnCarregarLista.Name = "btnCarregarLista";
-            btnCarregarLista.Size = new Size(25, 25);
-            btnCarregarLista.TabIndex = 11;
+            btnCarregarLista.Size = new Size(30, 30);
+            btnCarregarLista.TabIndex = 3;
             btnCarregarLista.UseVisualStyleBackColor = true;
             // 
             // btnAdicionar
             // 
             btnAdicionar.Image = Properties.Resources.adicionar__1_;
-            btnAdicionar.Location = new Point(207, 17);
+            btnAdicionar.Location = new Point(206, 13);
             btnAdicionar.Name = "btnAdicionar";
-            btnAdicionar.Size = new Size(25, 25);
-            btnAdicionar.TabIndex = 10;
+            btnAdicionar.Size = new Size(30, 30);
+            btnAdicionar.TabIndex = 2;
             btnAdicionar.UseVisualStyleBackColor = true;
+            btnAdicionar.Click += btnAdicionar_Click;
             // 
-            // txtInteresse
+            // txtItem
             // 
-            txtInteresse.Location = new Point(3, 17);
-            txtInteresse.Name = "txtInteresse";
-            txtInteresse.Size = new Size(203, 23);
-            txtInteresse.TabIndex = 9;
+            txtItem.Location = new Point(3, 17);
+            txtItem.Name = "txtItem";
+            txtItem.Size = new Size(203, 23);
+            txtItem.TabIndex = 1;
+            txtItem.KeyDown += txtItem_KeyDown;
             // 
             // lblDescricao
             // 
@@ -84,21 +86,23 @@
             ckList.FormattingEnabled = true;
             ckList.Location = new Point(3, 48);
             ckList.Name = "ckList";
-            ckList.Size = new Size(277, 94);
+            ckList.Size = new Size(288, 94);
             ckList.TabIndex = 7;
+            ckList.TabStop = false;
+            ckList.KeyDown += ckList_KeyDown;
             // 
-            // AdicionarListaControl1
+            // AdicionarListaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnSalvarLista);
             Controls.Add(btnCarregarLista);
             Controls.Add(btnAdicionar);
-            Controls.Add(txtInteresse);
+            Controls.Add(txtItem);
             Controls.Add(lblDescricao);
             Controls.Add(ckList);
-            Name = "AdicionarListaControl1";
-            Size = new Size(286, 148);
+            Name = "AdicionarListaControl";
+            Size = new Size(294, 148);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -108,7 +112,7 @@
         private Button btnSalvarLista;
         private Button btnCarregarLista;
         private Button btnAdicionar;
-        private TextBox txtInteresse;
+        private TextBox txtItem;
         private Label lblDescricao;
         private CheckedListBox ckList;
     }

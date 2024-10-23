@@ -41,6 +41,14 @@
             splitContainer2 = new SplitContainer();
             tabControlParametros = new TabControl();
             tabParamConteudo = new TabPage();
+            toolStrip4 = new ToolStrip();
+            novaToolStripButton1 = new ToolStripButton();
+            abrirToolStripButton1 = new ToolStripButton();
+            salvarToolStripButton1 = new ToolStripButton();
+            toolStripSeparator8 = new ToolStripSeparator();
+            ajudaToolStripButton1 = new ToolStripButton();
+            label21 = new Label();
+            textBox11 = new TextBox();
             tabCopy = new TabControl();
             tabPageBriefing = new TabPage();
             textBox4 = new TextBox();
@@ -120,6 +128,7 @@
             numericUpDown1 = new NumericUpDown();
             label13 = new Label();
             tabControles = new TabPage();
+            adicionarListaControl5 = new AdicionarListaControl();
             nOriginalidade = new NumericUpDown();
             label20 = new Label();
             groupBox7 = new GroupBox();
@@ -130,9 +139,6 @@
             label19 = new Label();
             nEntonacao = new NumericUpDown();
             label18 = new Label();
-            tabParamResumo = new TabPage();
-            tabParamTraducao = new TabPage();
-            tabParamGerarCodigo = new TabPage();
             btnMic = new Button();
             chatControl = new ChatControl();
             txtPrompt = new TextBox();
@@ -145,9 +151,6 @@
             salvarToolStripButton = new ToolStripButton();
             imprimirToolStripButton = new ToolStripButton();
             toolStripSeparator = new ToolStripSeparator();
-            recortarToolStripButton = new ToolStripButton();
-            copiarToolStripButton = new ToolStripButton();
-            colarToolStripButton = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             ajudaToolStripButton = new ToolStripButton();
             menuStrip1 = new MenuStrip();
@@ -163,14 +166,8 @@
             toolStripSeparator4 = new ToolStripSeparator();
             sairToolStripMenuItem = new ToolStripMenuItem();
             editarToolStripMenuItem = new ToolStripMenuItem();
-            desfazerToolStripMenuItem = new ToolStripMenuItem();
-            refazerToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
-            recortarToolStripMenuItem = new ToolStripMenuItem();
-            copiarToolStripMenuItem = new ToolStripMenuItem();
-            colarToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator6 = new ToolStripSeparator();
-            selecionarTudoToolStripMenuItem = new ToolStripMenuItem();
             ferramentasToolStripMenuItem = new ToolStripMenuItem();
             personalizarToolStripMenuItem = new ToolStripMenuItem();
             opçõesToolStripMenuItem = new ToolStripMenuItem();
@@ -181,7 +178,6 @@
             toolStripSeparator7 = new ToolStripSeparator();
             sobreToolStripMenuItem = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
-            adicionarListaControl5 = new AdicionarListaControl();
             statusStrip1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
             toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -197,6 +193,7 @@
             splitContainer2.SuspendLayout();
             tabControlParametros.SuspendLayout();
             tabParamConteudo.SuspendLayout();
+            toolStrip4.SuspendLayout();
             tabCopy.SuspendLayout();
             tabPageBriefing.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -222,7 +219,7 @@
             statusStrip1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             statusStrip1.Dock = DockStyle.None;
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripProgressBar1 });
-            statusStrip1.Location = new Point(847, 575);
+            statusStrip1.Location = new Point(847, 633);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(119, 22);
             statusStrip1.TabIndex = 0;
@@ -246,10 +243,10 @@
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
             toolStripContainer1.ContentPanel.ImeMode = ImeMode.On;
             toolStripContainer1.ContentPanel.RightToLeft = RightToLeft.No;
-            toolStripContainer1.ContentPanel.Size = new Size(978, 521);
+            toolStripContainer1.ContentPanel.Size = new Size(978, 579);
             toolStripContainer1.Location = new Point(0, 26);
             toolStripContainer1.Name = "toolStripContainer1";
-            toolStripContainer1.Size = new Size(978, 546);
+            toolStripContainer1.Size = new Size(978, 604);
             toolStripContainer1.TabIndex = 1;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -273,7 +270,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new Size(978, 521);
+            splitContainer1.Size = new Size(978, 579);
             splitContainer1.SplitterDistance = 28;
             splitContainer1.TabIndex = 0;
             // 
@@ -314,34 +311,108 @@
             splitContainer2.Panel2.Controls.Add(btnMic);
             splitContainer2.Panel2.Controls.Add(chatControl);
             splitContainer2.Panel2.Controls.Add(txtPrompt);
-            splitContainer2.Size = new Size(946, 521);
-            splitContainer2.SplitterDistance = 447;
+            splitContainer2.Size = new Size(946, 579);
+            splitContainer2.SplitterDistance = 496;
             splitContainer2.TabIndex = 0;
             // 
             // tabControlParametros
             // 
             tabControlParametros.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControlParametros.Controls.Add(tabParamConteudo);
-            tabControlParametros.Controls.Add(tabParamResumo);
-            tabControlParametros.Controls.Add(tabParamTraducao);
-            tabControlParametros.Controls.Add(tabParamGerarCodigo);
             tabControlParametros.Location = new Point(5, 3);
             tabControlParametros.Name = "tabControlParametros";
             tabControlParametros.SelectedIndex = 0;
-            tabControlParametros.Size = new Size(936, 445);
+            tabControlParametros.Size = new Size(936, 494);
             tabControlParametros.TabIndex = 0;
             // 
             // tabParamConteudo
             // 
+            tabParamConteudo.Controls.Add(toolStrip4);
+            tabParamConteudo.Controls.Add(label21);
+            tabParamConteudo.Controls.Add(textBox11);
             tabParamConteudo.Controls.Add(tabCopy);
             tabParamConteudo.Location = new Point(4, 24);
             tabParamConteudo.Name = "tabParamConteudo";
             tabParamConteudo.Padding = new Padding(3);
-            tabParamConteudo.Size = new Size(928, 417);
+            tabParamConteudo.Size = new Size(928, 466);
             tabParamConteudo.TabIndex = 0;
             tabParamConteudo.Text = "Conteudo";
             tabParamConteudo.ToolTipText = "Gera COPYWRITER com base em informações definidas";
             tabParamConteudo.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip4
+            // 
+            toolStrip4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            toolStrip4.Dock = DockStyle.None;
+            toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip4.Items.AddRange(new ToolStripItem[] { novaToolStripButton1, abrirToolStripButton1, salvarToolStripButton1, toolStripSeparator8, ajudaToolStripButton1 });
+            toolStrip4.Location = new Point(857, 24);
+            toolStrip4.Name = "toolStrip4";
+            toolStrip4.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip4.Size = new Size(101, 25);
+            toolStrip4.TabIndex = 3;
+            toolStrip4.Text = "toolStrip4";
+            // 
+            // novaToolStripButton1
+            // 
+            novaToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            novaToolStripButton1.Image = (Image)resources.GetObject("novaToolStripButton1.Image");
+            novaToolStripButton1.ImageTransparentColor = Color.Magenta;
+            novaToolStripButton1.Name = "novaToolStripButton1";
+            novaToolStripButton1.Size = new Size(23, 22);
+            novaToolStripButton1.Text = "&Nova";
+            novaToolStripButton1.ToolTipText = "Novo Prompt";
+            // 
+            // abrirToolStripButton1
+            // 
+            abrirToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            abrirToolStripButton1.Image = (Image)resources.GetObject("abrirToolStripButton1.Image");
+            abrirToolStripButton1.ImageTransparentColor = Color.Magenta;
+            abrirToolStripButton1.Name = "abrirToolStripButton1";
+            abrirToolStripButton1.Size = new Size(23, 22);
+            abrirToolStripButton1.Text = "&Abrir";
+            abrirToolStripButton1.ToolTipText = "Abrir Prompt ";
+            // 
+            // salvarToolStripButton1
+            // 
+            salvarToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            salvarToolStripButton1.Image = (Image)resources.GetObject("salvarToolStripButton1.Image");
+            salvarToolStripButton1.ImageTransparentColor = Color.Magenta;
+            salvarToolStripButton1.Name = "salvarToolStripButton1";
+            salvarToolStripButton1.Size = new Size(23, 22);
+            salvarToolStripButton1.Text = "&Salvar";
+            salvarToolStripButton1.ToolTipText = "Salvar Prompt";
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new Size(6, 25);
+            // 
+            // ajudaToolStripButton1
+            // 
+            ajudaToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ajudaToolStripButton1.Image = (Image)resources.GetObject("ajudaToolStripButton1.Image");
+            ajudaToolStripButton1.ImageTransparentColor = Color.Magenta;
+            ajudaToolStripButton1.Name = "ajudaToolStripButton1";
+            ajudaToolStripButton1.Size = new Size(23, 22);
+            ajudaToolStripButton1.Text = "Aju&da";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(3, 3);
+            label21.Name = "label21";
+            label21.Size = new Size(121, 15);
+            label21.TabIndex = 2;
+            label21.Text = "DESCRIÇÃO PROMPT";
+            // 
+            // textBox11
+            // 
+            textBox11.BackColor = Color.Ivory;
+            textBox11.Location = new Point(2, 24);
+            textBox11.Name = "textBox11";
+            textBox11.Size = new Size(491, 23);
+            textBox11.TabIndex = 1;
             // 
             // tabCopy
             // 
@@ -349,10 +420,10 @@
             tabCopy.Controls.Add(tabPageBriefing);
             tabCopy.Controls.Add(tabPagePublicoCopy);
             tabCopy.Controls.Add(tabControles);
-            tabCopy.Location = new Point(3, 0);
+            tabCopy.Location = new Point(3, 53);
             tabCopy.Name = "tabCopy";
             tabCopy.SelectedIndex = 0;
-            tabCopy.Size = new Size(922, 423);
+            tabCopy.Size = new Size(922, 419);
             tabCopy.TabIndex = 0;
             // 
             // tabPageBriefing
@@ -388,7 +459,7 @@
             tabPageBriefing.Location = new Point(4, 24);
             tabPageBriefing.Name = "tabPageBriefing";
             tabPageBriefing.Padding = new Padding(3);
-            tabPageBriefing.Size = new Size(914, 395);
+            tabPageBriefing.Size = new Size(914, 391);
             tabPageBriefing.TabIndex = 0;
             tabPageBriefing.Text = "BRIEFING";
             tabPageBriefing.UseVisualStyleBackColor = true;
@@ -399,7 +470,7 @@
             textBox4.Location = new Point(7, 360);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(389, 23);
-            textBox4.TabIndex = 45;
+            textBox4.TabIndex = 15;
             // 
             // label12
             // 
@@ -428,7 +499,7 @@
             groupBox3.Location = new Point(400, 303);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(511, 75);
-            groupBox3.TabIndex = 44;
+            groupBox3.TabIndex = 16;
             groupBox3.TabStop = false;
             groupBox3.Text = "METAS";
             // 
@@ -438,7 +509,7 @@
             checkBox13.Location = new Point(282, 13);
             checkBox13.Name = "checkBox13";
             checkBox13.Size = new Size(75, 19);
-            checkBox13.TabIndex = 12;
+            checkBox13.TabIndex = 7;
             checkBox13.Text = "Interação";
             checkBox13.UseVisualStyleBackColor = true;
             // 
@@ -448,7 +519,7 @@
             checkBox12.Location = new Point(419, 13);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(84, 19);
-            checkBox12.TabIndex = 11;
+            checkBox12.TabIndex = 10;
             checkBox12.Text = "Seguidores";
             checkBox12.UseVisualStyleBackColor = true;
             // 
@@ -468,7 +539,7 @@
             checkBox9.Location = new Point(146, 31);
             checkBox9.Name = "checkBox9";
             checkBox9.Size = new Size(96, 19);
-            checkBox9.TabIndex = 8;
+            checkBox9.TabIndex = 5;
             checkBox9.Text = "Desempenho";
             checkBox9.UseVisualStyleBackColor = true;
             // 
@@ -478,7 +549,7 @@
             checkBox8.Location = new Point(10, 14);
             checkBox8.Name = "checkBox8";
             checkBox8.Size = new Size(112, 19);
-            checkBox8.TabIndex = 7;
+            checkBox8.TabIndex = 1;
             checkBox8.Text = "Adição Carrinho";
             checkBox8.UseVisualStyleBackColor = true;
             // 
@@ -488,7 +559,7 @@
             checkBox7.Location = new Point(146, 13);
             checkBox7.Name = "checkBox7";
             checkBox7.Size = new Size(132, 19);
-            checkBox7.TabIndex = 6;
+            checkBox7.TabIndex = 4;
             checkBox7.Text = "Compartilhamentos";
             checkBox7.UseVisualStyleBackColor = true;
             // 
@@ -498,7 +569,7 @@
             checkBox6.Location = new Point(419, 50);
             checkBox6.Name = "checkBox6";
             checkBox6.Size = new Size(95, 19);
-            checkBox6.TabIndex = 5;
+            checkBox6.TabIndex = 12;
             checkBox6.Text = "Vizualizações";
             checkBox6.UseVisualStyleBackColor = true;
             // 
@@ -508,7 +579,7 @@
             checkBox5.Location = new Point(282, 32);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new Size(134, 19);
-            checkBox5.TabIndex = 4;
+            checkBox5.TabIndex = 8;
             checkBox5.Text = "Permanência Página";
             checkBox5.UseVisualStyleBackColor = true;
             // 
@@ -518,7 +589,7 @@
             checkBox4.Location = new Point(146, 48);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new Size(96, 19);
-            checkBox4.TabIndex = 3;
+            checkBox4.TabIndex = 6;
             checkBox4.Text = "Engajamento";
             checkBox4.UseVisualStyleBackColor = true;
             // 
@@ -528,7 +599,7 @@
             checkBox3.Location = new Point(419, 32);
             checkBox3.Name = "checkBox3";
             checkBox3.Size = new Size(58, 19);
-            checkBox3.TabIndex = 2;
+            checkBox3.TabIndex = 11;
             checkBox3.Text = "Venda";
             checkBox3.UseVisualStyleBackColor = true;
             // 
@@ -538,7 +609,7 @@
             checkBox2.Location = new Point(10, 32);
             checkBox2.Name = "checkBox2";
             checkBox2.Size = new Size(134, 19);
-            checkBox2.TabIndex = 1;
+            checkBox2.TabIndex = 2;
             checkBox2.Text = "Cadastro Formulario";
             checkBox2.UseVisualStyleBackColor = true;
             // 
@@ -548,14 +619,16 @@
             checkBox1.Location = new Point(10, 51);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(82, 19);
-            checkBox1.TabIndex = 0;
+            checkBox1.TabIndex = 3;
             checkBox1.Text = "Clicks Link";
             checkBox1.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
+            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBox1.BackColor = Color.LavenderBlush;
             comboBox1.FormattingEnabled = true;
+            comboBox1.ItemHeight = 15;
             comboBox1.Items.AddRange(new object[] { "E-mail Marketing", "Landing Page", "Página de Vendas", "Anúncios em Redes Sociais", "Blog Post (SEO)", "Roteiro para Vídeos", "Descrição de Produtos E-commerce", "Teste A/B", "Webinar/Palestras Online", "Conteúdo de Rede Social para Aumento de Audiência", "Impresso", "Radio" });
             comboBox1.Location = new Point(8, 318);
             comboBox1.Name = "comboBox1";
@@ -579,7 +652,7 @@
             cboSubSegmentos.Location = new Point(498, 69);
             cboSubSegmentos.Name = "cboSubSegmentos";
             cboSubSegmentos.Size = new Size(237, 23);
-            cboSubSegmentos.TabIndex = 41;
+            cboSubSegmentos.TabIndex = 7;
             // 
             // label10
             // 
@@ -598,7 +671,7 @@
             cboSegmento.Location = new Point(315, 69);
             cboSegmento.Name = "cboSegmento";
             cboSegmento.Size = new Size(177, 23);
-            cboSegmento.TabIndex = 39;
+            cboSegmento.TabIndex = 6;
             cboSegmento.SelectedIndexChanged += cboSegmento_SelectedIndexChanged;
             // 
             // textBox8
@@ -611,7 +684,7 @@
             textBox8.Name = "textBox8";
             textBox8.ScrollBars = ScrollBars.Vertical;
             textBox8.Size = new Size(475, 54);
-            textBox8.TabIndex = 37;
+            textBox8.TabIndex = 13;
             // 
             // label9
             // 
@@ -632,7 +705,7 @@
             textBox7.Name = "textBox7";
             textBox7.ScrollBars = ScrollBars.Vertical;
             textBox7.Size = new Size(421, 54);
-            textBox7.TabIndex = 35;
+            textBox7.TabIndex = 12;
             // 
             // label8
             // 
@@ -651,7 +724,7 @@
             groupBox1.Location = new Point(773, 67);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(138, 41);
-            groupBox1.TabIndex = 7;
+            groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "É UM LANÇAMENTO?";
             // 
@@ -683,7 +756,7 @@
             textBox6.Location = new Point(315, 114);
             textBox6.Name = "textBox6";
             textBox6.Size = new Size(593, 23);
-            textBox6.TabIndex = 9;
+            textBox6.TabIndex = 10;
             // 
             // label7
             // 
@@ -699,7 +772,7 @@
             textBox5.Location = new Point(6, 114);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(303, 23);
-            textBox5.TabIndex = 8;
+            textBox5.TabIndex = 9;
             // 
             // label6
             // 
@@ -827,7 +900,7 @@
             textBox1.Name = "textBox1";
             textBox1.ScrollBars = ScrollBars.Vertical;
             textBox1.Size = new Size(902, 66);
-            textBox1.TabIndex = 10;
+            textBox1.TabIndex = 11;
             // 
             // label1
             // 
@@ -856,47 +929,50 @@
             tabPagePublicoCopy.Location = new Point(4, 24);
             tabPagePublicoCopy.Name = "tabPagePublicoCopy";
             tabPagePublicoCopy.Padding = new Padding(3);
-            tabPagePublicoCopy.Size = new Size(914, 395);
+            tabPagePublicoCopy.Size = new Size(914, 391);
             tabPagePublicoCopy.TabIndex = 1;
             tabPagePublicoCopy.Text = "PUBLICO ALVO";
             tabPagePublicoCopy.UseVisualStyleBackColor = true;
             // 
             // adicionarListaControl4
             // 
+            adicionarListaControl4.Descricao = "INTERESSES";
             adicionarListaControl4.Location = new Point(2, 225);
             adicionarListaControl4.Name = "adicionarListaControl4";
-            adicionarListaControl4.Size = new Size(286, 148);
-            adicionarListaControl4.TabIndex = 28;
+            adicionarListaControl4.Size = new Size(303, 148);
+            adicionarListaControl4.TabIndex = 8;
             // 
             // adicionarListaControl3
             // 
+            adicionarListaControl3.Descricao = "INTERESSES";
             adicionarListaControl3.Location = new Point(596, 71);
             adicionarListaControl3.Name = "adicionarListaControl3";
-            adicionarListaControl3.Size = new Size(286, 148);
-            adicionarListaControl3.TabIndex = 27;
+            adicionarListaControl3.Size = new Size(296, 148);
+            adicionarListaControl3.TabIndex = 6;
             // 
             // adicionarListaControl2
             // 
+            adicionarListaControl2.Descricao = "INTERESSES";
             adicionarListaControl2.Location = new Point(299, 71);
             adicionarListaControl2.Name = "adicionarListaControl2";
-            adicionarListaControl2.Size = new Size(286, 148);
-            adicionarListaControl2.TabIndex = 26;
+            adicionarListaControl2.Size = new Size(298, 148);
+            adicionarListaControl2.TabIndex = 6;
             // 
             // adicionarListaControl1
             // 
+            adicionarListaControl1.Descricao = "INTERESSES";
             adicionarListaControl1.Location = new Point(2, 71);
             adicionarListaControl1.Name = "adicionarListaControl1";
-            adicionarListaControl1.Size = new Size(286, 148);
-            adicionarListaControl1.TabIndex = 25;
+            adicionarListaControl1.Size = new Size(291, 148);
+            adicionarListaControl1.TabIndex = 5;
             // 
             // textBox10
             // 
-            textBox10.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            textBox10.Location = new Point(596, 236);
+            textBox10.Location = new Point(595, 232);
             textBox10.Multiline = true;
             textBox10.Name = "textBox10";
             textBox10.Size = new Size(286, 136);
-            textBox10.TabIndex = 24;
+            textBox10.TabIndex = 10;
             // 
             // label16
             // 
@@ -920,7 +996,7 @@
             groupBox6.Location = new Point(129, 0);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(308, 65);
-            groupBox6.TabIndex = 22;
+            groupBox6.TabIndex = 2;
             groupBox6.TabStop = false;
             groupBox6.Text = "GÊNERO";
             // 
@@ -930,7 +1006,7 @@
             radioButton16.Location = new Point(108, 41);
             radioButton16.Name = "radioButton16";
             radioButton16.Size = new Size(105, 19);
-            radioButton16.TabIndex = 7;
+            radioButton16.TabIndex = 6;
             radioButton16.Text = "GENDERQUEER";
             radioButton16.UseVisualStyleBackColor = true;
             // 
@@ -940,7 +1016,7 @@
             radioButton15.Location = new Point(9, 42);
             radioButton15.Name = "radioButton15";
             radioButton15.Size = new Size(93, 19);
-            radioButton15.TabIndex = 6;
+            radioButton15.TabIndex = 5;
             radioButton15.Text = "PANGÊNERO";
             radioButton15.UseVisualStyleBackColor = true;
             // 
@@ -950,7 +1026,7 @@
             radioButton14.Location = new Point(230, 19);
             radioButton14.Name = "radioButton14";
             radioButton14.Size = new Size(78, 19);
-            radioButton14.TabIndex = 5;
+            radioButton14.TabIndex = 4;
             radioButton14.Text = "AGÊNERO";
             radioButton14.UseVisualStyleBackColor = true;
             // 
@@ -960,7 +1036,7 @@
             radioButton13.Location = new Point(147, 19);
             radioButton13.Name = "radioButton13";
             radioButton13.Size = new Size(83, 19);
-            radioButton13.TabIndex = 4;
+            radioButton13.TabIndex = 3;
             radioButton13.Text = "N BINARIO";
             radioButton13.UseVisualStyleBackColor = true;
             // 
@@ -970,7 +1046,7 @@
             radioButton12.Location = new Point(84, 19);
             radioButton12.Name = "radioButton12";
             radioButton12.Size = new Size(62, 19);
-            radioButton12.TabIndex = 3;
+            radioButton12.TabIndex = 2;
             radioButton12.Text = "TRANS";
             radioButton12.UseVisualStyleBackColor = true;
             // 
@@ -980,7 +1056,7 @@
             radioButton11.Location = new Point(44, 19);
             radioButton11.Name = "radioButton11";
             radioButton11.Size = new Size(36, 19);
-            radioButton11.TabIndex = 2;
+            radioButton11.TabIndex = 1;
             radioButton11.Text = "M";
             radioButton11.UseVisualStyleBackColor = true;
             // 
@@ -991,7 +1067,7 @@
             radioButton10.Location = new Point(231, 42);
             radioButton10.Name = "radioButton10";
             radioButton10.Size = new Size(63, 19);
-            radioButton10.TabIndex = 1;
+            radioButton10.TabIndex = 7;
             radioButton10.TabStop = true;
             radioButton10.Text = "TODOS";
             radioButton10.UseVisualStyleBackColor = true;
@@ -1008,17 +1084,16 @@
             // 
             // groupBox5
             // 
-            groupBox5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             groupBox5.Controls.Add(radioButton8);
             groupBox5.Controls.Add(radioButton7);
             groupBox5.Controls.Add(radioButton6);
             groupBox5.Controls.Add(radioButton5);
             groupBox5.Controls.Add(radioButton4);
             groupBox5.Controls.Add(radioButton3);
-            groupBox5.Location = new Point(299, 219);
+            groupBox5.Location = new Point(306, 218);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(286, 154);
-            groupBox5.TabIndex = 21;
+            groupBox5.TabIndex = 9;
             groupBox5.TabStop = false;
             groupBox5.Text = "NÍVEL CONSCIÊNCIA";
             // 
@@ -1086,11 +1161,11 @@
             // 
             // textBox9
             // 
-            textBox9.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            textBox9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             textBox9.Location = new Point(653, 20);
             textBox9.Name = "textBox9";
             textBox9.Size = new Size(229, 23);
-            textBox9.TabIndex = 19;
+            textBox9.TabIndex = 4;
             // 
             // label15
             // 
@@ -1109,7 +1184,7 @@
             comboBox2.Location = new Point(443, 20);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(204, 23);
-            comboBox2.TabIndex = 14;
+            comboBox2.TabIndex = 3;
             // 
             // label17
             // 
@@ -1139,6 +1214,7 @@
             numericUpDown2.Name = "numericUpDown2";
             numericUpDown2.Size = new Size(47, 23);
             numericUpDown2.TabIndex = 5;
+            numericUpDown2.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
             // label14
             // 
@@ -1155,6 +1231,7 @@
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(47, 23);
             numericUpDown1.TabIndex = 3;
+            numericUpDown1.Value = new decimal(new int[] { 18, 0, 0, 0 });
             // 
             // label13
             // 
@@ -1178,10 +1255,18 @@
             tabControles.Location = new Point(4, 24);
             tabControles.Name = "tabControles";
             tabControles.Padding = new Padding(3);
-            tabControles.Size = new Size(914, 395);
+            tabControles.Size = new Size(914, 391);
             tabControles.TabIndex = 2;
             tabControles.Text = "CONTROLES";
             tabControles.UseVisualStyleBackColor = true;
+            // 
+            // adicionarListaControl5
+            // 
+            adicionarListaControl5.Descricao = "INTERESSES";
+            adicionarListaControl5.Location = new Point(577, 2);
+            adicionarListaControl5.Name = "adicionarListaControl5";
+            adicionarListaControl5.Size = new Size(301, 148);
+            adicionarListaControl5.TabIndex = 7;
             // 
             // nOriginalidade
             // 
@@ -1195,7 +1280,7 @@
             nOriginalidade.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             nOriginalidade.Name = "nOriginalidade";
             nOriginalidade.Size = new Size(58, 23);
-            nOriginalidade.TabIndex = 6;
+            nOriginalidade.TabIndex = 2;
             nOriginalidade.Value = new decimal(new int[] { 5, 0, 0, 0 });
             nOriginalidade.Enter += nOriginalidade_Enter;
             // 
@@ -1299,43 +1384,13 @@
             label18.TabIndex = 0;
             label18.Text = "Entonação";
             // 
-            // tabParamResumo
-            // 
-            tabParamResumo.Location = new Point(4, 24);
-            tabParamResumo.Name = "tabParamResumo";
-            tabParamResumo.Padding = new Padding(3);
-            tabParamResumo.Size = new Size(928, 417);
-            tabParamResumo.TabIndex = 1;
-            tabParamResumo.Text = "Resumo";
-            tabParamResumo.UseVisualStyleBackColor = true;
-            // 
-            // tabParamTraducao
-            // 
-            tabParamTraducao.Location = new Point(4, 24);
-            tabParamTraducao.Name = "tabParamTraducao";
-            tabParamTraducao.Padding = new Padding(3);
-            tabParamTraducao.Size = new Size(928, 417);
-            tabParamTraducao.TabIndex = 2;
-            tabParamTraducao.Text = "Tradução";
-            tabParamTraducao.UseVisualStyleBackColor = true;
-            // 
-            // tabParamGerarCodigo
-            // 
-            tabParamGerarCodigo.Location = new Point(4, 24);
-            tabParamGerarCodigo.Name = "tabParamGerarCodigo";
-            tabParamGerarCodigo.Padding = new Padding(3);
-            tabParamGerarCodigo.Size = new Size(928, 417);
-            tabParamGerarCodigo.TabIndex = 3;
-            tabParamGerarCodigo.Text = "Código";
-            tabParamGerarCodigo.UseVisualStyleBackColor = true;
-            // 
             // btnMic
             // 
             btnMic.AccessibleDescription = "Ativa/Desativa Captura por voz";
             btnMic.AccessibleRole = AccessibleRole.Cursor;
             btnMic.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnMic.Image = Properties.Resources.conversacao__1_;
-            btnMic.Location = new Point(914, 33);
+            btnMic.Location = new Point(914, 42);
             btnMic.Name = "btnMic";
             btnMic.Size = new Size(27, 22);
             btnMic.TabIndex = 12;
@@ -1350,7 +1405,7 @@
             chatControl.BackColor = Color.White;
             chatControl.Location = new Point(5, 3);
             chatControl.Name = "chatControl";
-            chatControl.Size = new Size(936, 26);
+            chatControl.Size = new Size(936, 35);
             chatControl.TabIndex = 10;
             chatControl.TabStop = false;
             chatControl.Tag = "Chat";
@@ -1365,7 +1420,7 @@
             txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtPrompt.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtPrompt.AutoCompleteSource = AutoCompleteSource.FileSystem;
-            txtPrompt.Location = new Point(5, 32);
+            txtPrompt.Location = new Point(5, 41);
             txtPrompt.Multiline = true;
             txtPrompt.Name = "txtPrompt";
             txtPrompt.PlaceholderText = "Comando ";
@@ -1411,11 +1466,11 @@
             // 
             toolStrip1.BackColor = SystemColors.Control;
             toolStrip1.Dock = DockStyle.None;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { novaToolStripButton, abrirToolStripButton, salvarToolStripButton, imprimirToolStripButton, toolStripSeparator, recortarToolStripButton, copiarToolStripButton, colarToolStripButton, toolStripSeparator1, ajudaToolStripButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { novaToolStripButton, abrirToolStripButton, salvarToolStripButton, imprimirToolStripButton, toolStripSeparator, toolStripSeparator1, ajudaToolStripButton });
             toolStrip1.Location = new Point(63, 24);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip1.Size = new Size(208, 25);
+            toolStrip1.Size = new Size(139, 25);
             toolStrip1.TabIndex = 0;
             // 
             // novaToolStripButton
@@ -1464,33 +1519,6 @@
             // 
             toolStripSeparator.Name = "toolStripSeparator";
             toolStripSeparator.Size = new Size(6, 25);
-            // 
-            // recortarToolStripButton
-            // 
-            recortarToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            recortarToolStripButton.Image = (Image)resources.GetObject("recortarToolStripButton.Image");
-            recortarToolStripButton.ImageTransparentColor = Color.Magenta;
-            recortarToolStripButton.Name = "recortarToolStripButton";
-            recortarToolStripButton.Size = new Size(23, 22);
-            recortarToolStripButton.Text = "R&ecortar";
-            // 
-            // copiarToolStripButton
-            // 
-            copiarToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            copiarToolStripButton.Image = (Image)resources.GetObject("copiarToolStripButton.Image");
-            copiarToolStripButton.ImageTransparentColor = Color.Magenta;
-            copiarToolStripButton.Name = "copiarToolStripButton";
-            copiarToolStripButton.Size = new Size(23, 22);
-            copiarToolStripButton.Text = "&Copiar";
-            // 
-            // colarToolStripButton
-            // 
-            colarToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            colarToolStripButton.Image = (Image)resources.GetObject("colarToolStripButton.Image");
-            colarToolStripButton.ImageTransparentColor = Color.Magenta;
-            colarToolStripButton.Name = "colarToolStripButton";
-            colarToolStripButton.Size = new Size(23, 22);
-            colarToolStripButton.Text = "&Colar";
             // 
             // toolStripSeparator1
             // 
@@ -1596,67 +1624,20 @@
             // 
             // editarToolStripMenuItem
             // 
-            editarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { desfazerToolStripMenuItem, refazerToolStripMenuItem, toolStripSeparator5, recortarToolStripMenuItem, copiarToolStripMenuItem, colarToolStripMenuItem, toolStripSeparator6, selecionarTudoToolStripMenuItem });
+            editarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator5, toolStripSeparator6 });
             editarToolStripMenuItem.Name = "editarToolStripMenuItem";
             editarToolStripMenuItem.Size = new Size(49, 20);
             editarToolStripMenuItem.Text = "&Editar";
             // 
-            // desfazerToolStripMenuItem
-            // 
-            desfazerToolStripMenuItem.Name = "desfazerToolStripMenuItem";
-            desfazerToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Z;
-            desfazerToolStripMenuItem.Size = new Size(159, 22);
-            desfazerToolStripMenuItem.Text = "&Desfazer";
-            // 
-            // refazerToolStripMenuItem
-            // 
-            refazerToolStripMenuItem.Name = "refazerToolStripMenuItem";
-            refazerToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Y;
-            refazerToolStripMenuItem.Size = new Size(159, 22);
-            refazerToolStripMenuItem.Text = "&Refazer";
-            // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(156, 6);
-            // 
-            // recortarToolStripMenuItem
-            // 
-            recortarToolStripMenuItem.Image = (Image)resources.GetObject("recortarToolStripMenuItem.Image");
-            recortarToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-            recortarToolStripMenuItem.Name = "recortarToolStripMenuItem";
-            recortarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
-            recortarToolStripMenuItem.Size = new Size(159, 22);
-            recortarToolStripMenuItem.Text = "Recor&tar";
-            // 
-            // copiarToolStripMenuItem
-            // 
-            copiarToolStripMenuItem.Image = (Image)resources.GetObject("copiarToolStripMenuItem.Image");
-            copiarToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-            copiarToolStripMenuItem.Name = "copiarToolStripMenuItem";
-            copiarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
-            copiarToolStripMenuItem.Size = new Size(159, 22);
-            copiarToolStripMenuItem.Text = "&Copiar";
-            // 
-            // colarToolStripMenuItem
-            // 
-            colarToolStripMenuItem.Image = (Image)resources.GetObject("colarToolStripMenuItem.Image");
-            colarToolStripMenuItem.ImageTransparentColor = Color.Magenta;
-            colarToolStripMenuItem.Name = "colarToolStripMenuItem";
-            colarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
-            colarToolStripMenuItem.Size = new Size(159, 22);
-            colarToolStripMenuItem.Text = "&Colar";
+            toolStripSeparator5.Size = new Size(57, 6);
             // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(156, 6);
-            // 
-            // selecionarTudoToolStripMenuItem
-            // 
-            selecionarTudoToolStripMenuItem.Name = "selecionarTudoToolStripMenuItem";
-            selecionarTudoToolStripMenuItem.Size = new Size(159, 22);
-            selecionarTudoToolStripMenuItem.Text = "Selecionar &Tudo";
+            toolStripSeparator6.Size = new Size(57, 6);
             // 
             // ferramentasToolStripMenuItem
             // 
@@ -1718,18 +1699,11 @@
             toolTip1.BackColor = Color.Ivory;
             toolTip1.IsBalloon = true;
             // 
-            // adicionarListaControl5
-            // 
-            adicionarListaControl5.Location = new Point(577, 2);
-            adicionarListaControl5.Name = "adicionarListaControl5";
-            adicionarListaControl5.Size = new Size(286, 148);
-            adicionarListaControl5.TabIndex = 7;
-            // 
             // FrmPrincipal
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(977, 603);
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(977, 661);
             Controls.Add(toolStrip1);
             Controls.Add(toolStripContainer1);
             Controls.Add(statusStrip1);
@@ -1760,6 +1734,9 @@
             splitContainer2.ResumeLayout(false);
             tabControlParametros.ResumeLayout(false);
             tabParamConteudo.ResumeLayout(false);
+            tabParamConteudo.PerformLayout();
+            toolStrip4.ResumeLayout(false);
+            toolStrip4.PerformLayout();
             tabCopy.ResumeLayout(false);
             tabPageBriefing.ResumeLayout(false);
             tabPageBriefing.PerformLayout();
@@ -1808,9 +1785,6 @@
         private ToolStripButton salvarToolStripButton;
         private ToolStripButton imprimirToolStripButton;
         private ToolStripSeparator toolStripSeparator;
-        private ToolStripButton recortarToolStripButton;
-        private ToolStripButton copiarToolStripButton;
-        private ToolStripButton colarToolStripButton;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton ajudaToolStripButton;
         private MenuStrip menuStrip1;
@@ -1826,14 +1800,8 @@
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripMenuItem sairToolStripMenuItem;
         private ToolStripMenuItem editarToolStripMenuItem;
-        private ToolStripMenuItem desfazerToolStripMenuItem;
-        private ToolStripMenuItem refazerToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator5;
-        private ToolStripMenuItem recortarToolStripMenuItem;
-        private ToolStripMenuItem copiarToolStripMenuItem;
-        private ToolStripMenuItem colarToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator6;
-        private ToolStripMenuItem selecionarTudoToolStripMenuItem;
         private ToolStripMenuItem ferramentasToolStripMenuItem;
         private ToolStripMenuItem personalizarToolStripMenuItem;
         private ToolStripMenuItem opçõesToolStripMenuItem;
@@ -1856,9 +1824,6 @@
         private TextBox txtPrompt;
         private TabControl tabControlParametros;
         private TabPage tabParamConteudo;
-        private TabPage tabParamResumo;
-        private TabPage tabParamTraducao;
-        private TabPage tabParamGerarCodigo;
         private TabControl tabCopy;
         private TabPage tabPageBriefing;
         private TabPage tabPagePublicoCopy;
@@ -1954,5 +1919,13 @@
         private RadioButton radioButton18;
         private RadioButton radioButton17;
         private AdicionarListaControl adicionarListaControl5;
+        private Label label21;
+        private TextBox textBox11;
+        private ToolStrip toolStrip4;
+        private ToolStripButton novaToolStripButton1;
+        private ToolStripButton abrirToolStripButton1;
+        private ToolStripButton salvarToolStripButton1;
+        private ToolStripSeparator toolStripSeparator8;
+        private ToolStripButton ajudaToolStripButton1;
     }
 }

@@ -63,6 +63,16 @@ namespace AIBAM.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap abrir_arquivo {
+            get {
+                object obj = ResourceManager.GetObject("abrir-arquivo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap adicionar {
             get {
                 object obj = ResourceManager.GetObject("adicionar", resourceCulture);
@@ -146,6 +156,16 @@ namespace AIBAM.Properties {
         internal static System.Drawing.Bitmap robo {
             get {
                 object obj = ResourceManager.GetObject("robo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap salve_ {
+            get {
+                object obj = ResourceManager.GetObject("salve-", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

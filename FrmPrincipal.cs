@@ -9,8 +9,6 @@ namespace AIBAM
 {
     public partial class FrmPrincipal : Form
     {
-
-
         #region CONFIGURAÇÃO MIC
         // Importa a função keybd_event da API do Windows
         [DllImport("user32.dll", SetLastError = true)]
@@ -32,9 +30,25 @@ namespace AIBAM
         public FrmPrincipal()
         {
             InitializeComponent();
+            AtualizaBarraProgresso();
             SetStatus("Carregando ferramentas...");
             ChatEngine();
+            SetStatus("Preparando UI...");
+            DefinirClasseControles();
+
+            txtPrompt.Focus();
+            AtualizaBarraProgresso();
             SetStatus("Pronto!");
+        }
+
+        private void DefinirClasseControles()
+        {
+            adicionarListaControl1.Descricao = "Insira os interesses do publico alvo";
+            adicionarListaControl2.Descricao = "Insira ocupações do publico alvo";
+            adicionarListaControl3.Descricao = "Insira as dores do publico alvo";
+            adicionarListaControl4.Descricao = "Insira seus diferenciais competitivos";
+            adicionarListaControl5.Descricao = "Insira palavras chave";
+
         }
 
         // CONFIGURAÇÃO CHATPROCESS
@@ -93,7 +107,6 @@ namespace AIBAM
             }
         }
 
-
         // Método separado para ler a saída do processo
         private async Task ReadOutputAsync()
         {
@@ -111,8 +124,11 @@ namespace AIBAM
             }
         }
 
-
-
+        private void AtualizaBarraProgresso()
+        {
+            toolStripProgressBar1.Visible = !toolStripProgressBar1.Visible;
+            toolStripProgressBar1.Style = toolStripProgressBar1.Style == ProgressBarStyle.Marquee ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
+        }
         // Atualiza o cursor entre o cursor de espera e o cursor padrão
         private void AtualizaCursor(bool esperando)
         {
@@ -125,6 +141,8 @@ namespace AIBAM
         {
             // Define o status antes de iniciar o salvamento
             SetStatus("Salvando a conversação...");
+            AtualizaBarraProgresso();
+
 
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -161,12 +179,11 @@ namespace AIBAM
                     SetStatus("Operação de salvamento cancelada.");
                 }
             }
-
+            AtualizaBarraProgresso();
             // Limpa e foca no txtPrompt
             txtPrompt.Clear();
             txtPrompt.Focus();
         }
-
 
         private void salvarToolStripButton_Click(object sender, EventArgs e)
         {
@@ -198,13 +215,12 @@ namespace AIBAM
             SetStatus("Enviando solicitação...");
             AtualizaCursor(true);
 
-            toolStripProgressBar1.Visible = true;
-            toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
+            AtualizaBarraProgresso();
 
             // Execute the Python chat asynchronously
             await ExecutePythonChat();
 
-            toolStripProgressBar1.Visible = false;
+            AtualizaBarraProgresso();
             AtualizaCursor(false);
         }
 
@@ -237,22 +253,26 @@ namespace AIBAM
         }
         private void toolChatLivre_Click(object sender, EventArgs e)
         {
+            AtualizaBarraProgresso();
             toolChatLivre.CheckState = CheckState.Checked;
             toolChatParametrizado.Checked = !toolChatLivre.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
             splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
             toolChatParametrizado.CheckState = CheckState.Unchecked;
             toolChatLivre.CheckState = CheckState.Checked;
+            AtualizaBarraProgresso();
         }
 
         private void toolChatParametrizado_Click(object sender, EventArgs e)
         {
+            AtualizaBarraProgresso();
             toolChatParametrizado.CheckState = CheckState.Checked;
             toolChatLivre.Checked = !toolChatParametrizado.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
             splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
             toolChatLivre.CheckState = CheckState.Unchecked;
             toolChatParametrizado.CheckState = CheckState.Checked;
+            AtualizaBarraProgresso();
         }
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
@@ -473,5 +493,6 @@ namespace AIBAM
         {
             toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
         }
+       
     }
 }

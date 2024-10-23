@@ -10,7 +10,7 @@ namespace AIBAM.Classes
     {
         public string DescricaoCopy {  get; set; }
         public Briefing briefing { get; set; }
-        public PubicoAlvo pubicoAlvo { get; set; }
+        public PublicoAlvo publicoAlvo { get; set; }
         public ControlesCopy controlesCopy { get; set; }
     }
 }
