@@ -249,7 +249,7 @@ namespace AIBAM
         {
             toolChatParametrizado.CheckState = CheckState.Checked;
             toolChatLivre.Checked = !toolChatParametrizado.Checked;
-            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked; 
+            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
             splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
             toolChatLivre.CheckState = CheckState.Unchecked;
             toolChatParametrizado.CheckState = CheckState.Checked;
@@ -260,5 +260,209 @@ namespace AIBAM
             toolChatLivre.Checked = !toolChatParametrizado.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
         }
+
+        private void cboSegmento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Limpa os itens do ComboBox de subsegmentos
+            cboSubSegmentos.Items.Clear();
+
+            // Obtém o segmento selecionado
+            string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
+
+            // Adiciona os subsegmentos de acordo com o segmento selecionado
+            switch (segmentoSelecionado)
+            {
+                case "Tecnologia da Informação (TI)":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Desenvolvimento de Software",
+                "Consultoria em TI",
+                "Segurança da Informação",
+                "Infraestrutura de Redes",
+                "Serviços em Nuvem (Cloud Computing)",
+                "Desenvolvimento de Aplicativos Mobile"
+                    });
+                    break;
+
+                case "Educação":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Escolas e Universidades",
+                "Cursos Online (EAD)",
+                "Formação Profissional",
+                "Treinamento Corporativo",
+                "Plataformas de Ensino à Distância",
+                "Educação Infantil"
+                    });
+                    break;
+
+                case "Saúde e Bem-Estar":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Clínicas Médicas e Odontológicas",
+                "Farmácias",
+                "Hospitais",
+                "Academias e Centros de Fitness",
+                "Terapias Alternativas (Fisioterapia, Acupuntura)",
+                "Saúde Mental (Psicologia e Psiquiatria)"
+                    });
+                    break;
+
+                case "Alimentação e Bebidas":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Restaurantes e Bares",
+                "Fast Food",
+                "Food Trucks",
+                "Indústria Alimentícia",
+                "Delivery de Alimentos",
+                "Cafeterias"
+                    });
+                    break;
+
+                case "Varejo":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Supermercados",
+                "Lojas de Roupas e Acessórios",
+                "E-commerce",
+                "Lojas de Conveniência",
+                "Lojas de Móveis e Decoração",
+                "Produtos Eletrônicos"
+                    });
+                    break;
+
+                case "Turismo e Hotelaria":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Agências de Viagens",
+                "Hotéis e Resorts",
+                "Pousadas e Hostels",
+                "Turismo de Aventura",
+                "Turismo de Luxo",
+                "Aluguel de Temporada"
+                    });
+                    break;
+
+                case "Construção Civil e Imobiliário":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Construtoras e Incorporadoras",
+                "Arquitetura e Design de Interiores",
+                "Corretoras de Imóveis",
+                "Engenharia Civil",
+                "Venda e Aluguel de Imóveis",
+                "Manutenção Predial"
+                    });
+                    break;
+
+                case "Entretenimento e Cultura":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Produtoras de Eventos",
+                "Cinema e Produção Audiovisual",
+                "Música e Shows",
+                "Parques Temáticos",
+                "Editoração e Publicação",
+                "Streaming de Conteúdo"
+                    });
+                    break;
+
+                case "Finanças e Seguros":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Bancos e Instituições Financeiras",
+                "Fintechs",
+                "Corretoras de Seguros",
+                "Consultoria Financeira",
+                "Investimentos e Bolsa de Valores",
+                "Cartões de Crédito e Pagamentos"
+                    });
+                    break;
+
+                case "Logística e Transporte":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Transporte de Cargas",
+                "Empresas de Transporte Público",
+                "Aluguel de Veículos",
+                "Logística e Armazenagem",
+                "Transporte Internacional (Importação e Exportação)",
+                "Entregas de Pequenas Mercadorias"
+                    });
+                    break;
+
+                case "Indústria":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Indústria Automobilística",
+                "Indústria Têxtil",
+                "Indústria Química",
+                "Indústria de Plásticos",
+                "Indústria de Alimentos e Bebidas",
+                "Indústria Metalúrgica"
+                    });
+                    break;
+
+                case "Moda e Beleza":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Salões de Beleza e Barbearias",
+                "Indústria de Cosméticos",
+                "Lojas de Roupas e Acessórios",
+                "Consultoria de Imagem",
+                "Maquiagem e Estética",
+                "Spa e Clínicas de Beleza"
+                    });
+                    break;
+
+                case "Agronegócio":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Produção Agrícola",
+                "Pecuária",
+                "Produção de Alimentos Orgânicos",
+                "Agroindústria",
+                "Máquinas e Equipamentos Agrícolas",
+                "Exportação de Produtos Agrícolas"
+                    });
+                    break;
+
+                case "Energia e Sustentabilidade":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Energia Renovável (Solar, Eólica)",
+                "Mineração",
+                "Tratamento de Resíduos",
+                "Consultoria Ambiental",
+                "Eficiência Energética",
+                "Gestão de Recursos Naturais"
+                    });
+                    break;
+
+                case "Comunicação e Marketing":
+                    cboSubSegmentos.Items.AddRange(new string[]
+                    {
+                "Agências de Publicidade",
+                "Marketing Digital",
+                "Relações Públicas",
+                "Consultoria em Branding",
+                "Produção de Conteúdo",
+                "Mídias Sociais"
+                    });
+                    break;
+
+                default:
+                    cboSubSegmentos.Items.Clear();
+                    break;
+            }
+
+            // Opcional: Seleciona o primeiro subsegmento automaticamente
+            if (cboSubSegmentos.Items.Count > 0)
+            {
+                cboSubSegmentos.SelectedIndex = 0;
+            }
+        }
+
     }
 }
