@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using AIBAM.Classes;
 
 namespace AIBAM
 {
@@ -22,23 +23,78 @@ namespace AIBAM
         private const byte VK_ESC = 0x1B;            // Tecla Escape (ESC)
         #endregion
 
-        // Caminho para o ambiente virtual Python e o script
-        string pythonExePath = System.IO.Path.Combine(@"A:\DESKTOP\mars\venv", "Scripts", "python.exe");
-        private string scriptPath = @"A:\DESKTOP\mars\gemini.py";
-        Process chatProcess = new Process();
+
+        // Configurar o cliente de chat
+        ChatClient chatClient = new ChatClient("localhost", 8080);
+
+        PromptCopy promptCopy;
+        Briefing briefing;
+
+
 
         public FrmPrincipal()
         {
             InitializeComponent();
-            AtualizaBarraProgresso();
-            SetStatus("Carregando ferramentas...");
-            ChatEngine();
-            SetStatus("Preparando UI...");
-            DefinirClasseControles();
+            AdicionarEventosControles();
+            ConstruirClasses();
 
-            txtPrompt.Focus();
-            AtualizaBarraProgresso();
-            SetStatus("Pronto!");
+        }
+
+        private void ConstruirClasses()
+        {
+            promptCopy = new();
+            briefing = new();
+            promptCopy.briefing = briefing;
+        }
+
+        private void AdicionarEventosControles()
+        {
+
+            chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
+            chatClient.OnConect += ChatClient_Status;
+            adicionarListaControl1.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            adicionarListaControl2.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            adicionarListaControl3.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            adicionarListaControl4.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            adicionarListaControl5.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+        }
+
+        private void AdicionarListaControl_OnStateChange(string obj)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SetStatus(obj)));
+            }
+            else
+            {
+                SetStatus(obj);
+            }
+        }
+
+        private void ChatClient_Status(string obj)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SetStatus(obj)));
+            }
+            else
+            {
+                SetStatus(obj);
+            }
+        }
+
+        // Manipulador do evento
+        private void ChatClient_OnMessageReceived(string response)
+        {
+            // Adiciona a resposta ao controle de chat (chatControl)
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => chatControl.AddBotResponse(response)));
+            }
+            else
+            {
+                chatControl.AddBotResponse(response);
+            }
         }
 
         private void DefinirClasseControles()
@@ -51,77 +107,25 @@ namespace AIBAM
 
         }
 
-        // CONFIGURAÇÃO CHATPROCESS
-        private void ChatEngine()
+        private async void RequestToChat()
         {
-            // Configuração do processo Python
-            chatProcess.StartInfo.FileName = pythonExePath;
-            chatProcess.StartInfo.WorkingDirectory = System.IO.Path.GetDirectoryName(scriptPath);
-            chatProcess.StartInfo.RedirectStandardOutput = true;
-            chatProcess.StartInfo.RedirectStandardError = true;
-            chatProcess.StartInfo.UseShellExecute = false;
-            chatProcess.StartInfo.CreateNoWindow = true;
-        }
-        private async Task ExecutePythonChat()
-        {
-            // Define o status antes de iniciar a execução do script Python
-            SetStatus("Executando o chat...");
-
-            // Passa argumento
-            chatProcess.StartInfo.Arguments = $"\"{scriptPath}\" \"{txtPrompt.Text}\"";
-
-            // Inicia o processo
-            chatProcess.Start();
+            SetStatus("Enviando solicitação...");
+            AtualizaCursor(true);
+            AtualizaBarraProgresso();
 
             // Exibe o prompt (mensagem do usuário) no ChatControl
             chatControl.AddUserMessage(txtPrompt.Text);
 
-            try
-            {
-                // Processamento da saída em streaming
-                await ReadOutputAsync();
+            string _ = "chat " + txtPrompt.Text;
+            // Envia a mensagem para o servidor via socket
+            await chatClient.SendMessage(_);
 
-                // Captura e exibe erros, se houver
-                string errorOutput = await chatProcess.StandardError.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(errorOutput))
-                {
-                    MessageBox.Show($"Erro no script Python: {errorOutput}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    SetStatus("Erro durante a execução do chat.");
-                }
-                else
-                {
-                    // Atualiza o status após o processamento bem-sucedido
-                    SetStatus("Processo concluído com sucesso!");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Captura exceções que podem ocorrer durante a execução
-                MessageBox.Show($"Erro ao executar o chat: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SetStatus("Erro ao executar o chat.");
-            }
-            finally
-            {
-                txtPrompt.Clear();
-                txtPrompt.Focus(); // Foca no campo de entrada
-            }
-        }
+            AtualizaBarraProgresso();
+            AtualizaCursor(false);
 
-        // Método separado para ler a saída do processo
-        private async Task ReadOutputAsync()
-        {
-            bool first = true;
-
-            while (!chatProcess.StandardOutput.EndOfStream)
-            {
-                string fragment = await chatProcess.StandardOutput.ReadLineAsync();
-                if (!string.IsNullOrWhiteSpace(fragment))
-                {
-                    // Adiciona fragmentos da resposta do bot conforme são recebidos
-                    chatControl.AddBotResponse(fragment, first);
-                    first = false;
-                }
-            }
+            // Limpa o campo de entrada após o envio
+            txtPrompt.Clear();
+            txtPrompt.Focus();
         }
 
         private void AtualizaBarraProgresso()
@@ -201,27 +205,13 @@ namespace AIBAM
         }
 
         // Detecta Enter para enviar o prompt
-        private async void txtPrompt_KeyDown(object sender, KeyEventArgs e)
+        private void txtPrompt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
                 RequestToChat();
             }
-        }
-
-        private async void RequestToChat()
-        {
-            SetStatus("Enviando solicitação...");
-            AtualizaCursor(true);
-
-            AtualizaBarraProgresso();
-
-            // Execute the Python chat asynchronously
-            await ExecutePythonChat();
-
-            AtualizaBarraProgresso();
-            AtualizaCursor(false);
         }
 
         private void btnMic_Click(object sender, EventArgs e)
@@ -277,6 +267,15 @@ namespace AIBAM
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
+            AtualizaBarraProgresso();
+            SetStatus("Carregando ferramentas...");
+
+            Task.Run(() => chatClient.Connect());
+            SetStatus("Preparando UI...");
+            DefinirClasseControles();
+            txtPrompt.Focus();
+            AtualizaBarraProgresso();
+            SetStatus("Pronto!");
             toolChatLivre.Checked = !toolChatParametrizado.Checked;
             splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
         }
@@ -285,7 +284,7 @@ namespace AIBAM
         {
             // Limpa os itens do ComboBox de subsegmentos
             cboSubSegmentos.Items.Clear();
-
+            var _briefing = briefing;
             // Obtém o segmento selecionado
             string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
 
@@ -493,6 +492,10 @@ namespace AIBAM
         {
             toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
         }
-       
+
+        private void txtNomePromptCopy_Leave(object sender, EventArgs e)
+        {
+            promptCopy.DescricaoCopy = txtNomePromptCopy.Text;
+        }
     }
 }

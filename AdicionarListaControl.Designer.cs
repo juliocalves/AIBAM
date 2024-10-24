@@ -28,41 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnSalvarLista = new Button();
-            btnCarregarLista = new Button();
-            btnAdicionar = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdicionarListaControl));
             txtItem = new TextBox();
             lblDescricao = new Label();
             ckList = new CheckedListBox();
+            toolStrip4 = new ToolStrip();
+            toolNovoItemLista = new ToolStripButton();
+            toolAbrirLista = new ToolStripButton();
+            toolSalvarLista = new ToolStripButton();
+            toolLimparLista = new ToolStripButton();
+            toolRemoverSelecionados = new ToolStripButton();
+            saveFileDialog1 = new SaveFileDialog();
+            openFileDialog1 = new OpenFileDialog();
+            toolStrip4.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnSalvarLista
-            // 
-            btnSalvarLista.Image = Properties.Resources.data;
-            btnSalvarLista.Location = new Point(261, 13);
-            btnSalvarLista.Name = "btnSalvarLista";
-            btnSalvarLista.Size = new Size(30, 30);
-            btnSalvarLista.TabIndex = 4;
-            btnSalvarLista.UseVisualStyleBackColor = true;
-            // 
-            // btnCarregarLista
-            // 
-            btnCarregarLista.Image = Properties.Resources.importar;
-            btnCarregarLista.Location = new Point(233, 13);
-            btnCarregarLista.Name = "btnCarregarLista";
-            btnCarregarLista.Size = new Size(30, 30);
-            btnCarregarLista.TabIndex = 3;
-            btnCarregarLista.UseVisualStyleBackColor = true;
-            // 
-            // btnAdicionar
-            // 
-            btnAdicionar.Image = Properties.Resources.adicionar__1_;
-            btnAdicionar.Location = new Point(206, 13);
-            btnAdicionar.Name = "btnAdicionar";
-            btnAdicionar.Size = new Size(30, 30);
-            btnAdicionar.TabIndex = 2;
-            btnAdicionar.UseVisualStyleBackColor = true;
-            btnAdicionar.Click += btnAdicionar_Click;
             // 
             // txtItem
             // 
@@ -86,34 +65,109 @@
             ckList.FormattingEnabled = true;
             ckList.Location = new Point(3, 48);
             ckList.Name = "ckList";
-            ckList.Size = new Size(288, 94);
+            ckList.Size = new Size(320, 94);
             ckList.TabIndex = 7;
             ckList.TabStop = false;
             ckList.KeyDown += ckList_KeyDown;
+            // 
+            // toolStrip4
+            // 
+            toolStrip4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            toolStrip4.Dock = DockStyle.None;
+            toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip4.Items.AddRange(new ToolStripItem[] { toolNovoItemLista, toolAbrirLista, toolSalvarLista, toolLimparLista, toolRemoverSelecionados });
+            toolStrip4.Location = new Point(208, 17);
+            toolStrip4.Name = "toolStrip4";
+            toolStrip4.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip4.Size = new Size(118, 25);
+            toolStrip4.TabIndex = 9;
+            toolStrip4.Text = "toolStrip4";
+            // 
+            // toolNovoItemLista
+            // 
+            toolNovoItemLista.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolNovoItemLista.Image = (Image)resources.GetObject("toolNovoItemLista.Image");
+            toolNovoItemLista.ImageTransparentColor = Color.Magenta;
+            toolNovoItemLista.Name = "toolNovoItemLista";
+            toolNovoItemLista.Size = new Size(23, 22);
+            toolNovoItemLista.Text = "&Novo Item";
+            toolNovoItemLista.ToolTipText = "Novo Item";
+            toolNovoItemLista.Click += toolNovoItemLista_Click;
+            // 
+            // toolAbrirLista
+            // 
+            toolAbrirLista.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolAbrirLista.Image = (Image)resources.GetObject("toolAbrirLista.Image");
+            toolAbrirLista.ImageTransparentColor = Color.Magenta;
+            toolAbrirLista.Name = "toolAbrirLista";
+            toolAbrirLista.Size = new Size(23, 22);
+            toolAbrirLista.Text = "&Abrir Lista";
+            toolAbrirLista.ToolTipText = "Abrir Lista";
+            toolAbrirLista.Click += toolAbrirLista_Click;
+            // 
+            // toolSalvarLista
+            // 
+            toolSalvarLista.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolSalvarLista.Image = (Image)resources.GetObject("toolSalvarLista.Image");
+            toolSalvarLista.ImageTransparentColor = Color.Magenta;
+            toolSalvarLista.Name = "toolSalvarLista";
+            toolSalvarLista.Size = new Size(23, 22);
+            toolSalvarLista.Text = "&Salvar Lista";
+            toolSalvarLista.ToolTipText = "Salvar Lista";
+            toolSalvarLista.Click += toolSalvarLista_Click;
+            // 
+            // toolLimparLista
+            // 
+            toolLimparLista.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolLimparLista.Image = Properties.Resources.botao_de_deletar;
+            toolLimparLista.ImageTransparentColor = Color.Magenta;
+            toolLimparLista.Name = "toolLimparLista";
+            toolLimparLista.RightToLeft = RightToLeft.No;
+            toolLimparLista.Size = new Size(23, 22);
+            toolLimparLista.Text = "&Limpar Lista";
+            toolLimparLista.Click += toolLimparLista_Click;
+            // 
+            // toolRemoverSelecionados
+            // 
+            toolRemoverSelecionados.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolRemoverSelecionados.Image = Properties.Resources.excluir_arquivo;
+            toolRemoverSelecionados.ImageTransparentColor = Color.Magenta;
+            toolRemoverSelecionados.Name = "toolRemoverSelecionados";
+            toolRemoverSelecionados.Size = new Size(23, 22);
+            toolRemoverSelecionados.Text = "&Remover Selecionados";
+            toolRemoverSelecionados.Click += toolRemoverSelecionados_Click;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
             // 
             // AdicionarListaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btnSalvarLista);
-            Controls.Add(btnCarregarLista);
-            Controls.Add(btnAdicionar);
+            Controls.Add(toolStrip4);
             Controls.Add(txtItem);
             Controls.Add(lblDescricao);
             Controls.Add(ckList);
             Name = "AdicionarListaControl";
-            Size = new Size(294, 148);
+            Size = new Size(326, 148);
+            toolStrip4.ResumeLayout(false);
+            toolStrip4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Button btnSalvarLista;
-        private Button btnCarregarLista;
-        private Button btnAdicionar;
         private TextBox txtItem;
         private Label lblDescricao;
         private CheckedListBox ckList;
+        private ToolStrip toolStrip4;
+        private ToolStripButton toolNovoItemLista;
+        private ToolStripButton toolAbrirLista;
+        private ToolStripButton toolSalvarLista;
+        private ToolStripButton toolLimparLista;
+        private ToolStripButton toolRemoverSelecionados;
+        private SaveFileDialog saveFileDialog1;
+        private OpenFileDialog openFileDialog1;
     }
 }

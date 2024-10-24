@@ -103,6 +103,26 @@ namespace AIBAM.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bate_papo {
+            get {
+                object obj = ResourceManager.GetObject("bate-papo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botao_de_deletar {
+            get {
+                object obj = ResourceManager.GetObject("botao-de-deletar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap conversacao__1_ {
             get {
                 object obj = ResourceManager.GetObject("conversacao (1)", resourceCulture);
@@ -126,6 +146,26 @@ namespace AIBAM.Properties {
         internal static System.Drawing.Bitmap data {
             get {
                 object obj = ResourceManager.GetObject("data", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap excluir {
+            get {
+                object obj = ResourceManager.GetObject("excluir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap excluir_arquivo {
+            get {
+                object obj = ResourceManager.GetObject("excluir-arquivo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
