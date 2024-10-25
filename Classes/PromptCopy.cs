@@ -8,6 +8,13 @@ namespace AIBAM.Classes
 {
     public class PromptCopy
     {
+        public PromptCopy()
+        {
+            this.briefing = new();
+            this.publicoAlvo = new();
+            this.controlesCopy = new();
+        }
+
         public string DescricaoCopy {  get; set; }
         public Briefing briefing { get; set; }
         public PublicoAlvo publicoAlvo { get; set; }

@@ -40,11 +40,13 @@
             toolRemoverSelecionados = new ToolStripButton();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
+            lblNomeLista = new Label();
             toolStrip4.SuspendLayout();
             SuspendLayout();
             // 
             // txtItem
             // 
+            txtItem.CharacterCasing = CharacterCasing.Upper;
             txtItem.Location = new Point(3, 17);
             txtItem.Name = "txtItem";
             txtItem.Size = new Size(203, 23);
@@ -76,10 +78,10 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { toolNovoItemLista, toolAbrirLista, toolSalvarLista, toolLimparLista, toolRemoverSelecionados });
-            toolStrip4.Location = new Point(208, 17);
+            toolStrip4.Location = new Point(177, 17);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip4.Size = new Size(118, 25);
+            toolStrip4.Size = new Size(149, 25);
             toolStrip4.TabIndex = 9;
             toolStrip4.Text = "toolStrip4";
             // 
@@ -141,10 +143,21 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // lblNomeLista
+            // 
+            lblNomeLista.AutoSize = true;
+            lblNomeLista.Location = new Point(164, 3);
+            lblNomeLista.Name = "lblNomeLista";
+            lblNomeLista.Size = new Size(38, 15);
+            lblNomeLista.TabIndex = 10;
+            lblNomeLista.Text = "label1";
+            lblNomeLista.Visible = false;
+            // 
             // AdicionarListaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblNomeLista);
             Controls.Add(toolStrip4);
             Controls.Add(txtItem);
             Controls.Add(lblDescricao);
@@ -169,5 +182,6 @@
         private ToolStripButton toolRemoverSelecionados;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog1;
+        private Label lblNomeLista;
     }
 }

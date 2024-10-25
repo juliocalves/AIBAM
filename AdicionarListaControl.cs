@@ -17,7 +17,12 @@ namespace AIBAM
             get { return lblDescricao.Text; }
             set { lblDescricao.Text = value; }
         }
-     
+        
+        public string NomeLista
+        {
+            get { return lblNomeLista.Text; }
+            set { lblNomeLista.Text = value; }
+        }
 
         // Método para adicionar o item à lista com check automático
         private void AdicionaItemLista()
@@ -81,11 +86,10 @@ namespace AIBAM
 
         private void toolLimparLista_Click(object sender, EventArgs e)
         {
-            foreach (var iten in ckList.Items)
-            {
-                ckList.Items.Remove(iten);
-            }
+            ckList.Items.Clear(); // Limpa todos os itens da lista de uma só vez
+            MessageBox.Show("Todos os itens foram removidos.", "Lista Limpa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void toolRemoverSelecionados_Click(object sender, EventArgs e)
         {
@@ -101,8 +105,52 @@ namespace AIBAM
 
         private void toolAbrirLista_Click(object sender, EventArgs e)
         {
+            // Configura o filtro e o título da caixa de diálogo para abrir arquivos
+            openFileDialog1.Filter = "Text Files (*.txt)|*.txt";
+            openFileDialog1.Title = "Abrir Lista";
 
+            // Exibe a caixa de diálogo para o usuário selecionar o arquivo
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;  // Obtém o caminho do arquivo selecionado
+
+                try
+                {
+                    // Lê todas as linhas do arquivo de texto
+                    string[] lines = File.ReadAllLines(filePath);
+
+                    // Limpa a lista atual antes de carregar novos itens
+                    ckList.Items.Clear();
+
+                    // Adiciona cada linha como um item na ckList, marcando todos os itens por padrão
+                    foreach (string line in lines)
+                    {
+                        ckList.Items.Add(line, true); // Adiciona o item e marca o checkbox
+                    }
+
+                    MessageBox.Show("Lista carregada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    // Em caso de erro ao abrir o arquivo
+                    MessageBox.Show($"Erro ao abrir o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
+
+        public List<string> GetItensSelecionados()
+        {
+            List<string> itensSelecionados = new List<string>();
+
+            // Itera pelos itens checados em ckList
+            foreach (var item in ckList.CheckedItems)
+            {
+                itensSelecionados.Add(item.ToString());
+            }
+
+            return itensSelecionados;
+        }
+
 
         private void toolSalvarLista_Click(object sender, EventArgs e)
         {
@@ -112,15 +160,15 @@ namespace AIBAM
                 saveFileDialog1.Title = "Salvar Lista";
                 saveFileDialog1.DefaultExt = "txt";
                 saveFileDialog1.AddExtension = true;
+                saveFileDialog1.FileName = lblNomeLista.Text;
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = saveFileDialog1.FileName;
-
                     try
                     {
-                        string conversationText = ckList.Items.ToString();
-                        File.WriteAllText(filePath, conversationText);
+                        string conteudo = string.Join(Environment.NewLine, GetItensSelecionados());
+                        File.WriteAllText(filePath, conteudo);
                         MessageBox.Show($"Lista salva em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // Atualiza o status após o salvamento bem-sucedido

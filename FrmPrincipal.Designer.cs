@@ -50,58 +50,58 @@
             txtNomePromptCopy = new TextBox();
             tabCopy = new TabControl();
             tabPageBriefing = new TabPage();
-            textBox4 = new TextBox();
+            txtIdeiaPromovida = new TextBox();
+            txtMensagemCopy = new TextBox();
             label12 = new Label();
-            groupBox3 = new GroupBox();
-            checkBox13 = new CheckBox();
-            checkBox12 = new CheckBox();
-            checkBox10 = new CheckBox();
-            checkBox9 = new CheckBox();
-            checkBox8 = new CheckBox();
-            checkBox7 = new CheckBox();
-            checkBox6 = new CheckBox();
-            checkBox5 = new CheckBox();
-            checkBox4 = new CheckBox();
-            checkBox3 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox1 = new CheckBox();
-            comboBox1 = new ComboBox();
+            gBMetas = new GroupBox();
+            chkInteracao = new CheckBox();
+            chkSeguidores = new CheckBox();
+            chkRegistro = new CheckBox();
+            chkDesempenho = new CheckBox();
+            ckAdicao = new CheckBox();
+            chkCompartilhamento = new CheckBox();
+            chkVizualizacao = new CheckBox();
+            chkPermanencia = new CheckBox();
+            chkEngajamento = new CheckBox();
+            chkVenda = new CheckBox();
+            chkCadastro = new CheckBox();
+            chkClick = new CheckBox();
+            cboDestinoCopy = new ComboBox();
             label11 = new Label();
             cboSubSegmentos = new ComboBox();
             label10 = new Label();
             cboSegmento = new ComboBox();
-            textBox8 = new TextBox();
+            txtObjetivoEspecifico = new TextBox();
             label9 = new Label();
-            textBox7 = new TextBox();
+            txtObjetivoGeral = new TextBox();
             label8 = new Label();
-            groupBox1 = new GroupBox();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            textBox6 = new TextBox();
+            gBLancamento = new GroupBox();
+            rdbNao = new RadioButton();
+            rdbSim = new RadioButton();
+            txtObservacoes = new TextBox();
             label7 = new Label();
-            textBox5 = new TextBox();
+            txtLinkCatalogo = new TextBox();
             label6 = new Label();
             label5 = new Label();
-            textBox3 = new TextBox();
+            txtLinkSite = new TextBox();
             label4 = new Label();
-            richTextBox1 = new RichTextBox();
             btnAnexo = new Button();
             label3 = new Label();
-            textBox2 = new TextBox();
+            txtMarca = new TextBox();
             label2 = new Label();
             gBTipoVenda = new GroupBox();
-            rdbServiço = new RadioButton();
+            rdbServico = new RadioButton();
             rdbProduto = new RadioButton();
-            textBox1 = new TextBox();
+            txtInforProdServ = new TextBox();
             label1 = new Label();
             tabPagePublicoCopy = new TabPage();
-            adicionarListaControl4 = new AdicionarListaControl();
-            adicionarListaControl3 = new AdicionarListaControl();
-            adicionarListaControl2 = new AdicionarListaControl();
-            adicionarListaControl1 = new AdicionarListaControl();
-            textBox10 = new TextBox();
+            listDiferenciais = new AdicionarListaControl();
+            lstDores = new AdicionarListaControl();
+            lstOcupacoes = new AdicionarListaControl();
+            lstInteresses = new AdicionarListaControl();
+            txtOutrasInf = new TextBox();
             label16 = new Label();
-            groupBox6 = new GroupBox();
+            gbGenero = new GroupBox();
             radioButton16 = new RadioButton();
             radioButton15 = new RadioButton();
             radioButton14 = new RadioButton();
@@ -110,27 +110,27 @@
             radioButton11 = new RadioButton();
             radioButton10 = new RadioButton();
             radioButton9 = new RadioButton();
-            groupBox5 = new GroupBox();
+            gbNivelConsciencia = new GroupBox();
             radioButton8 = new RadioButton();
             radioButton7 = new RadioButton();
             radioButton6 = new RadioButton();
             radioButton5 = new RadioButton();
             radioButton4 = new RadioButton();
             radioButton3 = new RadioButton();
-            textBox9 = new TextBox();
+            txtPropostaValor = new TextBox();
             label15 = new Label();
-            comboBox2 = new ComboBox();
+            cboNivelAcademico = new ComboBox();
             label17 = new Label();
-            groupBox4 = new GroupBox();
-            numericUpDown2 = new NumericUpDown();
+            gbRangeIdade = new GroupBox();
+            nIdadeFinal = new NumericUpDown();
             label14 = new Label();
-            numericUpDown1 = new NumericUpDown();
+            nIdadeInicial = new NumericUpDown();
             label13 = new Label();
             tabControles = new TabPage();
-            adicionarListaControl5 = new AdicionarListaControl();
+            lstPalavrasChave = new AdicionarListaControl();
             nOriginalidade = new NumericUpDown();
             label20 = new Label();
-            groupBox7 = new GroupBox();
+            gbPerspectiva = new GroupBox();
             radioButton19 = new RadioButton();
             radioButton18 = new RadioButton();
             radioButton17 = new RadioButton();
@@ -194,18 +194,18 @@
             toolStrip4.SuspendLayout();
             tabCopy.SuspendLayout();
             tabPageBriefing.SuspendLayout();
-            groupBox3.SuspendLayout();
-            groupBox1.SuspendLayout();
+            gBMetas.SuspendLayout();
+            gBLancamento.SuspendLayout();
             gBTipoVenda.SuspendLayout();
             tabPagePublicoCopy.SuspendLayout();
-            groupBox6.SuspendLayout();
-            groupBox5.SuspendLayout();
-            groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            gbGenero.SuspendLayout();
+            gbNivelConsciencia.SuspendLayout();
+            gbRangeIdade.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)nIdadeFinal).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nIdadeInicial).BeginInit();
             tabControles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nOriginalidade).BeginInit();
-            groupBox7.SuspendLayout();
+            gbPerspectiva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nEntonacao).BeginInit();
             toolStrip2.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -378,8 +378,9 @@
             salvarToolStripButton1.ImageTransparentColor = Color.Magenta;
             salvarToolStripButton1.Name = "salvarToolStripButton1";
             salvarToolStripButton1.Size = new Size(23, 22);
-            salvarToolStripButton1.Text = "&Salvar";
+            salvarToolStripButton1.Text = "&Salvar Prompt";
             salvarToolStripButton1.ToolTipText = "Salvar Prompt";
+            salvarToolStripButton1.Click += salvarToolStripButton1_Click;
             // 
             // toolStripButton1
             // 
@@ -403,6 +404,8 @@
             // txtNomePromptCopy
             // 
             txtNomePromptCopy.BackColor = Color.Ivory;
+            txtNomePromptCopy.CharacterCasing = CharacterCasing.Upper;
+            txtNomePromptCopy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             txtNomePromptCopy.Location = new Point(2, 24);
             txtNomePromptCopy.Name = "txtNomePromptCopy";
             txtNomePromptCopy.Size = new Size(491, 23);
@@ -423,33 +426,33 @@
             // 
             // tabPageBriefing
             // 
-            tabPageBriefing.Controls.Add(textBox4);
+            tabPageBriefing.Controls.Add(txtIdeiaPromovida);
+            tabPageBriefing.Controls.Add(txtMensagemCopy);
             tabPageBriefing.Controls.Add(label12);
-            tabPageBriefing.Controls.Add(groupBox3);
-            tabPageBriefing.Controls.Add(comboBox1);
+            tabPageBriefing.Controls.Add(gBMetas);
+            tabPageBriefing.Controls.Add(cboDestinoCopy);
             tabPageBriefing.Controls.Add(label11);
             tabPageBriefing.Controls.Add(cboSubSegmentos);
             tabPageBriefing.Controls.Add(label10);
             tabPageBriefing.Controls.Add(cboSegmento);
-            tabPageBriefing.Controls.Add(textBox8);
+            tabPageBriefing.Controls.Add(txtObjetivoEspecifico);
             tabPageBriefing.Controls.Add(label9);
-            tabPageBriefing.Controls.Add(textBox7);
+            tabPageBriefing.Controls.Add(txtObjetivoGeral);
             tabPageBriefing.Controls.Add(label8);
-            tabPageBriefing.Controls.Add(groupBox1);
-            tabPageBriefing.Controls.Add(textBox6);
+            tabPageBriefing.Controls.Add(gBLancamento);
+            tabPageBriefing.Controls.Add(txtObservacoes);
             tabPageBriefing.Controls.Add(label7);
-            tabPageBriefing.Controls.Add(textBox5);
+            tabPageBriefing.Controls.Add(txtLinkCatalogo);
             tabPageBriefing.Controls.Add(label6);
             tabPageBriefing.Controls.Add(label5);
-            tabPageBriefing.Controls.Add(textBox3);
+            tabPageBriefing.Controls.Add(txtLinkSite);
             tabPageBriefing.Controls.Add(label4);
-            tabPageBriefing.Controls.Add(richTextBox1);
             tabPageBriefing.Controls.Add(btnAnexo);
             tabPageBriefing.Controls.Add(label3);
-            tabPageBriefing.Controls.Add(textBox2);
+            tabPageBriefing.Controls.Add(txtMarca);
             tabPageBriefing.Controls.Add(label2);
             tabPageBriefing.Controls.Add(gBTipoVenda);
-            tabPageBriefing.Controls.Add(textBox1);
+            tabPageBriefing.Controls.Add(txtInforProdServ);
             tabPageBriefing.Controls.Add(label1);
             tabPageBriefing.Location = new Point(4, 24);
             tabPageBriefing.Name = "tabPageBriefing";
@@ -458,15 +461,25 @@
             tabPageBriefing.TabIndex = 0;
             tabPageBriefing.Text = "BRIEFING";
             tabPageBriefing.UseVisualStyleBackColor = true;
-            tabPageBriefing.Enter += tabPageBriefing_Enter;
             // 
-            // textBox4
+            // txtIdeiaPromovida
             // 
-            textBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox4.Location = new Point(7, 360);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(470, 23);
-            textBox4.TabIndex = 15;
+            txtIdeiaPromovida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            txtIdeiaPromovida.Location = new Point(671, 24);
+            txtIdeiaPromovida.Name = "txtIdeiaPromovida";
+            txtIdeiaPromovida.PlaceholderText = "Descreva a ideia geral do texto";
+            txtIdeiaPromovida.Size = new Size(317, 23);
+            txtIdeiaPromovida.TabIndex = 3;
+            txtIdeiaPromovida.Leave += txtIdeiaPromovida_Leave;
+            // 
+            // txtMensagemCopy
+            // 
+            txtMensagemCopy.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMensagemCopy.Location = new Point(7, 360);
+            txtMensagemCopy.Name = "txtMensagemCopy";
+            txtMensagemCopy.Size = new Size(470, 23);
+            txtMensagemCopy.TabIndex = 15;
+            txtMensagemCopy.Leave += txtMensagemCopy_Leave;
             // 
             // label12
             // 
@@ -477,159 +490,161 @@
             label12.TabIndex = 46;
             label12.Text = "MENSAGEM A SER TRANSMITIDA COM A CAMPANHA";
             // 
-            // groupBox3
+            // gBMetas
             // 
-            groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            groupBox3.Controls.Add(checkBox13);
-            groupBox3.Controls.Add(checkBox12);
-            groupBox3.Controls.Add(checkBox10);
-            groupBox3.Controls.Add(checkBox9);
-            groupBox3.Controls.Add(checkBox8);
-            groupBox3.Controls.Add(checkBox7);
-            groupBox3.Controls.Add(checkBox6);
-            groupBox3.Controls.Add(checkBox5);
-            groupBox3.Controls.Add(checkBox4);
-            groupBox3.Controls.Add(checkBox3);
-            groupBox3.Controls.Add(checkBox2);
-            groupBox3.Controls.Add(checkBox1);
-            groupBox3.Location = new Point(481, 303);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(511, 75);
-            groupBox3.TabIndex = 16;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "METAS";
+            gBMetas.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            gBMetas.Controls.Add(chkInteracao);
+            gBMetas.Controls.Add(chkSeguidores);
+            gBMetas.Controls.Add(chkRegistro);
+            gBMetas.Controls.Add(chkDesempenho);
+            gBMetas.Controls.Add(ckAdicao);
+            gBMetas.Controls.Add(chkCompartilhamento);
+            gBMetas.Controls.Add(chkVizualizacao);
+            gBMetas.Controls.Add(chkPermanencia);
+            gBMetas.Controls.Add(chkEngajamento);
+            gBMetas.Controls.Add(chkVenda);
+            gBMetas.Controls.Add(chkCadastro);
+            gBMetas.Controls.Add(chkClick);
+            gBMetas.Location = new Point(481, 303);
+            gBMetas.Name = "gBMetas";
+            gBMetas.Size = new Size(511, 75);
+            gBMetas.TabIndex = 16;
+            gBMetas.TabStop = false;
+            gBMetas.Text = "METAS";
+            gBMetas.Leave += gBMetas_Leave;
             // 
-            // checkBox13
+            // chkInteracao
             // 
-            checkBox13.AutoSize = true;
-            checkBox13.Location = new Point(282, 13);
-            checkBox13.Name = "checkBox13";
-            checkBox13.Size = new Size(75, 19);
-            checkBox13.TabIndex = 7;
-            checkBox13.Text = "Interação";
-            checkBox13.UseVisualStyleBackColor = true;
+            chkInteracao.AutoSize = true;
+            chkInteracao.Location = new Point(282, 13);
+            chkInteracao.Name = "chkInteracao";
+            chkInteracao.Size = new Size(75, 19);
+            chkInteracao.TabIndex = 7;
+            chkInteracao.Text = "Interação";
+            chkInteracao.UseVisualStyleBackColor = true;
             // 
-            // checkBox12
+            // chkSeguidores
             // 
-            checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(419, 13);
-            checkBox12.Name = "checkBox12";
-            checkBox12.Size = new Size(84, 19);
-            checkBox12.TabIndex = 10;
-            checkBox12.Text = "Seguidores";
-            checkBox12.UseVisualStyleBackColor = true;
+            chkSeguidores.AutoSize = true;
+            chkSeguidores.Location = new Point(419, 13);
+            chkSeguidores.Name = "chkSeguidores";
+            chkSeguidores.Size = new Size(84, 19);
+            chkSeguidores.TabIndex = 10;
+            chkSeguidores.Text = "Seguidores";
+            chkSeguidores.UseVisualStyleBackColor = true;
             // 
-            // checkBox10
+            // chkRegistro
             // 
-            checkBox10.AutoSize = true;
-            checkBox10.Location = new Point(282, 51);
-            checkBox10.Name = "checkBox10";
-            checkBox10.Size = new Size(69, 19);
-            checkBox10.TabIndex = 9;
-            checkBox10.Text = "Registro";
-            checkBox10.UseVisualStyleBackColor = true;
+            chkRegistro.AutoSize = true;
+            chkRegistro.Location = new Point(282, 51);
+            chkRegistro.Name = "chkRegistro";
+            chkRegistro.Size = new Size(69, 19);
+            chkRegistro.TabIndex = 9;
+            chkRegistro.Text = "Registro";
+            chkRegistro.UseVisualStyleBackColor = true;
             // 
-            // checkBox9
+            // chkDesempenho
             // 
-            checkBox9.AutoSize = true;
-            checkBox9.Location = new Point(146, 31);
-            checkBox9.Name = "checkBox9";
-            checkBox9.Size = new Size(96, 19);
-            checkBox9.TabIndex = 5;
-            checkBox9.Text = "Desempenho";
-            checkBox9.UseVisualStyleBackColor = true;
+            chkDesempenho.AutoSize = true;
+            chkDesempenho.Location = new Point(146, 31);
+            chkDesempenho.Name = "chkDesempenho";
+            chkDesempenho.Size = new Size(96, 19);
+            chkDesempenho.TabIndex = 5;
+            chkDesempenho.Text = "Desempenho";
+            chkDesempenho.UseVisualStyleBackColor = true;
             // 
-            // checkBox8
+            // ckAdicao
             // 
-            checkBox8.AutoSize = true;
-            checkBox8.Location = new Point(10, 14);
-            checkBox8.Name = "checkBox8";
-            checkBox8.Size = new Size(112, 19);
-            checkBox8.TabIndex = 1;
-            checkBox8.Text = "Adição Carrinho";
-            checkBox8.UseVisualStyleBackColor = true;
+            ckAdicao.AutoSize = true;
+            ckAdicao.Location = new Point(10, 14);
+            ckAdicao.Name = "ckAdicao";
+            ckAdicao.Size = new Size(112, 19);
+            ckAdicao.TabIndex = 1;
+            ckAdicao.Text = "Adição Carrinho";
+            ckAdicao.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // chkCompartilhamento
             // 
-            checkBox7.AutoSize = true;
-            checkBox7.Location = new Point(146, 13);
-            checkBox7.Name = "checkBox7";
-            checkBox7.Size = new Size(132, 19);
-            checkBox7.TabIndex = 4;
-            checkBox7.Text = "Compartilhamentos";
-            checkBox7.UseVisualStyleBackColor = true;
+            chkCompartilhamento.AutoSize = true;
+            chkCompartilhamento.Location = new Point(146, 13);
+            chkCompartilhamento.Name = "chkCompartilhamento";
+            chkCompartilhamento.Size = new Size(132, 19);
+            chkCompartilhamento.TabIndex = 4;
+            chkCompartilhamento.Text = "Compartilhamentos";
+            chkCompartilhamento.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // chkVizualizacao
             // 
-            checkBox6.AutoSize = true;
-            checkBox6.Location = new Point(419, 50);
-            checkBox6.Name = "checkBox6";
-            checkBox6.Size = new Size(95, 19);
-            checkBox6.TabIndex = 12;
-            checkBox6.Text = "Vizualizações";
-            checkBox6.UseVisualStyleBackColor = true;
+            chkVizualizacao.AutoSize = true;
+            chkVizualizacao.Location = new Point(419, 50);
+            chkVizualizacao.Name = "chkVizualizacao";
+            chkVizualizacao.Size = new Size(95, 19);
+            chkVizualizacao.TabIndex = 12;
+            chkVizualizacao.Text = "Vizualizações";
+            chkVizualizacao.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // chkPermanencia
             // 
-            checkBox5.AutoSize = true;
-            checkBox5.Location = new Point(282, 32);
-            checkBox5.Name = "checkBox5";
-            checkBox5.Size = new Size(134, 19);
-            checkBox5.TabIndex = 8;
-            checkBox5.Text = "Permanência Página";
-            checkBox5.UseVisualStyleBackColor = true;
+            chkPermanencia.AutoSize = true;
+            chkPermanencia.Location = new Point(282, 32);
+            chkPermanencia.Name = "chkPermanencia";
+            chkPermanencia.Size = new Size(134, 19);
+            chkPermanencia.TabIndex = 8;
+            chkPermanencia.Text = "Permanência Página";
+            chkPermanencia.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // chkEngajamento
             // 
-            checkBox4.AutoSize = true;
-            checkBox4.Location = new Point(146, 48);
-            checkBox4.Name = "checkBox4";
-            checkBox4.Size = new Size(96, 19);
-            checkBox4.TabIndex = 6;
-            checkBox4.Text = "Engajamento";
-            checkBox4.UseVisualStyleBackColor = true;
+            chkEngajamento.AutoSize = true;
+            chkEngajamento.Location = new Point(146, 48);
+            chkEngajamento.Name = "chkEngajamento";
+            chkEngajamento.Size = new Size(96, 19);
+            chkEngajamento.TabIndex = 6;
+            chkEngajamento.Text = "Engajamento";
+            chkEngajamento.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // chkVenda
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(419, 32);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(58, 19);
-            checkBox3.TabIndex = 11;
-            checkBox3.Text = "Venda";
-            checkBox3.UseVisualStyleBackColor = true;
+            chkVenda.AutoSize = true;
+            chkVenda.Location = new Point(419, 32);
+            chkVenda.Name = "chkVenda";
+            chkVenda.Size = new Size(58, 19);
+            chkVenda.TabIndex = 11;
+            chkVenda.Text = "Venda";
+            chkVenda.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // chkCadastro
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(10, 32);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(134, 19);
-            checkBox2.TabIndex = 2;
-            checkBox2.Text = "Cadastro Formulario";
-            checkBox2.UseVisualStyleBackColor = true;
+            chkCadastro.AutoSize = true;
+            chkCadastro.Location = new Point(10, 32);
+            chkCadastro.Name = "chkCadastro";
+            chkCadastro.Size = new Size(134, 19);
+            chkCadastro.TabIndex = 2;
+            chkCadastro.Text = "Cadastro Formulario";
+            chkCadastro.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkClick
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(10, 51);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(82, 19);
-            checkBox1.TabIndex = 3;
-            checkBox1.Text = "Clicks Link";
-            checkBox1.UseVisualStyleBackColor = true;
+            chkClick.AutoSize = true;
+            chkClick.Location = new Point(10, 51);
+            chkClick.Name = "chkClick";
+            chkClick.Size = new Size(82, 19);
+            chkClick.TabIndex = 3;
+            chkClick.Text = "Clicks Link";
+            chkClick.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cboDestinoCopy
             // 
-            comboBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            comboBox1.BackColor = Color.LavenderBlush;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.ItemHeight = 15;
-            comboBox1.Items.AddRange(new object[] { "E-mail Marketing", "Landing Page", "Página de Vendas", "Anúncios em Redes Sociais", "Blog Post (SEO)", "Roteiro para Vídeos", "Descrição de Produtos E-commerce", "Teste A/B", "Webinar/Palestras Online", "Conteúdo de Rede Social para Aumento de Audiência", "Impresso", "Radio" });
-            comboBox1.Location = new Point(8, 318);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(469, 23);
-            comboBox1.TabIndex = 43;
+            cboDestinoCopy.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cboDestinoCopy.BackColor = Color.LavenderBlush;
+            cboDestinoCopy.FormattingEnabled = true;
+            cboDestinoCopy.ItemHeight = 15;
+            cboDestinoCopy.Items.AddRange(new object[] { "E-mail Marketing", "Landing Page", "Página de Vendas", "Anúncios em Redes Sociais", "Blog Post (SEO)", "Roteiro para Vídeos", "Descrição de Produtos E-commerce", "Teste A/B", "Webinar/Palestras Online", "Conteúdo de Rede Social para Aumento de Audiência", "Impresso", "Radio" });
+            cboDestinoCopy.Location = new Point(8, 318);
+            cboDestinoCopy.Name = "cboDestinoCopy";
+            cboDestinoCopy.Size = new Size(469, 23);
+            cboDestinoCopy.TabIndex = 43;
+            cboDestinoCopy.Leave += cboDestinoCopy_Leave;
             // 
             // label11
             // 
@@ -649,6 +664,7 @@
             cboSubSegmentos.Name = "cboSubSegmentos";
             cboSubSegmentos.Size = new Size(237, 23);
             cboSubSegmentos.TabIndex = 7;
+            cboSubSegmentos.Leave += cboSubSegmentos_Leave;
             // 
             // label10
             // 
@@ -669,39 +685,42 @@
             cboSegmento.Size = new Size(177, 23);
             cboSegmento.TabIndex = 6;
             cboSegmento.SelectedIndexChanged += cboSegmento_SelectedIndexChanged;
+            cboSegmento.Leave += cboSegmento_Leave;
             // 
-            // textBox8
+            // txtObjetivoEspecifico
             // 
-            textBox8.AcceptsReturn = true;
-            textBox8.AcceptsTab = true;
-            textBox8.AllowDrop = true;
-            textBox8.Location = new Point(433, 245);
-            textBox8.Multiline = true;
-            textBox8.Name = "textBox8";
-            textBox8.ScrollBars = ScrollBars.Vertical;
-            textBox8.Size = new Size(475, 54);
-            textBox8.TabIndex = 13;
+            txtObjetivoEspecifico.AcceptsReturn = true;
+            txtObjetivoEspecifico.AcceptsTab = true;
+            txtObjetivoEspecifico.AllowDrop = true;
+            txtObjetivoEspecifico.Location = new Point(498, 245);
+            txtObjetivoEspecifico.Multiline = true;
+            txtObjetivoEspecifico.Name = "txtObjetivoEspecifico";
+            txtObjetivoEspecifico.ScrollBars = ScrollBars.Vertical;
+            txtObjetivoEspecifico.Size = new Size(490, 54);
+            txtObjetivoEspecifico.TabIndex = 13;
+            txtObjetivoEspecifico.Leave += txtObjetivoEspecifico_Leave;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(433, 227);
+            label9.Location = new Point(498, 227);
             label9.Name = "label9";
             label9.Size = new Size(136, 15);
             label9.TabIndex = 38;
             label9.Text = "OBJETIVOS ESPECIFICOS";
             // 
-            // textBox7
+            // txtObjetivoGeral
             // 
-            textBox7.AcceptsReturn = true;
-            textBox7.AcceptsTab = true;
-            textBox7.AllowDrop = true;
-            textBox7.Location = new Point(6, 245);
-            textBox7.Multiline = true;
-            textBox7.Name = "textBox7";
-            textBox7.ScrollBars = ScrollBars.Vertical;
-            textBox7.Size = new Size(421, 54);
-            textBox7.TabIndex = 12;
+            txtObjetivoGeral.AcceptsReturn = true;
+            txtObjetivoGeral.AcceptsTab = true;
+            txtObjetivoGeral.AllowDrop = true;
+            txtObjetivoGeral.Location = new Point(6, 245);
+            txtObjetivoGeral.Multiline = true;
+            txtObjetivoGeral.Name = "txtObjetivoGeral";
+            txtObjetivoGeral.ScrollBars = ScrollBars.Vertical;
+            txtObjetivoGeral.Size = new Size(490, 54);
+            txtObjetivoGeral.TabIndex = 12;
+            txtObjetivoGeral.Leave += txtObjetivoGeral_Leave;
             // 
             // label8
             // 
@@ -712,47 +731,49 @@
             label8.TabIndex = 36;
             label8.Text = "OBJETIVO GERAL";
             // 
-            // groupBox1
+            // gBLancamento
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            groupBox1.Controls.Add(radioButton1);
-            groupBox1.Controls.Add(radioButton2);
-            groupBox1.Location = new Point(854, 67);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(138, 41);
-            groupBox1.TabIndex = 8;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "É UM LANÇAMENTO?";
+            gBLancamento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            gBLancamento.Controls.Add(rdbNao);
+            gBLancamento.Controls.Add(rdbSim);
+            gBLancamento.Location = new Point(741, 51);
+            gBLancamento.Name = "gBLancamento";
+            gBLancamento.Size = new Size(138, 41);
+            gBLancamento.TabIndex = 8;
+            gBLancamento.TabStop = false;
+            gBLancamento.Text = "É UM LANÇAMENTO?";
+            gBLancamento.Leave += gBLancamento_Leave;
             // 
-            // radioButton1
+            // rdbNao
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Checked = true;
-            radioButton1.Location = new Point(81, 16);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(51, 19);
-            radioButton1.TabIndex = 1;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "NÃO";
-            radioButton1.UseVisualStyleBackColor = true;
+            rdbNao.AutoSize = true;
+            rdbNao.Checked = true;
+            rdbNao.Location = new Point(81, 16);
+            rdbNao.Name = "rdbNao";
+            rdbNao.Size = new Size(51, 19);
+            rdbNao.TabIndex = 1;
+            rdbNao.TabStop = true;
+            rdbNao.Text = "NÃO";
+            rdbNao.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rdbSim
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(12, 16);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(45, 19);
-            radioButton2.TabIndex = 0;
-            radioButton2.Text = "SIM";
-            radioButton2.UseVisualStyleBackColor = true;
+            rdbSim.AutoSize = true;
+            rdbSim.Location = new Point(12, 16);
+            rdbSim.Name = "rdbSim";
+            rdbSim.Size = new Size(45, 19);
+            rdbSim.TabIndex = 0;
+            rdbSim.Text = "SIM";
+            rdbSim.UseVisualStyleBackColor = true;
             // 
-            // textBox6
+            // txtObservacoes
             // 
-            textBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox6.Location = new Point(315, 114);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(674, 23);
-            textBox6.TabIndex = 10;
+            txtObservacoes.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtObservacoes.Location = new Point(315, 114);
+            txtObservacoes.Name = "txtObservacoes";
+            txtObservacoes.Size = new Size(674, 23);
+            txtObservacoes.TabIndex = 10;
+            txtObservacoes.Leave += txtObservacoes_Leave;
             // 
             // label7
             // 
@@ -763,12 +784,14 @@
             label7.TabIndex = 34;
             label7.Text = "OBSERVAÇÕES";
             // 
-            // textBox5
+            // txtLinkCatalogo
             // 
-            textBox5.Location = new Point(6, 114);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(303, 23);
-            textBox5.TabIndex = 9;
+            txtLinkCatalogo.Location = new Point(6, 114);
+            txtLinkCatalogo.Name = "txtLinkCatalogo";
+            txtLinkCatalogo.PlaceholderText = "Cole o link do catalogo";
+            txtLinkCatalogo.Size = new Size(303, 23);
+            txtLinkCatalogo.TabIndex = 9;
+            txtLinkCatalogo.Leave += txtLinkCatalogo_Leave;
             // 
             // label6
             // 
@@ -788,13 +811,14 @@
             label5.TabIndex = 30;
             label5.Text = "SEGMENTO";
             // 
-            // textBox3
+            // txtLinkSite
             // 
-            textBox3.Location = new Point(6, 69);
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Cole o link de seu site";
-            textBox3.Size = new Size(303, 23);
-            textBox3.TabIndex = 5;
+            txtLinkSite.Location = new Point(6, 69);
+            txtLinkSite.Name = "txtLinkSite";
+            txtLinkSite.PlaceholderText = "Cole o link de seu site";
+            txtLinkSite.Size = new Size(303, 23);
+            txtLinkSite.TabIndex = 5;
+            txtLinkSite.Leave += txtLinkSite_Leave;
             // 
             // label4
             // 
@@ -805,23 +829,15 @@
             label4.TabIndex = 28;
             label4.Text = "VOCÊ TEM UM SITE?";
             // 
-            // richTextBox1
-            // 
-            richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            richTextBox1.Location = new Point(675, 21);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(279, 40);
-            richTextBox1.TabIndex = 3;
-            richTextBox1.Text = "";
-            // 
             // btnAnexo
             // 
             btnAnexo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAnexo.Image = Properties.Resources.anexar_arquivo;
-            btnAnexo.Location = new Point(954, 21);
+            btnAnexo.Location = new Point(885, 52);
             btnAnexo.Name = "btnAnexo";
             btnAnexo.Size = new Size(38, 40);
             btnAnexo.TabIndex = 4;
+            btnAnexo.TabStop = false;
             btnAnexo.UseVisualStyleBackColor = true;
             // 
             // label3
@@ -834,14 +850,16 @@
             label3.TabIndex = 24;
             label3.Text = "IDEIA QUE SERÁ PROMOVIDA";
             // 
-            // textBox2
+            // txtMarca
             // 
-            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox2.Location = new Point(166, 24);
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Diga o nome de sua marca";
-            textBox2.Size = new Size(503, 23);
-            textBox2.TabIndex = 2;
+            txtMarca.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMarca.CharacterCasing = CharacterCasing.Lower;
+            txtMarca.Location = new Point(166, 24);
+            txtMarca.Name = "txtMarca";
+            txtMarca.PlaceholderText = "Diga o nome de sua marca";
+            txtMarca.Size = new Size(503, 23);
+            txtMarca.TabIndex = 2;
+            txtMarca.Leave += textMarca_Leave;
             // 
             // label2
             // 
@@ -854,7 +872,7 @@
             // 
             // gBTipoVenda
             // 
-            gBTipoVenda.Controls.Add(rdbServiço);
+            gBTipoVenda.Controls.Add(rdbServico);
             gBTipoVenda.Controls.Add(rdbProduto);
             gBTipoVenda.Location = new Point(6, 6);
             gBTipoVenda.Name = "gBTipoVenda";
@@ -862,16 +880,17 @@
             gBTipoVenda.TabIndex = 1;
             gBTipoVenda.TabStop = false;
             gBTipoVenda.Text = "O QUE VOCÊ VENDE?";
+            gBTipoVenda.Leave += gBTipoVenda_Leave;
             // 
-            // rdbServiço
+            // rdbServico
             // 
-            rdbServiço.AutoSize = true;
-            rdbServiço.Location = new Point(86, 16);
-            rdbServiço.Name = "rdbServiço";
-            rdbServiço.Size = new Size(63, 19);
-            rdbServiço.TabIndex = 1;
-            rdbServiço.Text = "Serviço";
-            rdbServiço.UseVisualStyleBackColor = true;
+            rdbServico.AutoSize = true;
+            rdbServico.Location = new Point(86, 16);
+            rdbServico.Name = "rdbServico";
+            rdbServico.Size = new Size(63, 19);
+            rdbServico.TabIndex = 1;
+            rdbServico.Text = "Serviço";
+            rdbServico.UseVisualStyleBackColor = true;
             // 
             // rdbProduto
             // 
@@ -885,18 +904,19 @@
             rdbProduto.Text = "Produto";
             rdbProduto.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtInforProdServ
             // 
-            textBox1.AcceptsReturn = true;
-            textBox1.AcceptsTab = true;
-            textBox1.AllowDrop = true;
-            textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox1.Location = new Point(6, 158);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(983, 66);
-            textBox1.TabIndex = 11;
+            txtInforProdServ.AcceptsReturn = true;
+            txtInforProdServ.AcceptsTab = true;
+            txtInforProdServ.AllowDrop = true;
+            txtInforProdServ.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtInforProdServ.Location = new Point(6, 158);
+            txtInforProdServ.Multiline = true;
+            txtInforProdServ.Name = "txtInforProdServ";
+            txtInforProdServ.ScrollBars = ScrollBars.Vertical;
+            txtInforProdServ.Size = new Size(983, 66);
+            txtInforProdServ.TabIndex = 11;
+            txtInforProdServ.Leave += txtInforProdServ_Leave;
             // 
             // label1
             // 
@@ -909,19 +929,19 @@
             // 
             // tabPagePublicoCopy
             // 
-            tabPagePublicoCopy.Controls.Add(adicionarListaControl4);
-            tabPagePublicoCopy.Controls.Add(adicionarListaControl3);
-            tabPagePublicoCopy.Controls.Add(adicionarListaControl2);
-            tabPagePublicoCopy.Controls.Add(adicionarListaControl1);
-            tabPagePublicoCopy.Controls.Add(textBox10);
+            tabPagePublicoCopy.Controls.Add(listDiferenciais);
+            tabPagePublicoCopy.Controls.Add(lstDores);
+            tabPagePublicoCopy.Controls.Add(lstOcupacoes);
+            tabPagePublicoCopy.Controls.Add(lstInteresses);
+            tabPagePublicoCopy.Controls.Add(txtOutrasInf);
             tabPagePublicoCopy.Controls.Add(label16);
-            tabPagePublicoCopy.Controls.Add(groupBox6);
-            tabPagePublicoCopy.Controls.Add(groupBox5);
-            tabPagePublicoCopy.Controls.Add(textBox9);
+            tabPagePublicoCopy.Controls.Add(gbGenero);
+            tabPagePublicoCopy.Controls.Add(gbNivelConsciencia);
+            tabPagePublicoCopy.Controls.Add(txtPropostaValor);
             tabPagePublicoCopy.Controls.Add(label15);
-            tabPagePublicoCopy.Controls.Add(comboBox2);
+            tabPagePublicoCopy.Controls.Add(cboNivelAcademico);
             tabPagePublicoCopy.Controls.Add(label17);
-            tabPagePublicoCopy.Controls.Add(groupBox4);
+            tabPagePublicoCopy.Controls.Add(gbRangeIdade);
             tabPagePublicoCopy.Location = new Point(4, 24);
             tabPagePublicoCopy.Name = "tabPagePublicoCopy";
             tabPagePublicoCopy.Padding = new Padding(3);
@@ -930,45 +950,54 @@
             tabPagePublicoCopy.Text = "PUBLICO ALVO";
             tabPagePublicoCopy.UseVisualStyleBackColor = true;
             // 
-            // adicionarListaControl4
+            // listDiferenciais
             // 
-            adicionarListaControl4.Descricao = "INTERESSES";
-            adicionarListaControl4.Location = new Point(2, 225);
-            adicionarListaControl4.Name = "adicionarListaControl4";
-            adicionarListaControl4.Size = new Size(327, 148);
-            adicionarListaControl4.TabIndex = 8;
+            listDiferenciais.Descricao = "DIFERENCIAIS COMPETITIVOS";
+            listDiferenciais.Location = new Point(2, 225);
+            listDiferenciais.Name = "listDiferenciais";
+            listDiferenciais.NomeLista = "DIFERENCIAIS_COMPETITIVOS";
+            listDiferenciais.Size = new Size(327, 148);
+            listDiferenciais.TabIndex = 8;
+            listDiferenciais.Leave += listDiferenciais_Leave;
             // 
-            // adicionarListaControl3
+            // lstDores
             // 
-            adicionarListaControl3.Descricao = "INTERESSES";
-            adicionarListaControl3.Location = new Point(663, 71);
-            adicionarListaControl3.Name = "adicionarListaControl3";
-            adicionarListaControl3.Size = new Size(325, 148);
-            adicionarListaControl3.TabIndex = 6;
+            lstDores.Descricao = "DORES DO PUBLICO ALVO";
+            lstDores.Location = new Point(663, 71);
+            lstDores.Name = "lstDores";
+            lstDores.NomeLista = "DORES_PUBLICO_ALVO";
+            lstDores.Size = new Size(325, 148);
+            lstDores.TabIndex = 7;
+            lstDores.Leave += lstDores_Leave;
             // 
-            // adicionarListaControl2
+            // lstOcupacoes
             // 
-            adicionarListaControl2.Descricao = "INTERESSES";
-            adicionarListaControl2.Location = new Point(330, 71);
-            adicionarListaControl2.Name = "adicionarListaControl2";
-            adicionarListaControl2.Size = new Size(325, 148);
-            adicionarListaControl2.TabIndex = 6;
+            lstOcupacoes.Descricao = "OCUPAÇÕES DO PUBLICO ALVO";
+            lstOcupacoes.Location = new Point(330, 71);
+            lstOcupacoes.Name = "lstOcupacoes";
+            lstOcupacoes.NomeLista = "OCUPACAO_PUBLICO_ALVO";
+            lstOcupacoes.Size = new Size(325, 148);
+            lstOcupacoes.TabIndex = 6;
+            lstOcupacoes.Leave += lstOcupacoes_Leave;
             // 
-            // adicionarListaControl1
+            // lstInteresses
             // 
-            adicionarListaControl1.Descricao = "INTERESSES";
-            adicionarListaControl1.Location = new Point(2, 71);
-            adicionarListaControl1.Name = "adicionarListaControl1";
-            adicionarListaControl1.Size = new Size(327, 148);
-            adicionarListaControl1.TabIndex = 5;
+            lstInteresses.Descricao = "INTERESSES DO PUBLICO ALVO";
+            lstInteresses.Location = new Point(2, 71);
+            lstInteresses.Name = "lstInteresses";
+            lstInteresses.NomeLista = "INTERESSES_PUBLICO_ALVO";
+            lstInteresses.Size = new Size(327, 148);
+            lstInteresses.TabIndex = 5;
+            lstInteresses.Leave += lstInteresses_Leave;
             // 
-            // textBox10
+            // txtOutrasInf
             // 
-            textBox10.Location = new Point(633, 232);
-            textBox10.Multiline = true;
-            textBox10.Name = "textBox10";
-            textBox10.Size = new Size(355, 136);
-            textBox10.TabIndex = 10;
+            txtOutrasInf.Location = new Point(633, 232);
+            txtOutrasInf.Multiline = true;
+            txtOutrasInf.Name = "txtOutrasInf";
+            txtOutrasInf.Size = new Size(355, 136);
+            txtOutrasInf.TabIndex = 10;
+            txtOutrasInf.Leave += txtOutrasInf_Leave;
             // 
             // label16
             // 
@@ -979,22 +1008,23 @@
             label16.TabIndex = 23;
             label16.Text = "Outras informações relevantes";
             // 
-            // groupBox6
+            // gbGenero
             // 
-            groupBox6.Controls.Add(radioButton16);
-            groupBox6.Controls.Add(radioButton15);
-            groupBox6.Controls.Add(radioButton14);
-            groupBox6.Controls.Add(radioButton13);
-            groupBox6.Controls.Add(radioButton12);
-            groupBox6.Controls.Add(radioButton11);
-            groupBox6.Controls.Add(radioButton10);
-            groupBox6.Controls.Add(radioButton9);
-            groupBox6.Location = new Point(129, 0);
-            groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(308, 65);
-            groupBox6.TabIndex = 2;
-            groupBox6.TabStop = false;
-            groupBox6.Text = "GÊNERO";
+            gbGenero.Controls.Add(radioButton16);
+            gbGenero.Controls.Add(radioButton15);
+            gbGenero.Controls.Add(radioButton14);
+            gbGenero.Controls.Add(radioButton13);
+            gbGenero.Controls.Add(radioButton12);
+            gbGenero.Controls.Add(radioButton11);
+            gbGenero.Controls.Add(radioButton10);
+            gbGenero.Controls.Add(radioButton9);
+            gbGenero.Location = new Point(129, 2);
+            gbGenero.Name = "gbGenero";
+            gbGenero.Size = new Size(308, 65);
+            gbGenero.TabIndex = 2;
+            gbGenero.TabStop = false;
+            gbGenero.Text = "GÊNERO";
+            gbGenero.Leave += gbGenero_Leave;
             // 
             // radioButton16
             // 
@@ -1078,20 +1108,21 @@
             radioButton9.Text = "F";
             radioButton9.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
+            // gbNivelConsciencia
             // 
-            groupBox5.Controls.Add(radioButton8);
-            groupBox5.Controls.Add(radioButton7);
-            groupBox5.Controls.Add(radioButton6);
-            groupBox5.Controls.Add(radioButton5);
-            groupBox5.Controls.Add(radioButton4);
-            groupBox5.Controls.Add(radioButton3);
-            groupBox5.Location = new Point(332, 218);
-            groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(286, 154);
-            groupBox5.TabIndex = 9;
-            groupBox5.TabStop = false;
-            groupBox5.Text = "NÍVEL CONSCIÊNCIA";
+            gbNivelConsciencia.Controls.Add(radioButton8);
+            gbNivelConsciencia.Controls.Add(radioButton7);
+            gbNivelConsciencia.Controls.Add(radioButton6);
+            gbNivelConsciencia.Controls.Add(radioButton5);
+            gbNivelConsciencia.Controls.Add(radioButton4);
+            gbNivelConsciencia.Controls.Add(radioButton3);
+            gbNivelConsciencia.Location = new Point(332, 218);
+            gbNivelConsciencia.Name = "gbNivelConsciencia";
+            gbNivelConsciencia.Size = new Size(286, 154);
+            gbNivelConsciencia.TabIndex = 9;
+            gbNivelConsciencia.TabStop = false;
+            gbNivelConsciencia.Text = "NÍVEL CONSCIÊNCIA";
+            gbNivelConsciencia.Leave += gbNivelConsciencia_Leave;
             // 
             // radioButton8
             // 
@@ -1155,13 +1186,14 @@
             radioButton3.Text = "Inconsciente do problema";
             radioButton3.UseVisualStyleBackColor = true;
             // 
-            // textBox9
+            // txtPropostaValor
             // 
-            textBox9.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            textBox9.Location = new Point(653, 20);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(336, 23);
-            textBox9.TabIndex = 4;
+            txtPropostaValor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPropostaValor.Location = new Point(653, 20);
+            txtPropostaValor.Name = "txtPropostaValor";
+            txtPropostaValor.Size = new Size(336, 23);
+            txtPropostaValor.TabIndex = 4;
+            txtPropostaValor.Leave += txtPropostaValor_Leave;
             // 
             // label15
             // 
@@ -1172,15 +1204,16 @@
             label15.TabIndex = 18;
             label15.Text = "Proposta de Valor";
             // 
-            // comboBox2
+            // cboNivelAcademico
             // 
-            comboBox2.BackColor = Color.LavenderBlush;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Ensino Fundamental Incompleto", "", "Ensino Fundamental Completo", "", "Ensino Médio Incompleto", "", "Ensino Médio Completo", "Técnico", "", "Graduação Incompleta", "", "Graduação Completa", "", "Pós-Graduação Incompleta", "", "Pós-Graduação Completa", "", "Mestrado Incompleto", "", "Mestrado Completo", "", "Doutorado Incompleto", "", "Doutorado Completo", "", "MBA", "Livre Docência", "", "Pós-Doutorado" });
-            comboBox2.Location = new Point(443, 20);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(204, 23);
-            comboBox2.TabIndex = 3;
+            cboNivelAcademico.BackColor = Color.LavenderBlush;
+            cboNivelAcademico.FormattingEnabled = true;
+            cboNivelAcademico.Items.AddRange(new object[] { "Ensino Fundamental Incompleto", "", "Ensino Fundamental Completo", "", "Ensino Médio Incompleto", "", "Ensino Médio Completo", "Técnico", "", "Graduação Incompleta", "", "Graduação Completa", "", "Pós-Graduação Incompleta", "", "Pós-Graduação Completa", "", "Mestrado Incompleto", "", "Mestrado Completo", "", "Doutorado Incompleto", "", "Doutorado Completo", "", "MBA", "Livre Docência", "", "Pós-Doutorado" });
+            cboNivelAcademico.Location = new Point(443, 20);
+            cboNivelAcademico.Name = "cboNivelAcademico";
+            cboNivelAcademico.Size = new Size(204, 23);
+            cboNivelAcademico.TabIndex = 3;
+            cboNivelAcademico.Leave += cboNivelAcademico_Leave;
             // 
             // label17
             // 
@@ -1191,26 +1224,27 @@
             label17.TabIndex = 13;
             label17.Text = "Nível acadêmico";
             // 
-            // groupBox4
+            // gbRangeIdade
             // 
-            groupBox4.Controls.Add(numericUpDown2);
-            groupBox4.Controls.Add(label14);
-            groupBox4.Controls.Add(numericUpDown1);
-            groupBox4.Controls.Add(label13);
-            groupBox4.Location = new Point(2, 2);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(121, 61);
-            groupBox4.TabIndex = 0;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "RANGE IDADE";
+            gbRangeIdade.Controls.Add(nIdadeFinal);
+            gbRangeIdade.Controls.Add(label14);
+            gbRangeIdade.Controls.Add(nIdadeInicial);
+            gbRangeIdade.Controls.Add(label13);
+            gbRangeIdade.Location = new Point(2, 2);
+            gbRangeIdade.Name = "gbRangeIdade";
+            gbRangeIdade.Size = new Size(121, 61);
+            gbRangeIdade.TabIndex = 0;
+            gbRangeIdade.TabStop = false;
+            gbRangeIdade.Text = "RANGE IDADE";
+            gbRangeIdade.Leave += gbRangeIdade_Leave;
             // 
-            // numericUpDown2
+            // nIdadeFinal
             // 
-            numericUpDown2.Location = new Point(59, 31);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(47, 23);
-            numericUpDown2.TabIndex = 5;
-            numericUpDown2.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            nIdadeFinal.Location = new Point(59, 31);
+            nIdadeFinal.Name = "nIdadeFinal";
+            nIdadeFinal.Size = new Size(47, 23);
+            nIdadeFinal.TabIndex = 5;
+            nIdadeFinal.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
             // label14
             // 
@@ -1221,13 +1255,13 @@
             label14.TabIndex = 4;
             label14.Text = "A";
             // 
-            // numericUpDown1
+            // nIdadeInicial
             // 
-            numericUpDown1.Location = new Point(6, 31);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(47, 23);
-            numericUpDown1.TabIndex = 3;
-            numericUpDown1.Value = new decimal(new int[] { 18, 0, 0, 0 });
+            nIdadeInicial.Location = new Point(6, 31);
+            nIdadeInicial.Name = "nIdadeInicial";
+            nIdadeInicial.Size = new Size(47, 23);
+            nIdadeInicial.TabIndex = 3;
+            nIdadeInicial.Value = new decimal(new int[] { 18, 0, 0, 0 });
             // 
             // label13
             // 
@@ -1240,10 +1274,10 @@
             // 
             // tabControles
             // 
-            tabControles.Controls.Add(adicionarListaControl5);
+            tabControles.Controls.Add(lstPalavrasChave);
             tabControles.Controls.Add(nOriginalidade);
             tabControles.Controls.Add(label20);
-            tabControles.Controls.Add(groupBox7);
+            tabControles.Controls.Add(gbPerspectiva);
             tabControles.Controls.Add(ckSentimentos);
             tabControles.Controls.Add(label19);
             tabControles.Controls.Add(nEntonacao);
@@ -1256,13 +1290,15 @@
             tabControles.Text = "CONTROLES";
             tabControles.UseVisualStyleBackColor = true;
             // 
-            // adicionarListaControl5
+            // lstPalavrasChave
             // 
-            adicionarListaControl5.Descricao = "INTERESSES";
-            adicionarListaControl5.Location = new Point(577, 2);
-            adicionarListaControl5.Name = "adicionarListaControl5";
-            adicionarListaControl5.Size = new Size(327, 148);
-            adicionarListaControl5.TabIndex = 7;
+            lstPalavrasChave.Descricao = "PALAVRAS CHAVE";
+            lstPalavrasChave.Location = new Point(577, 2);
+            lstPalavrasChave.Name = "lstPalavrasChave";
+            lstPalavrasChave.NomeLista = "PALAVRAS_CHAVE";
+            lstPalavrasChave.Size = new Size(327, 148);
+            lstPalavrasChave.TabIndex = 7;
+            lstPalavrasChave.Leave += lstPalavrasChave_Leave;
             // 
             // nOriginalidade
             // 
@@ -1279,6 +1315,7 @@
             nOriginalidade.TabIndex = 2;
             nOriginalidade.Value = new decimal(new int[] { 5, 0, 0, 0 });
             nOriginalidade.Enter += nOriginalidade_Enter;
+            nOriginalidade.Leave += nOriginalidade_Leave;
             // 
             // label20
             // 
@@ -1289,17 +1326,18 @@
             label20.TabIndex = 5;
             label20.Text = "Originalidade";
             // 
-            // groupBox7
+            // gbPerspectiva
             // 
-            groupBox7.Controls.Add(radioButton19);
-            groupBox7.Controls.Add(radioButton18);
-            groupBox7.Controls.Add(radioButton17);
-            groupBox7.Location = new Point(461, 2);
-            groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(110, 100);
-            groupBox7.TabIndex = 4;
-            groupBox7.TabStop = false;
-            groupBox7.Text = "PERSPECTIVA";
+            gbPerspectiva.Controls.Add(radioButton19);
+            gbPerspectiva.Controls.Add(radioButton18);
+            gbPerspectiva.Controls.Add(radioButton17);
+            gbPerspectiva.Location = new Point(461, 2);
+            gbPerspectiva.Name = "gbPerspectiva";
+            gbPerspectiva.Size = new Size(110, 100);
+            gbPerspectiva.TabIndex = 4;
+            gbPerspectiva.TabStop = false;
+            gbPerspectiva.Text = "PERSPECTIVA";
+            gbPerspectiva.Leave += gbPerspectiva_Leave;
             // 
             // radioButton19
             // 
@@ -1345,6 +1383,7 @@
             ckSentimentos.Name = "ckSentimentos";
             ckSentimentos.Size = new Size(377, 130);
             ckSentimentos.TabIndex = 3;
+            ckSentimentos.Leave += ckSentimentos_Leave;
             // 
             // label19
             // 
@@ -1370,6 +1409,7 @@
             nEntonacao.TabIndex = 1;
             nEntonacao.Value = new decimal(new int[] { 5, 0, 0, 0 });
             nEntonacao.Enter += nEntonacao_Enter;
+            nEntonacao.Leave += nEntonacao_Leave;
             // 
             // label18
             // 
@@ -1731,27 +1771,27 @@
             tabCopy.ResumeLayout(false);
             tabPageBriefing.ResumeLayout(false);
             tabPageBriefing.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gBMetas.ResumeLayout(false);
+            gBMetas.PerformLayout();
+            gBLancamento.ResumeLayout(false);
+            gBLancamento.PerformLayout();
             gBTipoVenda.ResumeLayout(false);
             gBTipoVenda.PerformLayout();
             tabPagePublicoCopy.ResumeLayout(false);
             tabPagePublicoCopy.PerformLayout();
-            groupBox6.ResumeLayout(false);
-            groupBox6.PerformLayout();
-            groupBox5.ResumeLayout(false);
-            groupBox5.PerformLayout();
-            groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            gbGenero.ResumeLayout(false);
+            gbGenero.PerformLayout();
+            gbNivelConsciencia.ResumeLayout(false);
+            gbNivelConsciencia.PerformLayout();
+            gbRangeIdade.ResumeLayout(false);
+            gbRangeIdade.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)nIdadeFinal).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nIdadeInicial).EndInit();
             tabControles.ResumeLayout(false);
             tabControles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nOriginalidade).EndInit();
-            groupBox7.ResumeLayout(false);
-            groupBox7.PerformLayout();
+            gbPerspectiva.ResumeLayout(false);
+            gbPerspectiva.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nEntonacao).EndInit();
             toolStrip2.ResumeLayout(false);
             toolStrip2.PerformLayout();
@@ -1768,7 +1808,6 @@
         private StatusStrip statusStrip1;
         private ToolStripProgressBar toolStripProgressBar1;
         private SaveFileDialog saveFileDialog1;
-        private FlowLayoutPanel lstPrompts;
         private ToolStripContainer toolStripContainer1;
         private ToolStrip toolStrip1;
         private ToolStripButton novaToolStripButton;
@@ -1817,63 +1856,61 @@
         private TabControl tabCopy;
         private TabPage tabPageBriefing;
         private TabPage tabPagePublicoCopy;
-        private RichTextBox richTextBox1;
         private Button btnAnexo;
         private Label label3;
-        private TextBox textBox2;
+        private TextBox txtMarca;
         private Label label2;
         private GroupBox gBTipoVenda;
-        private RadioButton rdbServiço;
+        private RadioButton rdbServico;
         private RadioButton rdbProduto;
-        private TextBox textBox1;
+        private TextBox txtInforProdServ;
         private Label label1;
-        private TextBox textBox3;
+        private TextBox txtLinkSite;
         private Label label4;
         private Label label5;
-        private TextBox textBox5;
+        private TextBox txtLinkCatalogo;
         private Label label6;
-        private GroupBox groupBox1;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private TextBox textBox6;
+        private GroupBox gBLancamento;
+        private RadioButton rdbNao;
+        private RadioButton rdbSim;
+        private TextBox txtObservacoes;
         private Label label7;
-        private TextBox textBox7;
+        private TextBox txtObjetivoGeral;
         private Label label8;
-        private TextBox textBox8;
+        private TextBox txtObjetivoEspecifico;
         private Label label9;
         private ComboBox cboSegmento;
         private ComboBox cboSubSegmentos;
         private Label label10;
         private Label label11;
-        private ComboBox comboBox1;
-        private GroupBox groupBox3;
-        private CheckBox checkBox6;
-        private CheckBox checkBox5;
-        private CheckBox checkBox4;
-        private CheckBox checkBox3;
-        private CheckBox checkBox2;
-        private CheckBox checkBox1;
-        private CheckBox checkBox13;
-        private CheckBox checkBox12;
-        private CheckBox checkBox10;
-        private CheckBox checkBox9;
-        private CheckBox checkBox8;
-        private CheckBox checkBox7;
-        private TextBox textBox4;
+        private ComboBox cboDestinoCopy;
+        private GroupBox gBMetas;
+        private CheckBox chkVizualizacao;
+        private CheckBox chkPermanencia;
+        private CheckBox chkEngajamento;
+        private CheckBox chkVenda;
+        private CheckBox chkCadastro;
+        private CheckBox chkClick;
+        private CheckBox chkInteracao;
+        private CheckBox chkSeguidores;
+        private CheckBox chkRegistro;
+        private CheckBox chkDesempenho;
+        private CheckBox ckAdicao;
+        private CheckBox chkCompartilhamento;
+        private TextBox txtMensagemCopy;
         private Label label12;
-        private GroupBox groupBox4;
-        private NumericUpDown numericUpDown2;
+        private GroupBox gbRangeIdade;
+        private NumericUpDown nIdadeFinal;
         private Label label14;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown nIdadeInicial;
         private Label label13;
         private Label label17;
-        private ComboBox comboBox2;
-        private AdicionarListaControl adicionarListaControl13;
+        private ComboBox cboNivelAcademico;
         private AdicionarListaControl adicionarListaControl12;
         private AdicionarListaControl adicionarListaControl11;
-        private TextBox textBox9;
+        private TextBox txtPropostaValor;
         private Label label15;
-        private GroupBox groupBox5;
+        private GroupBox gbNivelConsciencia;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
         private AdicionarListaControl adicionarListaControl14;
@@ -1881,7 +1918,7 @@
         private RadioButton radioButton7;
         private RadioButton radioButton6;
         private RadioButton radioButton5;
-        private GroupBox groupBox6;
+        private GroupBox gbGenero;
         private RadioButton radioButton11;
         private RadioButton radioButton10;
         private RadioButton radioButton9;
@@ -1891,24 +1928,24 @@
         private RadioButton radioButton14;
         private RadioButton radioButton13;
         private RadioButton radioButton12;
-        private TextBox textBox10;
+        private TextBox txtOutrasInf;
         private TabPage tabControles;
         private Label label18;
         private NumericUpDown nEntonacao;
         private ToolTip toolTip1;
-        private AdicionarListaControl adicionarListaControl3;
-        private AdicionarListaControl adicionarListaControl2;
-        private AdicionarListaControl adicionarListaControl1;
-        private AdicionarListaControl adicionarListaControl4;
+        private AdicionarListaControl lstDores;
+        private AdicionarListaControl lstOcupacoes;
+        private AdicionarListaControl lstInteresses;
+        private AdicionarListaControl listDiferenciais;
         private CheckedListBox ckSentimentos;
         private Label label19;
-        private GroupBox groupBox7;
+        private GroupBox gbPerspectiva;
         private NumericUpDown nOriginalidade;
         private Label label20;
         private RadioButton radioButton19;
         private RadioButton radioButton18;
         private RadioButton radioButton17;
-        private AdicionarListaControl adicionarListaControl5;
+        private AdicionarListaControl lstPalavrasChave;
         private Label label21;
         private TextBox txtNomePromptCopy;
         private ToolStrip toolStrip4;
@@ -1918,5 +1955,6 @@
         private ToolStripButton toolStripButton1;
         private BindingSource promptCopyBindingSource;
         private BindingSource bindingSource1;
+        private TextBox txtIdeiaPromovida;
     }
 }

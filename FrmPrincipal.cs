@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using AIBAM.Classes;
+using System.IO;
+using System.Xml;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace AIBAM
 {
@@ -28,23 +32,14 @@ namespace AIBAM
         ChatClient chatClient = new ChatClient("localhost", 8080);
 
         PromptCopy promptCopy;
-        Briefing briefing;
 
-
+        private string textoPromptCopy = "";
 
         public FrmPrincipal()
         {
             InitializeComponent();
-            AdicionarEventosControles();
-            ConstruirClasses();
-
-        }
-
-        private void ConstruirClasses()
-        {
             promptCopy = new();
-            briefing = new();
-            promptCopy.briefing = briefing;
+            AdicionarEventosControles();
         }
 
         private void AdicionarEventosControles()
@@ -52,11 +47,11 @@ namespace AIBAM
 
             chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
             chatClient.OnConect += ChatClient_Status;
-            adicionarListaControl1.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            adicionarListaControl2.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            adicionarListaControl3.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            adicionarListaControl4.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            adicionarListaControl5.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            lstInteresses.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            lstOcupacoes.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            lstDores.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            listDiferenciais.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            lstPalavrasChave.OnExecutaAcao += AdicionarListaControl_OnStateChange;
         }
 
         private void AdicionarListaControl_OnStateChange(string obj)
@@ -95,16 +90,6 @@ namespace AIBAM
             {
                 chatControl.AddBotResponse(response);
             }
-        }
-
-        private void DefinirClasseControles()
-        {
-            adicionarListaControl1.Descricao = "Insira os interesses do publico alvo";
-            adicionarListaControl2.Descricao = "Insira ocupações do publico alvo";
-            adicionarListaControl3.Descricao = "Insira as dores do publico alvo";
-            adicionarListaControl4.Descricao = "Insira seus diferenciais competitivos";
-            adicionarListaControl5.Descricao = "Insira palavras chave";
-
         }
 
         private async void RequestToChat()
@@ -272,7 +257,6 @@ namespace AIBAM
 
             Task.Run(() => chatClient.Connect());
             SetStatus("Preparando UI...");
-            DefinirClasseControles();
             txtPrompt.Focus();
             AtualizaBarraProgresso();
             SetStatus("Pronto!");
@@ -284,7 +268,6 @@ namespace AIBAM
         {
             // Limpa os itens do ComboBox de subsegmentos
             cboSubSegmentos.Items.Clear();
-            var _briefing = briefing;
             // Obtém o segmento selecionado
             string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
 
@@ -493,9 +476,514 @@ namespace AIBAM
             toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
         }
 
+
+        #region CONFIGURA PROMPT DE COPY
+        #region PROMPTCOPY
         private void txtNomePromptCopy_Leave(object sender, EventArgs e)
         {
             promptCopy.DescricaoCopy = txtNomePromptCopy.Text;
+        }
+
+        private void gBTipoVenda_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.TipoVenda = rdbProduto.Checked ? rdbProduto.Text : rdbServico.Text;
+        }
+
+        private void textMarca_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.Marca = txtMarca.Text;
+        }
+
+
+        private void txtLinkSite_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.LinkSite = txtLinkSite.Text;
+        }
+
+        private void cboSegmento_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.SegmentoNegocio = cboSegmento.Text;
+        }
+
+        private void cboSubSegmentos_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.SubSegmentoNegocio = cboSubSegmentos.Text;
+        }
+
+        private void gBLancamento_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.ELancamentoProdServ = rdbSim.Checked ? rdbSim.Text : rdbNao.Text;
+        }
+
+        private void txtLinkCatalogo_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.LinkCatalogoProdServ = txtLinkCatalogo.Text;
+        }
+
+        private void txtObservacoes_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.Observacoes = txtObservacoes.Text;
+        }
+
+        private void txtInforProdServ_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.InformacoesProdServ = txtInforProdServ.Text;
+        }
+
+        private void txtObjetivoGeral_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.ObjetivoGeral = txtObjetivoGeral.Text;
+        }
+
+        private void txtObjetivoEspecifico_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.ObjetivoEspecifico = txtObjetivoEspecifico.Text;
+        }
+
+        private void cboDestinoCopy_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.DestinoCopy = cboDestinoCopy.Text;
+        }
+
+        private void txtMensagemCopy_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.MensagemTransmitida = txtMensagemCopy.Text;
+        }
+
+        private void gBMetas_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.metasCampanhas.AdicaoCarrinho = ckAdicao.Checked;
+            promptCopy.briefing.metasCampanhas.CadastroFrm = chkCadastro.Checked;
+            promptCopy.briefing.metasCampanhas.Clickslink = chkClick.Checked;
+            promptCopy.briefing.metasCampanhas.Compartilhamentos = chkCompartilhamento.Checked;
+            promptCopy.briefing.metasCampanhas.Desempenho = chkDesempenho.Checked;
+            promptCopy.briefing.metasCampanhas.Engajamento = chkEngajamento.Checked;
+            promptCopy.briefing.metasCampanhas.Interacao = chkInteracao.Checked;
+            promptCopy.briefing.metasCampanhas.PermanenciaPag = chkPermanencia.Checked;
+            promptCopy.briefing.metasCampanhas.Registro = chkRegistro.Checked;
+            promptCopy.briefing.metasCampanhas.Seguidores = chkSeguidores.Checked;
+            promptCopy.briefing.metasCampanhas.Vendas = chkVenda.Checked;
+            promptCopy.briefing.metasCampanhas.Vizualizacoes = chkVizualizacao.Checked;
+        }
+        private void txtIdeiaPromovida_Leave(object sender, EventArgs e)
+        {
+            promptCopy.briefing.IdeiaPromovida = txtIdeiaPromovida.Text;
+        }
+        #endregion
+        #region PUBLICO ALVO
+        private void gbRangeIdade_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.IdadeInicial = (int)nIdadeInicial.Value;
+            promptCopy.publicoAlvo.IdadeFinal = (int)nIdadeFinal.Value;
+        }
+
+        private void gbGenero_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.Genero = ObterTextoGroupBox(gbGenero);
+        }
+
+        private void cboNivelAcademico_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.NivelAcademico = cboNivelAcademico.Text;
+        }
+
+        private void txtPropostaValor_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.PropostaValor = txtPropostaValor.Text;
+        }
+
+        private void lstInteresses_Leave(object sender, EventArgs e)
+        {
+            // Acessa o método GetItensSelecionados da instância 
+            // Atribui os interesses selecionados à propriedade no promptCopy
+            promptCopy.publicoAlvo.Interesses = lstInteresses.GetItensSelecionados();
+        }
+
+
+        private void lstOcupacoes_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.Ocupacoes = lstOcupacoes.GetItensSelecionados();
+        }
+
+        private void lstDores_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.Dores = lstDores.GetItensSelecionados();
+        }
+
+        private void listDiferenciais_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.DiferenciasCompetitivos = listDiferenciais.GetItensSelecionados();
+        }
+
+        private void gbNivelConsciencia_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.NivelConsciencia = ObterTextoGroupBox(gbNivelConsciencia);
+        }
+
+        private void txtOutrasInf_Leave(object sender, EventArgs e)
+        {
+            promptCopy.publicoAlvo.OutrasInf = txtOutrasInf.Text;
+
+        }
+        #endregion
+        #region CONTROLES CRIAÇÃO
+        private void nEntonacao_Leave(object sender, EventArgs e)
+        {
+            promptCopy.controlesCopy.Entonacao = (int)nEntonacao.Value;
+        }
+
+        private void nOriginalidade_Leave(object sender, EventArgs e)
+        {
+            promptCopy.controlesCopy.Originalidade = (int)nOriginalidade.Value;
+        }
+
+        private void ckSentimentos_Leave(object sender, EventArgs e)
+        {
+            promptCopy.controlesCopy.Sentimeto = ObterItensSelecionado(ckSentimentos);
+        }
+
+        private void gbPerspectiva_Leave(object sender, EventArgs e)
+        {
+            promptCopy.controlesCopy.Perspectiva = ObterTextoGroupBox(gbPerspectiva);
+        }
+
+        private void lstPalavrasChave_Leave(object sender, EventArgs e)
+        {
+            promptCopy.controlesCopy.PalavrasChave = lstPalavrasChave.GetItensSelecionados();
+        }
+        #endregion
+        #endregion
+
+
+        #region SALVA DADOS EM FORMATO JSON
+        public void SaveToJson(dynamic obj, string nome)
+        {
+            // Caminho do diretório de execução
+            string directoryPath = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = Path.Combine(directoryPath, $"{nome}.json");
+
+            try
+            {
+                // Serializa o objeto promptCopy em JSON
+                string json = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
+
+                // Salva o arquivo JSON no diretório de execução
+                File.WriteAllText(filePath, json);
+
+                SetStatus("Dados salvos com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                SetStatus($"Erro ao salvar os dados: {ex.Message}");
+            }
+        }
+        #endregion
+
+        private void salvarToolStripButton1_Click(object sender, EventArgs e)
+        {
+            AtualizaBarraProgresso();
+            SetStatus("Iniciando processo salvar");
+            ///salva aquivo em formato de texto concatenado
+            MontaPrompt();
+
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
+            saveFileDialog1.Title = "Salvar Modelo Prompt";
+            saveFileDialog1.DefaultExt = "md";
+            saveFileDialog1.FileName = txtNomePromptCopy.Text;
+            saveFileDialog1.AddExtension = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog1.FileName;
+                ///salva arquivo em dbjson para iteração
+                SaveToJson(promptCopy, txtNomePromptCopy.Text);
+                try
+                {
+                    File.WriteAllText(filePath, textoPromptCopy);
+                    MessageBox.Show($"Modelo Prompt salvo em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Atualiza o status após o salvamento bem-sucedido
+                    SetStatus("Modelo Prompt salva com sucesso!");
+                }
+                catch (Exception ex)
+                {
+                    // Mostra a mensagem de erro
+                    MessageBox.Show($"Erro ao salvar a Modelo Prompt: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Atualiza o status em caso de erro
+                    SetStatus("Erro ao salvar a Modelo Prompt.");
+                }
+            }
+            else
+            {
+                // Atualiza o status se o usuário cancelar a operação de salvamento
+                SetStatus("Operação de salvamento cancelada.");
+            }
+                       
+            AtualizaBarraProgresso();
+        }
+
+        #region  GERA TEXTO DE COPY PARAMETRIZADO
+        private void MontaPrompt()
+        {
+            textoPromptCopy = $@"Você é um copywriter experiente com mais de 25 anos de carreira. Um profissional com
+MBA especializado que escreve textos persuasivos e envolventes, com o objetivo de
+promover produtos, serviços ou ideias.
+Mas vamos além, você é um copywriter com textos publicitários vencedores de prêmios
+da mais alta importância. Por isso, você é capaz de produzir excelentes textos
+publicitários, seja ele impresso, online, em comerciais de TV, rádio ou qualquer outro
+meio de comunicação.
+Seu principal objetivo é criar mensagens que despertem interesse, gerem impacto
+emocional com o intuito de persuadir o leitor ou espectador a tomar uma ação
+específica, como fazer uma compra, se inscrever em uma lista de e-mails, solicitar mais
+informações ou compartilhar um conteúdo. Para alcançar esse objetivo, um você utiliza
+técnicas de redação persuasiva, conhecimento sobre o público-alvo, estratégias de
+marketing e branding.
+Além de escrever textos persuasivos, você também pode estar envolvido no processo
+criativo e na elaboração de conceitos para campanhas publicitárias. Em colaboração
+com equipes de marketing, publicidade ou agências de comunicação para desenvolver
+mensagens que sejam eficazes e estejam alinhadas com os objetivos do cliente.
+Em resumo, você é responsável por criar textos que vendem, seja para promover
+produtos, serviços, marcas ou ideias, utilizando técnicas persuasivas e estratégias de
+marketing para engajar o público-alvo e levá-lo a tomar ação.
+
+Você vai criar umas peças de texto que eu vou solicitar.
+Para isso, ira utilizar os detalhes do que queremos promover. 
+As iformações delimitadas por <ATENCAO></ATENCAO>, 
+são diretrizes para você considerar ao realizar as avaliações, sempre serão dispostas após o ponto critico.
+
+Primeiro ira avaliar o Briefing detalhado do cliente.
+
+{GerarTextoBriefing()}
+
+Segundo irá avaliar a Definição do público alvo do cliente.
+
+{GerarTextoPublicoAlvo()}
+
+Terceiro irá avaliar Controles para gerar a peça de texto.
+
+{GerarTextoControles()}
+";
+        }
+
+        private string GerarTextoControles()
+        {
+            StringBuilder texto = new StringBuilder();
+
+            texto.AppendLine("Controles:");
+            texto.AppendLine("===============================");
+            // Entonação
+            texto.AppendLine($"Entonação: {promptCopy.controlesCopy.Entonacao}");
+
+            texto.AppendLine("<ATENCAO>1-Muito informal e 10-Muito formal</ATENCAO>");
+
+            // Originalidade
+            texto.AppendLine($"Originalidade: {promptCopy.controlesCopy.Originalidade}");
+
+            // Sentimentos
+            if (promptCopy.controlesCopy.Sentimeto?.Count > 0)
+            {
+                texto.AppendLine("Sentimentos:");
+                foreach (var sentimento in promptCopy.controlesCopy.Sentimeto)
+                {
+                    texto.AppendLine($"- {sentimento}");
+                }
+                texto.AppendLine("<ATENCAO>Emoção(ções) que serão expressas no texto</ATENCAO>");
+            }
+
+            // Perspectiva
+            texto.AppendLine($"Perspectiva: {promptCopy.controlesCopy.Perspectiva}");
+            texto.AppendLine("<ATENCAO>Forma de escrita do texto</ATENCAO>");
+
+
+            // Palavras-chave
+            if (promptCopy.controlesCopy.PalavrasChave?.Count > 0)
+            {
+                texto.AppendLine("Palavras-chave:");
+                foreach (var palavraChave in promptCopy.controlesCopy.PalavrasChave)
+                {
+                    texto.AppendLine($"- {palavraChave}");
+                }
+            }
+            texto.AppendLine("===============================");
+            return texto.ToString();
+        }
+
+        private object GerarTextoPublicoAlvo()
+        {
+            StringBuilder texto = new StringBuilder();
+
+            texto.AppendLine("Público-Alvo:");
+            texto.AppendLine("===============================");
+
+            // Faixa de idade
+            texto.AppendLine($"Idade: de {promptCopy.publicoAlvo.IdadeInicial} a {promptCopy.publicoAlvo.IdadeFinal} anos.");
+
+            // Gênero
+            texto.AppendLine($"Gênero: {promptCopy.publicoAlvo.Genero}");
+
+            // Nível Acadêmico
+            texto.AppendLine($"Nível Acadêmico: {promptCopy.publicoAlvo.NivelAcademico}");
+
+            // Proposta de Valor
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.PropostaValor))
+            {
+                texto.AppendLine($"Proposta de Valor: {promptCopy.publicoAlvo.PropostaValor}");
+            }
+
+            // Interesses
+            if (promptCopy.publicoAlvo.Interesses?.Count > 0)
+            {
+                texto.AppendLine("Interesses:");
+                foreach (var interesse in promptCopy.publicoAlvo.Interesses)
+                {
+                    texto.AppendLine($"- {interesse}");
+                }
+            }
+
+            // Ocupações
+            if (promptCopy.publicoAlvo.Ocupacoes?.Count > 0)
+            {
+                texto.AppendLine("Ocupações:");
+                foreach (var ocupacao in promptCopy.publicoAlvo.Ocupacoes)
+                {
+                    texto.AppendLine($"- {ocupacao}");
+                }
+            }
+
+            // Dores
+            if (promptCopy.publicoAlvo.Dores?.Count > 0)
+            {
+                texto.AppendLine("Dores do público:");
+                foreach (var dor in promptCopy.publicoAlvo.Dores)
+                {
+                    texto.AppendLine($"- {dor}");
+                }
+                texto.AppendLine("<ATENCAO>Essa informação permitirá:\r\n● Destacar os pontos problemáticos, criando identificação e engajamento com a\r\nmensagem.\r\n● Apresentar o produto/serviço como a solução perfeita para suprir essa dor e\r\nnecessidade.\r\n● Enfatizar os benefícios como a transformação e o \"depois\" que o público-alvo\r\nterá ao utilizar o produto/serviço.\r\n● Antecipar objeções e quebras de confiança, tratando-as de forma empática.\r\n● Criar uma narrativa da jornada do usuário, da dor à solução, gerando\r\nenvolvimento emocional.</ATENCAO>");
+            }
+
+            // Diferenciais Competitivos
+            if (promptCopy.publicoAlvo.DiferenciasCompetitivos?.Count > 0)
+            {
+                texto.AppendLine("Diferenciais Competitivos:");
+                foreach (var diferencial in promptCopy.publicoAlvo.DiferenciasCompetitivos)
+                {
+                    texto.AppendLine($"- {diferencial}");
+                }
+            }
+
+            // Nível de Consciência
+            texto.AppendLine($"Nível de Consciência: {promptCopy.publicoAlvo.NivelConsciencia}");
+            texto.AppendLine("<ATENCAO>Baseado no nível de consciência, adapte a abordagem\r\nda cópia para o nível de prontidão e conhecimento do público - alvo, usando:\r\n● Educacional para inconscientes do problema\r\n● Identificação da dor para conscientes do problema\r\n● Apresentação da solução para conscientes da solução\r\n● Diferenciação e benefícios para conscientes do produto\r\n● Oferta irresistível para totalmente conscientes\r\n● Reforço de decisão para clientes</ATENCAO>");
+            
+            // Outras Informações
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInf))
+            {
+                texto.AppendLine($"Outras Informações: {promptCopy.publicoAlvo.OutrasInf}");
+            }
+            texto.AppendLine("===============================");
+            return texto.ToString();
+
+        }
+
+        public string GerarTextoBriefing()
+        {
+            StringBuilder briefingTexto = new StringBuilder();
+
+            // Início do briefing
+            briefingTexto.AppendLine("Briefing:");
+            briefingTexto.AppendLine("===============================");
+
+            // Descrição do Prompt
+            briefingTexto.AppendLine($"Descrição do Copy: {promptCopy.DescricaoCopy}");
+
+            // Tipo de Venda
+            briefingTexto.AppendLine($"Tipo de Venda: {promptCopy.briefing.TipoVenda}");
+
+            // Marca
+            briefingTexto.AppendLine($"Marca: {promptCopy.briefing.Marca}");
+
+            // Ideia Promovida
+            briefingTexto.AppendLine($"Ideia Promovida: {promptCopy.briefing.IdeiaPromovida}");
+
+            // Link do Site
+            briefingTexto.AppendLine($"Link do Site: {promptCopy.briefing.LinkSite}");
+
+            // Segmento e Subsegmento de Negócio
+            briefingTexto.AppendLine($"Segmento de Negócio: {promptCopy.briefing.SegmentoNegocio}");
+            briefingTexto.AppendLine($"Subsegmento de Negócio: {promptCopy.briefing.SubSegmentoNegocio}");
+
+            // É lançamento de produto/serviço?
+            briefingTexto.AppendLine($"É lançamento de produto ou serviço?: {promptCopy.briefing.ELancamentoProdServ}");
+
+            // Link do Catálogo de Produto ou Serviço
+            briefingTexto.AppendLine($"Link do Catálogo: {promptCopy.briefing.LinkCatalogoProdServ}");
+
+            // Observações
+            briefingTexto.AppendLine($"Observações: {promptCopy.briefing.Observacoes}");
+
+            // Informações sobre Produto ou Serviço
+            briefingTexto.AppendLine($"Informações sobre Produto ou Serviço: {promptCopy.briefing.InformacoesProdServ}");
+
+            // Objetivos
+            briefingTexto.AppendLine($"Objetivo Geral: {promptCopy.briefing.ObjetivoGeral}");
+            briefingTexto.AppendLine($"Objetivo Específico: {promptCopy.briefing.ObjetivoEspecifico}");
+
+            // Destino do Copy
+            briefingTexto.AppendLine($"Destino do Copy: {promptCopy.briefing.DestinoCopy}");
+
+            // Mensagem a ser Transmitida
+            briefingTexto.AppendLine($"Mensagem a ser Transmitida: {promptCopy.briefing.MensagemTransmitida}");
+
+            // Metas da Campanha
+            briefingTexto.AppendLine("Metas da Campanha:");
+            briefingTexto.AppendLine($"- Adição ao Carrinho: {(promptCopy.briefing.metasCampanhas.AdicaoCarrinho ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Cadastro de Formulário: {(promptCopy.briefing.metasCampanhas.CadastroFrm ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Cliques no Link: {(promptCopy.briefing.metasCampanhas.Clickslink ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Compartilhamentos: {(promptCopy.briefing.metasCampanhas.Compartilhamentos ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Desempenho: {(promptCopy.briefing.metasCampanhas.Desempenho ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Engajamento: {(promptCopy.briefing.metasCampanhas.Engajamento ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Interação: {(promptCopy.briefing.metasCampanhas.Interacao ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Permanência na Página: {(promptCopy.briefing.metasCampanhas.PermanenciaPag ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Registro: {(promptCopy.briefing.metasCampanhas.Registro ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Seguidores: {(promptCopy.briefing.metasCampanhas.Seguidores ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Vendas: {(promptCopy.briefing.metasCampanhas.Vendas ? "Sim" : "Não")}");
+            briefingTexto.AppendLine($"- Visualizações: {(promptCopy.briefing.metasCampanhas.Vizualizacoes ? "Sim" : "Não")}");
+
+            // Final do briefing
+            briefingTexto.AppendLine("===============================");
+
+            return briefingTexto.ToString();
+        }
+
+        #endregion
+
+        private string ObterTextoGroupBox(GroupBox groupBox)
+        {
+            // Itera pelos controles no GroupBox
+            foreach (Control control in groupBox.Controls)
+            {
+                // Verifica se o controle é um RadioButton e se está marcado
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+                    return radioButton.Text; // Retorna o texto do RadioButton selecionado
+                }
+            }
+
+            return string.Empty; // Retorna vazio se nenhum RadioButton estiver selecionado
+        }
+
+        private List<string> ObterItensSelecionado(CheckedListBox ckList)
+        {
+            List<string> itensSelecionados = new List<string>();
+
+            // Itera pelos itens checados em ckList
+            foreach (var item in ckList.CheckedItems)
+            {
+                itensSelecionados.Add(item.ToString());
+            }
+
+            return itensSelecionados;
         }
     }
 }
