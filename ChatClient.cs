@@ -51,7 +51,6 @@ namespace AIBAM
             }
         }
 
-
         public async Task SendMessage(string message)
         {
             if (_stream == null)
@@ -68,26 +67,27 @@ namespace AIBAM
 
                 // Buffer para armazenar a resposta
                 byte[] responseBuffer = new byte[1024];
-                int bytesRead = 0;
+                int bytesRead;
 
-                // Continuar lendo enquanto houver dados
+                // Continue lendo enquanto houver dados
                 do
                 {
                     bytesRead = await _stream.ReadAsync(responseBuffer, 0, responseBuffer.Length);
-                    string partialResponse = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
+                    if (bytesRead > 0)
+                    {
+                        string partialResponse = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
 
-                    // Dispara o evento para o trecho de mensagem recebido
-                    OnMessageReceived?.Invoke(partialResponse);
+                        // Dispara o evento para o trecho de mensagem recebido
+                        OnMessageReceived?.Invoke(partialResponse);
+                    }
                 }
-                while (_stream.DataAvailable); // Continua enquanto houver dados disponíveis no stream
+                while (bytesRead > 0); // Continua enquanto houver dados
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Erro ao enviar mensagem: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         public void Disconnect()
         {

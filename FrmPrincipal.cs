@@ -103,7 +103,7 @@ namespace AIBAM
 
             string _ = "chat " + txtPrompt.Text;
             // Envia a mensagem para o servidor via socket
-            await chatClient.SendMessage(_);
+            chatClient.SendMessage(_);
 
             AtualizaBarraProgresso();
             AtualizaCursor(false);
@@ -111,6 +111,8 @@ namespace AIBAM
             // Limpa o campo de entrada após o envio
             txtPrompt.Clear();
             txtPrompt.Focus();
+            SetStatus("Pronto!");
+
         }
 
         private void AtualizaBarraProgresso()
@@ -139,7 +141,8 @@ namespace AIBAM
                 saveFileDialog.Title = "Salvar Conversação";
                 saveFileDialog.DefaultExt = "md";
                 saveFileDialog.AddExtension = true;
-
+                saveFileDialog.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "CONVERSAS");
+                saveFileDialog.FileName = "CONVERSA_LIVRE";
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = saveFileDialog.FileName;
@@ -226,28 +229,42 @@ namespace AIBAM
             toolMenu.DisplayStyle = toolMenu.Checked ? ToolStripItemDisplayStyle.ImageAndText : ToolStripItemDisplayStyle.Image;
             splitContainer1.SplitterDistance = toolMenu.Checked ? 200 : 25;
         }
-        private void toolChatLivre_Click(object sender, EventArgs e)
+       
+        private void SelecionaTipoChat(string ChatParametrizado)
         {
             AtualizaBarraProgresso();
-            toolChatLivre.CheckState = CheckState.Checked;
-            toolChatParametrizado.Checked = !toolChatLivre.Checked;
-            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
-            splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
-            toolChatParametrizado.CheckState = CheckState.Unchecked;
-            toolChatLivre.CheckState = CheckState.Checked;
+            if (ChatParametrizado == "true")
+            {
+                toolChatParametrizado.CheckState = CheckState.Checked;
+                toolChatLivre.Checked = !toolChatParametrizado.Checked;
+                splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
+                splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
+                toolChatLivre.CheckState = CheckState.Unchecked;
+                toolChatParametrizado.CheckState = CheckState.Checked;
+                SetStatus("Chat Parametrizado pronto!");
+            }
+            else
+            {
+                toolChatLivre.CheckState = CheckState.Checked;
+                toolChatParametrizado.Checked = !toolChatLivre.Checked;
+                splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
+                splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
+                toolChatParametrizado.CheckState = CheckState.Unchecked;
+                toolChatLivre.CheckState = CheckState.Checked;
+                SetStatus("Chat Livre pronto!");
+            }
             AtualizaBarraProgresso();
+        }
+        private void toolChatLivre_Click(object sender, EventArgs e)
+        {
+            SelecionaTipoChat("false");
+            Settings.Default.TipoChat = "false";
         }
 
         private void toolChatParametrizado_Click(object sender, EventArgs e)
         {
-            AtualizaBarraProgresso();
-            toolChatParametrizado.CheckState = CheckState.Checked;
-            toolChatLivre.Checked = !toolChatParametrizado.Checked;
-            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
-            splitContainer2.Panel2Collapsed = !toolChatLivre.Checked;
-            toolChatLivre.CheckState = CheckState.Unchecked;
-            toolChatParametrizado.CheckState = CheckState.Checked;
-            AtualizaBarraProgresso();
+            SelecionaTipoChat("true");
+            Settings.Default.TipoChat = "true";
         }
 
         private void FrmPrincipal_Load(object sender, EventArgs e)
@@ -260,212 +277,215 @@ namespace AIBAM
             txtPrompt.Focus();
             AtualizaBarraProgresso();
             SetStatus("Pronto!");
-            toolChatLivre.Checked = !toolChatParametrizado.Checked;
-            splitContainer2.Panel1Collapsed = !toolChatParametrizado.Checked;
+            SelecionaTipoChat(Settings.Default.TipoChat);
         }
 
         private void cboSegmento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Limpa os itens do ComboBox de subsegmentos
-            cboSubSegmentos.Items.Clear();
-            // Obtém o segmento selecionado
-            string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
-
-            // Adiciona os subsegmentos de acordo com o segmento selecionado
-            switch (segmentoSelecionado)
+            if (cboSegmento.SelectedItem != null && !string.IsNullOrEmpty(cboSegmento.SelectedItem.ToString()))
             {
-                case "Tecnologia da Informação (TI)":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                // Limpa os itens do ComboBox de subsegmentos
+                cboSubSegmentos.Items.Clear();
+
+                // Obtém o segmento selecionado
+                string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
+
+                // Adiciona os subsegmentos de acordo com o segmento selecionado
+                switch (segmentoSelecionado)
+                {
+                    case "Tecnologia da Informação (TI)":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Desenvolvimento de Software",
                 "Consultoria em TI",
                 "Segurança da Informação",
                 "Infraestrutura de Redes",
                 "Serviços em Nuvem (Cloud Computing)",
                 "Desenvolvimento de Aplicativos Mobile"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Educação":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Educação":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Escolas e Universidades",
                 "Cursos Online (EAD)",
                 "Formação Profissional",
                 "Treinamento Corporativo",
                 "Plataformas de Ensino à Distância",
                 "Educação Infantil"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Saúde e Bem-Estar":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Saúde e Bem-Estar":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Clínicas Médicas e Odontológicas",
                 "Farmácias",
                 "Hospitais",
                 "Academias e Centros de Fitness",
                 "Terapias Alternativas (Fisioterapia, Acupuntura)",
                 "Saúde Mental (Psicologia e Psiquiatria)"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Alimentação e Bebidas":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Alimentação e Bebidas":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Restaurantes e Bares",
                 "Fast Food",
                 "Food Trucks",
                 "Indústria Alimentícia",
                 "Delivery de Alimentos",
                 "Cafeterias"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Varejo":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Varejo":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Supermercados",
                 "Lojas de Roupas e Acessórios",
                 "E-commerce",
                 "Lojas de Conveniência",
                 "Lojas de Móveis e Decoração",
                 "Produtos Eletrônicos"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Turismo e Hotelaria":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Turismo e Hotelaria":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Agências de Viagens",
                 "Hotéis e Resorts",
                 "Pousadas e Hostels",
                 "Turismo de Aventura",
                 "Turismo de Luxo",
                 "Aluguel de Temporada"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Construção Civil e Imobiliário":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Construção Civil e Imobiliário":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Construtoras e Incorporadoras",
                 "Arquitetura e Design de Interiores",
                 "Corretoras de Imóveis",
                 "Engenharia Civil",
                 "Venda e Aluguel de Imóveis",
                 "Manutenção Predial"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Entretenimento e Cultura":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Entretenimento e Cultura":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Produtoras de Eventos",
                 "Cinema e Produção Audiovisual",
                 "Música e Shows",
                 "Parques Temáticos",
                 "Editoração e Publicação",
                 "Streaming de Conteúdo"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Finanças e Seguros":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Finanças e Seguros":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Bancos e Instituições Financeiras",
                 "Fintechs",
                 "Corretoras de Seguros",
                 "Consultoria Financeira",
                 "Investimentos e Bolsa de Valores",
                 "Cartões de Crédito e Pagamentos"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Logística e Transporte":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Logística e Transporte":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Transporte de Cargas",
                 "Empresas de Transporte Público",
                 "Aluguel de Veículos",
                 "Logística e Armazenagem",
                 "Transporte Internacional (Importação e Exportação)",
                 "Entregas de Pequenas Mercadorias"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Indústria":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Indústria":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Indústria Automobilística",
                 "Indústria Têxtil",
                 "Indústria Química",
                 "Indústria de Plásticos",
                 "Indústria de Alimentos e Bebidas",
                 "Indústria Metalúrgica"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Moda e Beleza":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Moda e Beleza":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Salões de Beleza e Barbearias",
                 "Indústria de Cosméticos",
                 "Lojas de Roupas e Acessórios",
                 "Consultoria de Imagem",
                 "Maquiagem e Estética",
                 "Spa e Clínicas de Beleza"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Agronegócio":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Agronegócio":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Produção Agrícola",
                 "Pecuária",
                 "Produção de Alimentos Orgânicos",
                 "Agroindústria",
                 "Máquinas e Equipamentos Agrícolas",
                 "Exportação de Produtos Agrícolas"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Energia e Sustentabilidade":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Energia e Sustentabilidade":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Energia Renovável (Solar, Eólica)",
                 "Mineração",
                 "Tratamento de Resíduos",
                 "Consultoria Ambiental",
                 "Eficiência Energética",
                 "Gestão de Recursos Naturais"
-                    });
-                    break;
+                        });
+                        break;
 
-                case "Comunicação e Marketing":
-                    cboSubSegmentos.Items.AddRange(new string[]
-                    {
+                    case "Comunicação e Marketing":
+                        cboSubSegmentos.Items.AddRange(new string[]
+                        {
                 "Agências de Publicidade",
                 "Marketing Digital",
                 "Relações Públicas",
                 "Consultoria em Branding",
                 "Produção de Conteúdo",
                 "Mídias Sociais"
-                    });
-                    break;
+                        });
+                        break;
 
-                default:
-                    cboSubSegmentos.Items.Clear();
-                    break;
-            }
+                    default:
+                        cboSubSegmentos.Items.Clear();
+                        break;
+                }
 
-            // Opcional: Seleciona o primeiro subsegmento automaticamente
-            if (cboSubSegmentos.Items.Count > 0)
-            {
-                cboSubSegmentos.SelectedIndex = 0;
+                // Opcional: Seleciona o primeiro subsegmento automaticamente
+                if (cboSubSegmentos.Items.Count > 0)
+                {
+                    cboSubSegmentos.SelectedIndex = 0;
+                }
+
             }
         }
-
         private void nEntonacao_Enter(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(nEntonacao, " 1-Pouco Informal e 10-Muito Formal");
@@ -639,7 +659,7 @@ namespace AIBAM
 
         private void ckSentimentos_Leave(object sender, EventArgs e)
         {
-            promptCopy.controlesCopy.Sentimeto = ObterItensSelecionado(ckSentimentos);
+            promptCopy.controlesCopy.Sentimento = ObterItensSelecionado(ckSentimentos);
         }
 
         private void gbPerspectiva_Leave(object sender, EventArgs e)
@@ -659,7 +679,7 @@ namespace AIBAM
         public void SaveToJson(dynamic obj, string nome)
         {
             // Caminho do diretório de execução
-            string directoryPath = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS");
             string filePath = Path.Combine(directoryPath, $"{nome}.json");
 
             try
@@ -678,50 +698,6 @@ namespace AIBAM
             }
         }
         #endregion
-
-        private void salvarToolStripButton1_Click(object sender, EventArgs e)
-        {
-            AtualizaBarraProgresso();
-            SetStatus("Iniciando processo salvar");
-            ///salva aquivo em formato de texto concatenado
-            MontaPrompt();
-
-            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
-            saveFileDialog1.Title = "Salvar Modelo Prompt";
-            saveFileDialog1.DefaultExt = "md";
-            saveFileDialog1.FileName = txtNomePromptCopy.Text;
-            saveFileDialog1.AddExtension = true;
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = saveFileDialog1.FileName;
-                ///salva arquivo em dbjson para iteração
-                SaveToJson(promptCopy, txtNomePromptCopy.Text);
-                try
-                {
-                    File.WriteAllText(filePath, textoPromptCopy);
-                    MessageBox.Show($"Modelo Prompt salvo em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Atualiza o status após o salvamento bem-sucedido
-                    SetStatus("Modelo Prompt salva com sucesso!");
-                }
-                catch (Exception ex)
-                {
-                    // Mostra a mensagem de erro
-                    MessageBox.Show($"Erro ao salvar a Modelo Prompt: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // Atualiza o status em caso de erro
-                    SetStatus("Erro ao salvar a Modelo Prompt.");
-                }
-            }
-            else
-            {
-                // Atualiza o status se o usuário cancelar a operação de salvamento
-                SetStatus("Operação de salvamento cancelada.");
-            }
-                       
-            AtualizaBarraProgresso();
-        }
 
         #region  GERA TEXTO DE COPY PARAMETRIZADO
         private void MontaPrompt()
@@ -781,10 +757,10 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             texto.AppendLine($"Originalidade: {promptCopy.controlesCopy.Originalidade}");
 
             // Sentimentos
-            if (promptCopy.controlesCopy.Sentimeto?.Count > 0)
+            if (promptCopy.controlesCopy.Sentimento?.Count > 0)
             {
                 texto.AppendLine("Sentimentos:");
-                foreach (var sentimento in promptCopy.controlesCopy.Sentimeto)
+                foreach (var sentimento in promptCopy.controlesCopy.Sentimento)
                 {
                     texto.AppendLine($"- {sentimento}");
                 }
@@ -875,7 +851,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             // Nível de Consciência
             texto.AppendLine($"Nível de Consciência: {promptCopy.publicoAlvo.NivelConsciencia}");
             texto.AppendLine("<ATENCAO>Baseado no nível de consciência, adapte a abordagem\r\nda cópia para o nível de prontidão e conhecimento do público - alvo, usando:\r\n● Educacional para inconscientes do problema\r\n● Identificação da dor para conscientes do problema\r\n● Apresentação da solução para conscientes da solução\r\n● Diferenciação e benefícios para conscientes do produto\r\n● Oferta irresistível para totalmente conscientes\r\n● Reforço de decisão para clientes</ATENCAO>");
-            
+
             // Outras Informações
             if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInf))
             {
@@ -984,6 +960,253 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             }
 
             return itensSelecionados;
+        }
+
+        #region AÇÕES PROMPT COPY
+        private void salvarToolStripButton1_Click(object sender, EventArgs e)
+        {
+            AtualizaBarraProgresso();
+            SetStatus("Iniciando processo salvar");
+            ///salva aquivo em formato de texto concatenado
+            MontaPrompt();
+            saveFileDialog1 = new();
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
+            saveFileDialog1.Title = "Salvar Modelo Prompt";
+            saveFileDialog1.DefaultExt = "txt";
+            saveFileDialog1.FileName = txtNomePromptCopy.Text;
+            saveFileDialog1.AddExtension = true;
+            string diretorio = Path.Combine(Settings.Default.DiretorioRaiz, "PROMPTS");
+            saveFileDialog1.InitialDirectory = diretorio;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog1.FileName;
+                ///salva arquivo em dbjson para iteração
+                SaveToJson(promptCopy, txtNomePromptCopy.Text);
+                try
+                {
+                    File.WriteAllText(filePath, textoPromptCopy);
+                    MessageBox.Show($"Modelo Prompt salvo em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Atualiza o status após o salvamento bem-sucedido
+                    SetStatus("Modelo Prompt salva com sucesso!");
+                }
+                catch (Exception ex)
+                {
+                    // Mostra a mensagem de erro
+                    MessageBox.Show($"Erro ao salvar a Modelo Prompt: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Atualiza o status em caso de erro
+                    SetStatus("Erro ao salvar a Modelo Prompt.");
+                }
+            }
+            else
+            {
+                // Atualiza o status se o usuário cancelar a operação de salvamento
+                SetStatus("Operação de salvamento cancelada.");
+            }
+
+            AtualizaBarraProgresso();
+        }
+        private void abrirToolStripButton1_Click(object sender, EventArgs e)
+        {
+            // Configurações do diálogo de abertura de arquivo
+            openFileDialog1.Filter = "JSON files (*.json)|*.json";
+            openFileDialog1.Title = "Abrir Modelo Prompt";
+            saveFileDialog1.AddExtension = false;
+            openFileDialog1.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS");
+            // Exibe o diálogo e verifica se o usuário selecionou um arquivo
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog1.FileName;
+
+                try
+                {
+                    // Lê o conteúdo do arquivo JSON selecionado
+                    string json = File.ReadAllText(filePath);
+
+                    // Deserializa o conteúdo JSON para o objeto promptCopy
+                    promptCopy = JsonConvert.DeserializeObject<PromptCopy>(json);
+
+                    // Atualiza os campos da interface com os dados do promptCopy
+                    txtNomePromptCopy.Text = promptCopy.DescricaoCopy;
+                    txtMarca.Text = promptCopy.briefing.Marca;
+                    txtLinkSite.Text = promptCopy.briefing.LinkSite;
+                    cboSegmento.Text = promptCopy.briefing.SegmentoNegocio;
+                    cboSubSegmentos.Text = promptCopy.briefing.SubSegmentoNegocio;
+                    txtLinkCatalogo.Text = promptCopy.briefing.LinkCatalogoProdServ;
+                    txtObservacoes.Text = promptCopy.briefing.Observacoes;
+                    txtInforProdServ.Text = promptCopy.briefing.InformacoesProdServ;
+                    txtObjetivoGeral.Text = promptCopy.briefing.ObjetivoGeral;
+                    txtObjetivoEspecifico.Text = promptCopy.briefing.ObjetivoEspecifico;
+                    cboDestinoCopy.Text = promptCopy.briefing.DestinoCopy;
+                    txtMensagemCopy.Text = promptCopy.briefing.MensagemTransmitida;
+                    txtIdeiaPromovida.Text = promptCopy.briefing.IdeiaPromovida;
+
+                    // Atualiza os valores de metas de campanhas
+                    ckAdicao.Checked = promptCopy.briefing.metasCampanhas.AdicaoCarrinho;
+                    chkCadastro.Checked = promptCopy.briefing.metasCampanhas.CadastroFrm;
+                    chkClick.Checked = promptCopy.briefing.metasCampanhas.Clickslink;
+                    chkCompartilhamento.Checked = promptCopy.briefing.metasCampanhas.Compartilhamentos;
+                    chkDesempenho.Checked = promptCopy.briefing.metasCampanhas.Desempenho;
+                    chkEngajamento.Checked = promptCopy.briefing.metasCampanhas.Engajamento;
+                    chkInteracao.Checked = promptCopy.briefing.metasCampanhas.Interacao;
+                    chkPermanencia.Checked = promptCopy.briefing.metasCampanhas.PermanenciaPag;
+                    chkRegistro.Checked = promptCopy.briefing.metasCampanhas.Registro;
+                    chkSeguidores.Checked = promptCopy.briefing.metasCampanhas.Seguidores;
+                    chkVenda.Checked = promptCopy.briefing.metasCampanhas.Vendas;
+                    chkVizualizacao.Checked = promptCopy.briefing.metasCampanhas.Vizualizacoes;
+
+                    // Atualiza o público-alvo
+                    nIdadeInicial.Value = promptCopy.publicoAlvo.IdadeInicial;
+                    nIdadeFinal.Value = promptCopy.publicoAlvo.IdadeFinal;
+                    // Presume que ObterTextoGroupBox retorna o valor correto
+                    SetSelectedValue(gbGenero, promptCopy.publicoAlvo.Genero);
+                    cboNivelAcademico.Text = promptCopy.publicoAlvo.NivelAcademico;
+                    txtPropostaValor.Text = promptCopy.publicoAlvo.PropostaValor;
+
+                    // Atribui os interesses e ocupações usando o método GetItensSelecionados
+                    lstInteresses.SetItensSelecionados(promptCopy.publicoAlvo.Interesses);
+                    lstOcupacoes.SetItensSelecionados(promptCopy.publicoAlvo.Ocupacoes);
+                    lstDores.SetItensSelecionados(promptCopy.publicoAlvo.Dores);
+                    listDiferenciais.SetItensSelecionados(promptCopy.publicoAlvo.DiferenciasCompetitivos);
+
+                    // Atualiza o nível de consciência e outras informações
+                    SetSelectedValue(gbNivelConsciencia, promptCopy.publicoAlvo.NivelConsciencia);
+                    txtOutrasInf.Text = promptCopy.publicoAlvo.OutrasInf;
+                    SetSelectedValue(ckSentimentos, promptCopy.controlesCopy.Sentimento);
+                    // Atualiza os controles de criação
+                    nEntonacao.Value = promptCopy.controlesCopy.Entonacao;
+                    nOriginalidade.Value = promptCopy.controlesCopy.Originalidade;
+                    SetSelectedValue(gbPerspectiva, promptCopy.controlesCopy.Perspectiva);
+                    lstPalavrasChave.SetItensSelecionados(promptCopy.controlesCopy.PalavrasChave);
+
+                    // Atualiza o status de sucesso
+                    SetStatus($"Modelo Prompt carregado de: {filePath}");
+                }
+                catch (Exception ex)
+                {
+                    // Mostra mensagem de erro se algo falhar
+                    MessageBox.Show($"Erro ao abrir o Modelo Prompt: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Atualiza o status em caso de erro
+                    SetStatus("Erro ao abrir o Modelo Prompt.");
+                }
+            }
+            else
+            {
+                // Atualiza o status se o usuário cancelar a operação de abertura
+                SetStatus("Operação de abertura cancelada.");
+            }
+        }
+
+        private void SetSelectedValue(CheckedListBox ckList, List<string> itens)
+        {
+            // Itera sobre todos os itens no CheckedListBox
+            for (int i = 0; i < ckList.Items.Count; i++)
+            {
+                // Verifica se o texto do item atual está na lista de itens fornecida
+                if (itens.Contains(ckList.Items[i].ToString()))
+                {
+                    // Marca o item se estiver na lista
+                    ckList.SetItemChecked(i, true);
+                }
+                else
+                {
+                    // Desmarca o item se não estiver na lista
+                    ckList.SetItemChecked(i, false);
+                }
+            }
+        }
+
+
+        private void SetSelectedValue(GroupBox groupBox, string value)
+        {
+            foreach (Control control in groupBox.Controls)
+            {
+                if (control is RadioButton radioButton)
+                {
+                    radioButton.Checked = radioButton.Text == value;
+                }
+            }
+        }
+
+
+        private void novaToolStripButton1_Click(object sender, EventArgs e)
+        {
+            // Limpa o conteúdo dos controles onde o prompt é exibido
+            txtNomePromptCopy.Clear();
+            txtMarca.Clear();
+            txtLinkSite.Clear();
+            cboSegmento.SelectedIndex = -1; // Limpa a seleção do ComboBox
+            cboSubSegmentos.SelectedIndex = -1; // Limpa a seleção do ComboBox
+            txtLinkCatalogo.Clear();
+            txtObservacoes.Clear();
+            txtInforProdServ.Clear();
+            txtObjetivoGeral.Clear();
+            txtObjetivoEspecifico.Clear();
+            cboDestinoCopy.SelectedIndex = -1; // Limpa a seleção do ComboBox
+            txtMensagemCopy.Clear();
+            txtIdeiaPromovida.Clear();
+
+            // Limpa os campos de metas de campanhas
+            ckAdicao.Checked = false;
+            chkCadastro.Checked = false;
+            chkClick.Checked = false;
+            chkCompartilhamento.Checked = false;
+            chkDesempenho.Checked = false;
+            chkEngajamento.Checked = false;
+            chkInteracao.Checked = false;
+            chkPermanencia.Checked = false;
+            chkRegistro.Checked = false;
+            chkSeguidores.Checked = false;
+            chkVenda.Checked = false;
+            chkVizualizacao.Checked = false;
+
+            // Limpa o público-alvo
+            nIdadeInicial.Value = nIdadeInicial.Minimum; // ou 0, dependendo do seu controle
+            nIdadeFinal.Value = nIdadeFinal.Minimum; // ou 0, dependendo do seu controle
+            SetSelectedValue(gbGenero, string.Empty); // Limpa o gênero
+            cboNivelAcademico.SelectedIndex = -1; // Limpa a seleção do ComboBox
+            txtPropostaValor.Clear();
+
+            // Limpa os interesses e ocupações
+            lstInteresses.LimparLista();
+            lstOcupacoes.LimparLista();
+            lstDores.LimparLista();
+            listDiferenciais.LimparLista();
+
+            // Limpa o nível de consciência e outras informações
+            SetSelectedValue(gbNivelConsciencia, string.Empty); // Limpa o nível de consciência
+            txtOutrasInf.Clear();
+
+            // Limpa os controles de criação
+            nEntonacao.Value = nEntonacao.Minimum; // ou 0, dependendo do seu controle
+            nOriginalidade.Value = nOriginalidade.Minimum; // ou 0, dependendo do seu controle
+            SetSelectedValue(gbPerspectiva, string.Empty); // Limpa a perspectiva
+            lstPalavrasChave.LimparLista();
+            SetSelectedValue(ckSentimentos, new List<string>());
+
+            // Cria um novo objeto promptCopy vazio
+            promptCopy = new PromptCopy(); // Supondo que PromptCopy é a classe que você está usando
+
+            // Atualiza o status indicando que um novo prompt está pronto para ser criado
+            SetStatus("Novo Modelo Prompt iniciado.");
+        }
+
+
+        #endregion
+
+        private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmConfiguracoes frm = new FrmConfiguracoes();
+            DialogResult result = frm.ShowDialog();
+            if (result == DialogResult.OK) { }
+            else if (result == DialogResult.Cancel) { }
+        }
+
+        private void abrirToolStripButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

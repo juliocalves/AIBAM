@@ -36,6 +36,7 @@ namespace AIBAM
                 {
                     ckList.Items.Add(item, true); // Adiciona item e marca o checkbox
                     txtItem.Clear(); // Limpa o campo de entrada após adicionar
+                    ScrollToLastItem(ckList);
                 }
                 else
                 {
@@ -45,6 +46,14 @@ namespace AIBAM
             else
             {
                 MessageBox.Show("Por favor, insira um item antes de adicionar.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ScrollToLastItem(CheckedListBox ckList)
+        {
+            if (ckList.Items.Count > 0)
+            {
+                // Define o índice do item final para o topo da lista
+                ckList.TopIndex = ckList.Items.Count - 1;
             }
         }
 
@@ -86,10 +95,14 @@ namespace AIBAM
 
         private void toolLimparLista_Click(object sender, EventArgs e)
         {
-            ckList.Items.Clear(); // Limpa todos os itens da lista de uma só vez
+             LimparLista();
             MessageBox.Show("Todos os itens foram removidos.", "Lista Limpa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        public void LimparLista()
+        {
+            ckList.Items.Clear(); // Limpa todos os itens da lista de uma só vez
+        }
 
         private void toolRemoverSelecionados_Click(object sender, EventArgs e)
         {
@@ -108,7 +121,8 @@ namespace AIBAM
             // Configura o filtro e o título da caixa de diálogo para abrir arquivos
             openFileDialog1.Filter = "Text Files (*.txt)|*.txt";
             openFileDialog1.Title = "Abrir Lista";
-
+            saveFileDialog1.FileName = lblNomeLista.Text;
+            openFileDialog1.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "LISTAS");
             // Exibe a caixa de diálogo para o usuário selecionar o arquivo
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -161,6 +175,7 @@ namespace AIBAM
                 saveFileDialog1.DefaultExt = "txt";
                 saveFileDialog1.AddExtension = true;
                 saveFileDialog1.FileName = lblNomeLista.Text;
+                openFileDialog1.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "LISTAS");
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -192,6 +207,17 @@ namespace AIBAM
             else
             {
                 MessageBox.Show("Não há itens para salvar", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        public void SetItensSelecionados(List<string> itensSelecionados)
+        {
+            if(itensSelecionados != null || itensSelecionados.Any())
+            {
+                // Percorre todos os itens do CheckedListBox
+                foreach(var linha in itensSelecionados)
+                {
+                    ckList.Items.Add(linha, true); // Adiciona o item e marca o checkbox
+                }
             }
         }
     }

@@ -164,8 +164,6 @@
             toolStripSeparator4 = new ToolStripSeparator();
             sairToolStripMenuItem = new ToolStripMenuItem();
             editarToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator5 = new ToolStripSeparator();
-            toolStripSeparator6 = new ToolStripSeparator();
             ferramentasToolStripMenuItem = new ToolStripMenuItem();
             personalizarToolStripMenuItem = new ToolStripMenuItem();
             opçõesToolStripMenuItem = new ToolStripMenuItem();
@@ -176,6 +174,7 @@
             toolStripSeparator7 = new ToolStripSeparator();
             sobreToolStripMenuItem = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
+            openFileDialog1 = new OpenFileDialog();
             statusStrip1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
             toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -214,12 +213,10 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            statusStrip1.Dock = DockStyle.None;
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripProgressBar1 });
-            statusStrip1.Location = new Point(929, 633);
+            statusStrip1.Location = new Point(0, 639);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(119, 22);
+            statusStrip1.Size = new Size(1059, 22);
             statusStrip1.TabIndex = 0;
             // 
             // toolStripStatusLabel1
@@ -286,7 +283,7 @@
             // toolMenu
             // 
             toolMenu.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolMenu.Image = Properties.Resources.adicionar;
+            toolMenu.Image = Properties.Resources.cardapio;
             toolMenu.ImageTransparentColor = Color.Magenta;
             toolMenu.Name = "toolMenu";
             toolMenu.Size = new Size(23, 22);
@@ -320,7 +317,7 @@
             tabControlParametros.Location = new Point(5, 3);
             tabControlParametros.Name = "tabControlParametros";
             tabControlParametros.SelectedIndex = 0;
-            tabControlParametros.Size = new Size(1017, 494);
+            tabControlParametros.Size = new Size(1017, 577);
             tabControlParametros.TabIndex = 0;
             // 
             // tabParamConteudo
@@ -332,7 +329,7 @@
             tabParamConteudo.Location = new Point(4, 24);
             tabParamConteudo.Name = "tabParamConteudo";
             tabParamConteudo.Padding = new Padding(3);
-            tabParamConteudo.Size = new Size(1009, 466);
+            tabParamConteudo.Size = new Size(1009, 549);
             tabParamConteudo.TabIndex = 0;
             tabParamConteudo.Text = "Conteudo";
             tabParamConteudo.ToolTipText = "Gera COPYWRITER com base em informações definidas";
@@ -360,6 +357,7 @@
             novaToolStripButton1.Size = new Size(23, 22);
             novaToolStripButton1.Text = "&Nova";
             novaToolStripButton1.ToolTipText = "Novo Prompt";
+            novaToolStripButton1.Click += novaToolStripButton1_Click;
             // 
             // abrirToolStripButton1
             // 
@@ -370,6 +368,7 @@
             abrirToolStripButton1.Size = new Size(23, 22);
             abrirToolStripButton1.Text = "&Abrir";
             abrirToolStripButton1.ToolTipText = "Abrir Prompt ";
+            abrirToolStripButton1.Click += abrirToolStripButton1_Click;
             // 
             // salvarToolStripButton1
             // 
@@ -1426,7 +1425,7 @@
             btnMic.AccessibleRole = AccessibleRole.Cursor;
             btnMic.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnMic.Image = Properties.Resources.conversacao__1_;
-            btnMic.Location = new Point(995, 42);
+            btnMic.Location = new Point(987, 41);
             btnMic.Name = "btnMic";
             btnMic.Size = new Size(27, 22);
             btnMic.TabIndex = 12;
@@ -1441,7 +1440,7 @@
             chatControl.BackColor = Color.White;
             chatControl.Location = new Point(5, 3);
             chatControl.Name = "chatControl";
-            chatControl.Size = new Size(1017, 35);
+            chatControl.Size = new Size(1006, 35);
             chatControl.TabIndex = 10;
             chatControl.TabStop = false;
             chatControl.Tag = "Chat";
@@ -1526,6 +1525,7 @@
             abrirToolStripButton.Name = "abrirToolStripButton";
             abrirToolStripButton.Size = new Size(23, 22);
             abrirToolStripButton.Text = "&Abrir";
+            abrirToolStripButton.Click += abrirToolStripButton_Click;
             // 
             // salvarToolStripButton
             // 
@@ -1655,20 +1655,9 @@
             // 
             // editarToolStripMenuItem
             // 
-            editarToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripSeparator5, toolStripSeparator6 });
             editarToolStripMenuItem.Name = "editarToolStripMenuItem";
             editarToolStripMenuItem.Size = new Size(49, 20);
             editarToolStripMenuItem.Text = "&Editar";
-            // 
-            // toolStripSeparator5
-            // 
-            toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(57, 6);
-            // 
-            // toolStripSeparator6
-            // 
-            toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(57, 6);
             // 
             // ferramentasToolStripMenuItem
             // 
@@ -1680,14 +1669,18 @@
             // personalizarToolStripMenuItem
             // 
             personalizarToolStripMenuItem.Name = "personalizarToolStripMenuItem";
-            personalizarToolStripMenuItem.Size = new Size(137, 22);
+            personalizarToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Alt | Keys.P;
+            personalizarToolStripMenuItem.Size = new Size(231, 22);
             personalizarToolStripMenuItem.Text = "&Personalizar";
             // 
             // opçõesToolStripMenuItem
             // 
+            opçõesToolStripMenuItem.Image = Properties.Resources.engrenagens;
             opçõesToolStripMenuItem.Name = "opçõesToolStripMenuItem";
-            opçõesToolStripMenuItem.Size = new Size(137, 22);
-            opçõesToolStripMenuItem.Text = "&Opções";
+            opçõesToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Alt | Keys.C;
+            opçõesToolStripMenuItem.Size = new Size(231, 22);
+            opçõesToolStripMenuItem.Text = "&Configurações  ...";
+            opçõesToolStripMenuItem.Click += opçõesToolStripMenuItem_Click;
             // 
             // ajudaToolStripMenuItem
             // 
@@ -1730,6 +1723,10 @@
             toolTip1.BackColor = Color.Ivory;
             toolTip1.IsBalloon = true;
             // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
             // FrmPrincipal
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -1739,6 +1736,7 @@
             Controls.Add(toolStripContainer1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             ImeMode = ImeMode.On;
             MainMenuStrip = menuStrip1;
             Name = "FrmPrincipal";
@@ -1829,8 +1827,6 @@
         private ToolStripSeparator toolStripSeparator4;
         private ToolStripMenuItem sairToolStripMenuItem;
         private ToolStripMenuItem editarToolStripMenuItem;
-        private ToolStripSeparator toolStripSeparator5;
-        private ToolStripSeparator toolStripSeparator6;
         private ToolStripMenuItem ferramentasToolStripMenuItem;
         private ToolStripMenuItem personalizarToolStripMenuItem;
         private ToolStripMenuItem opçõesToolStripMenuItem;
@@ -1956,5 +1952,6 @@
         private BindingSource promptCopyBindingSource;
         private BindingSource bindingSource1;
         private TextBox txtIdeiaPromovida;
+        private OpenFileDialog openFileDialog1;
     }
 }
