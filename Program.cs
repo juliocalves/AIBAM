@@ -1,7 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace AIBAM
 {
@@ -16,9 +13,9 @@ namespace AIBAM
             ApplicationConfiguration.Initialize();
 
             // Cria e inicia uma nova thread para executar o script Python
-            Thread pythonScriptThread = new Thread(ExecutePythonScript);
-            pythonScriptThread.IsBackground = true; // Define como uma thread de fundo
-            pythonScriptThread.Start();
+            //Thread pythonScriptThread = new Thread(ExecutePythonScript);
+            //pythonScriptThread.IsBackground = true; // Define como uma thread de fundo
+            //pythonScriptThread.Start();
 
             // Executa a interface gráfica principal
             Application.Run(new FrmPrincipal());
@@ -42,32 +39,30 @@ namespace AIBAM
                 CreateNoWindow = true // Não mostrar uma janela de console
             };
 
-            using (Process process = new Process())
+            using Process process = new Process();
+            process.StartInfo = startInfo;
+
+            // Captura a saída do script Python
+            process.OutputDataReceived += (sender, e) =>
             {
-                process.StartInfo = startInfo;
-
-                // Captura a saída do script Python
-                process.OutputDataReceived += (sender, e) =>
+                if (!string.IsNullOrEmpty(e.Data))
                 {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        Console.WriteLine(e.Data); // Ou use um método para exibir na interface gráfica
-                    }
-                };
+                    Console.WriteLine(e.Data); // Ou use um método para exibir na interface gráfica
+                }
+            };
 
-                process.ErrorDataReceived += (sender, e) =>
+            process.ErrorDataReceived += (sender, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
                 {
-                    if (!string.IsNullOrEmpty(e.Data))
-                    {
-                        Console.WriteLine("Error: " + e.Data); // Ou use um método para exibir na interface gráfica
-                    }
-                };
+                    Console.WriteLine("Error: " + e.Data); // Ou use um método para exibir na interface gráfica
+                }
+            };
 
-                process.Start();
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-                process.WaitForExit(); // Espera o script terminar
-            }
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit(); // Espera o script terminar
         }
     }
 }

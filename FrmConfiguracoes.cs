@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-
-using AIBAM.Properties; // Certifique-se de ter o namespace correto para as configurações
-
-namespace AIBAM
+﻿namespace AIBAM
 {
     public partial class FrmConfiguracoes : Form
     {
@@ -21,23 +15,7 @@ namespace AIBAM
             tabControl1.TabPages[0].ImageIndex = 0;
         }
 
-        private void btnDefinirDiretorio_Click(object sender, EventArgs e)
-        {
-            // Exibe a caixa de diálogo para seleção de pasta
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                // Salva o caminho selecionado nas configurações
-                Settings.Default.DiretorioRaiz = Path.Combine(folderBrowserDialog1.SelectedPath, "AIBAM");
-
-                // Atualiza o TextBox com o caminho selecionado
-                txtDiretorioRaiz.Text = Settings.Default.DiretorioRaiz;
-
-                // Salva as configurações
-                Settings.Default.Save();
-            }
-        }
-
-        private void btnCriarEstrutura_Click(object sender, EventArgs e)
+        private void salvarToolStripButton_Click(object sender, EventArgs e)
         {
             // Verifica se o diretório raiz está definido
             if (!string.IsNullOrEmpty(Settings.Default.DiretorioRaiz))
@@ -75,6 +53,22 @@ namespace AIBAM
             else
             {
                 MessageBox.Show("Por favor, defina o diretório raiz antes de criar a estrutura.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void abrirToolStripButton_Click(object sender, EventArgs e)
+        {
+            // Exibe a caixa de diálogo para seleção de pasta
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Salva o caminho selecionado nas configurações
+                Settings.Default.DiretorioRaiz = Path.Combine(folderBrowserDialog1.SelectedPath, "AIBAM");
+
+                // Atualiza o TextBox com o caminho selecionado
+                txtDiretorioRaiz.Text = Settings.Default.DiretorioRaiz;
+
+                // Salva as configurações
+                Settings.Default.Save();
             }
         }
     }

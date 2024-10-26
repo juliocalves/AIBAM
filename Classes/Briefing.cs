@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AIBAM.Classes
+﻿namespace AIBAM.Classes
 {
     /// <summary>
     /// Classe representativa de Brieng para desenvolvimento de copy
@@ -16,7 +10,7 @@ namespace AIBAM.Classes
             this.metasCampanhas = new();
         }
 
-        public string? TipoVenda {  get; set; }
+        public string? TipoVenda { get; set; }
         public string? Marca { get; set; }
         public string? IdeiaPromovida { get; set; }
         public string? LinkSite { get; set; }
@@ -31,5 +25,6 @@ namespace AIBAM.Classes
         public string? DestinoCopy { get; set; }
         public string? MensagemTransmitida { get; set; }
         public MetasCampanha? metasCampanhas { get; set; }
+        public string? ArquivoImportado { get; set; } = string.Empty;
     }
 }

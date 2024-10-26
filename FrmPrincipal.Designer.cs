@@ -50,6 +50,10 @@
             txtNomePromptCopy = new TextBox();
             tabCopy = new TabControl();
             tabPageBriefing = new TabPage();
+            lblArquivo = new Label();
+            toolStrip5 = new ToolStrip();
+            toolStripButtonAdicionarArquivo = new ToolStripButton();
+            toolStripButtonRemoverArquivo = new ToolStripButton();
             txtIdeiaPromovida = new TextBox();
             txtMensagemCopy = new TextBox();
             label12 = new Label();
@@ -85,7 +89,6 @@
             label5 = new Label();
             txtLinkSite = new TextBox();
             label4 = new Label();
-            btnAnexo = new Button();
             label3 = new Label();
             txtMarca = new TextBox();
             label2 = new Label();
@@ -175,6 +178,7 @@
             sobreToolStripMenuItem = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
             openFileDialog1 = new OpenFileDialog();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             statusStrip1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
             toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -193,6 +197,7 @@
             toolStrip4.SuspendLayout();
             tabCopy.SuspendLayout();
             tabPageBriefing.SuspendLayout();
+            toolStrip5.SuspendLayout();
             gBMetas.SuspendLayout();
             gBLancamento.SuspendLayout();
             gBTipoVenda.SuspendLayout();
@@ -231,17 +236,17 @@
             // 
             // toolStripContainer1
             // 
-            toolStripContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             // 
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
             toolStripContainer1.ContentPanel.ImeMode = ImeMode.On;
             toolStripContainer1.ContentPanel.RightToLeft = RightToLeft.No;
-            toolStripContainer1.ContentPanel.Size = new Size(1060, 579);
-            toolStripContainer1.Location = new Point(0, 26);
+            toolStripContainer1.ContentPanel.Size = new Size(1059, 590);
+            toolStripContainer1.Dock = DockStyle.Fill;
+            toolStripContainer1.Location = new Point(0, 24);
             toolStripContainer1.Name = "toolStripContainer1";
-            toolStripContainer1.Size = new Size(1060, 604);
+            toolStripContainer1.Size = new Size(1059, 615);
             toolStripContainer1.TabIndex = 1;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -253,7 +258,7 @@
             // 
             // splitContainer1
             // 
-            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             // 
@@ -261,12 +266,13 @@
             // 
             splitContainer1.Panel1.AutoScroll = true;
             splitContainer1.Panel1.Controls.Add(toolStrip3);
+            splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new Size(1060, 579);
-            splitContainer1.SplitterDistance = 29;
+            splitContainer1.Size = new Size(1059, 590);
+            splitContainer1.SplitterDistance = 32;
             splitContainer1.TabIndex = 0;
             // 
             // toolStrip3
@@ -276,7 +282,7 @@
             toolStrip3.Location = new Point(0, 0);
             toolStrip3.Name = "toolStrip3";
             toolStrip3.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip3.Size = new Size(29, 25);
+            toolStrip3.Size = new Size(32, 25);
             toolStrip3.TabIndex = 0;
             toolStrip3.Text = "toolStrip3";
             // 
@@ -306,18 +312,18 @@
             splitContainer2.Panel2.Controls.Add(btnMic);
             splitContainer2.Panel2.Controls.Add(chatControl);
             splitContainer2.Panel2.Controls.Add(txtPrompt);
-            splitContainer2.Size = new Size(1027, 579);
-            splitContainer2.SplitterDistance = 496;
+            splitContainer2.Size = new Size(1059, 590);
+            splitContainer2.SplitterDistance = 519;
             splitContainer2.TabIndex = 0;
             // 
             // tabControlParametros
             // 
-            tabControlParametros.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControlParametros.Controls.Add(tabParamConteudo);
-            tabControlParametros.Location = new Point(5, 3);
+            tabControlParametros.Dock = DockStyle.Fill;
+            tabControlParametros.Location = new Point(0, 0);
             tabControlParametros.Name = "tabControlParametros";
             tabControlParametros.SelectedIndex = 0;
-            tabControlParametros.Size = new Size(1017, 577);
+            tabControlParametros.Size = new Size(1059, 519);
             tabControlParametros.TabIndex = 0;
             // 
             // tabParamConteudo
@@ -329,7 +335,7 @@
             tabParamConteudo.Location = new Point(4, 24);
             tabParamConteudo.Name = "tabParamConteudo";
             tabParamConteudo.Padding = new Padding(3);
-            tabParamConteudo.Size = new Size(1009, 549);
+            tabParamConteudo.Size = new Size(1051, 491);
             tabParamConteudo.TabIndex = 0;
             tabParamConteudo.Text = "Conteudo";
             tabParamConteudo.ToolTipText = "Gera COPYWRITER com base em informações definidas";
@@ -341,7 +347,7 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { novaToolStripButton1, abrirToolStripButton1, salvarToolStripButton1, toolStripButton1 });
-            toolStrip4.Location = new Point(913, 22);
+            toolStrip4.Location = new Point(955, 22);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
             toolStrip4.Size = new Size(95, 25);
@@ -390,6 +396,7 @@
             toolStripButton1.Size = new Size(23, 22);
             toolStripButton1.Text = "&Enviar Prompt";
             toolStripButton1.TextDirection = ToolStripTextDirection.Horizontal;
+            toolStripButton1.Click += toolStripButton1_Click;
             // 
             // label21
             // 
@@ -413,18 +420,19 @@
             // 
             // tabCopy
             // 
-            tabCopy.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabCopy.Controls.Add(tabPageBriefing);
             tabCopy.Controls.Add(tabPagePublicoCopy);
             tabCopy.Controls.Add(tabControles);
             tabCopy.Location = new Point(3, 53);
             tabCopy.Name = "tabCopy";
             tabCopy.SelectedIndex = 0;
-            tabCopy.Size = new Size(1003, 419);
+            tabCopy.Size = new Size(1047, 434);
             tabCopy.TabIndex = 0;
             // 
             // tabPageBriefing
             // 
+            tabPageBriefing.Controls.Add(lblArquivo);
+            tabPageBriefing.Controls.Add(toolStrip5);
             tabPageBriefing.Controls.Add(txtIdeiaPromovida);
             tabPageBriefing.Controls.Add(txtMensagemCopy);
             tabPageBriefing.Controls.Add(label12);
@@ -446,7 +454,6 @@
             tabPageBriefing.Controls.Add(label5);
             tabPageBriefing.Controls.Add(txtLinkSite);
             tabPageBriefing.Controls.Add(label4);
-            tabPageBriefing.Controls.Add(btnAnexo);
             tabPageBriefing.Controls.Add(label3);
             tabPageBriefing.Controls.Add(txtMarca);
             tabPageBriefing.Controls.Add(label2);
@@ -456,15 +463,58 @@
             tabPageBriefing.Location = new Point(4, 24);
             tabPageBriefing.Name = "tabPageBriefing";
             tabPageBriefing.Padding = new Padding(3);
-            tabPageBriefing.Size = new Size(995, 391);
+            tabPageBriefing.Size = new Size(1039, 406);
             tabPageBriefing.TabIndex = 0;
             tabPageBriefing.Text = "BRIEFING";
             tabPageBriefing.UseVisualStyleBackColor = true;
             // 
+            // lblArquivo
+            // 
+            lblArquivo.AutoSize = true;
+            lblArquivo.ForeColor = Color.Maroon;
+            lblArquivo.Location = new Point(778, 96);
+            lblArquivo.Name = "lblArquivo";
+            lblArquivo.Size = new Size(0, 15);
+            lblArquivo.TabIndex = 48;
+            // 
+            // toolStrip5
+            // 
+            toolStrip5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            toolStrip5.Dock = DockStyle.None;
+            toolStrip5.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip5.Items.AddRange(new ToolStripItem[] { toolStripButtonAdicionarArquivo, toolStripButtonRemoverArquivo });
+            toolStrip5.Location = new Point(1013, 61);
+            toolStrip5.Name = "toolStrip5";
+            toolStrip5.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip5.Size = new Size(26, 25);
+            toolStrip5.TabIndex = 47;
+            toolStrip5.Text = "toolStrip5";
+            // 
+            // toolStripButtonAdicionarArquivo
+            // 
+            toolStripButtonAdicionarArquivo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonAdicionarArquivo.Image = Properties.Resources.anexar_arquivo;
+            toolStripButtonAdicionarArquivo.ImageTransparentColor = Color.Magenta;
+            toolStripButtonAdicionarArquivo.Name = "toolStripButtonAdicionarArquivo";
+            toolStripButtonAdicionarArquivo.Size = new Size(23, 22);
+            toolStripButtonAdicionarArquivo.Text = "&Importar Arquivo";
+            toolStripButtonAdicionarArquivo.Click += toolStripButtonAdicionarArquivo_Click;
+            // 
+            // toolStripButtonRemoverArquivo
+            // 
+            toolStripButtonRemoverArquivo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonRemoverArquivo.Image = Properties.Resources.remover_arquivo;
+            toolStripButtonRemoverArquivo.ImageTransparentColor = Color.Magenta;
+            toolStripButtonRemoverArquivo.Name = "toolStripButtonRemoverArquivo";
+            toolStripButtonRemoverArquivo.Size = new Size(23, 22);
+            toolStripButtonRemoverArquivo.Text = "&Remover arquivo";
+            toolStripButtonRemoverArquivo.Visible = false;
+            toolStripButtonRemoverArquivo.Click += toolStripButtonRemoverArquivo_Click;
+            // 
             // txtIdeiaPromovida
             // 
             txtIdeiaPromovida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtIdeiaPromovida.Location = new Point(671, 24);
+            txtIdeiaPromovida.Location = new Point(712, 24);
             txtIdeiaPromovida.Name = "txtIdeiaPromovida";
             txtIdeiaPromovida.PlaceholderText = "Descreva a ideia geral do texto";
             txtIdeiaPromovida.Size = new Size(317, 23);
@@ -476,7 +526,7 @@
             txtMensagemCopy.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtMensagemCopy.Location = new Point(7, 360);
             txtMensagemCopy.Name = "txtMensagemCopy";
-            txtMensagemCopy.Size = new Size(470, 23);
+            txtMensagemCopy.Size = new Size(511, 23);
             txtMensagemCopy.TabIndex = 15;
             txtMensagemCopy.Leave += txtMensagemCopy_Leave;
             // 
@@ -504,7 +554,7 @@
             gBMetas.Controls.Add(chkVenda);
             gBMetas.Controls.Add(chkCadastro);
             gBMetas.Controls.Add(chkClick);
-            gBMetas.Location = new Point(481, 303);
+            gBMetas.Location = new Point(522, 303);
             gBMetas.Name = "gBMetas";
             gBMetas.Size = new Size(511, 75);
             gBMetas.TabIndex = 16;
@@ -641,7 +691,7 @@
             cboDestinoCopy.Items.AddRange(new object[] { "E-mail Marketing", "Landing Page", "Página de Vendas", "Anúncios em Redes Sociais", "Blog Post (SEO)", "Roteiro para Vídeos", "Descrição de Produtos E-commerce", "Teste A/B", "Webinar/Palestras Online", "Conteúdo de Rede Social para Aumento de Audiência", "Impresso", "Radio" });
             cboDestinoCopy.Location = new Point(8, 318);
             cboDestinoCopy.Name = "cboDestinoCopy";
-            cboDestinoCopy.Size = new Size(469, 23);
+            cboDestinoCopy.Size = new Size(510, 23);
             cboDestinoCopy.TabIndex = 43;
             cboDestinoCopy.Leave += cboDestinoCopy_Leave;
             // 
@@ -735,7 +785,7 @@
             gBLancamento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             gBLancamento.Controls.Add(rdbNao);
             gBLancamento.Controls.Add(rdbSim);
-            gBLancamento.Location = new Point(741, 51);
+            gBLancamento.Location = new Point(782, 51);
             gBLancamento.Name = "gBLancamento";
             gBLancamento.Size = new Size(138, 41);
             gBLancamento.TabIndex = 8;
@@ -770,7 +820,7 @@
             txtObservacoes.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtObservacoes.Location = new Point(315, 114);
             txtObservacoes.Name = "txtObservacoes";
-            txtObservacoes.Size = new Size(674, 23);
+            txtObservacoes.Size = new Size(715, 23);
             txtObservacoes.TabIndex = 10;
             txtObservacoes.Leave += txtObservacoes_Leave;
             // 
@@ -828,22 +878,11 @@
             label4.TabIndex = 28;
             label4.Text = "VOCÊ TEM UM SITE?";
             // 
-            // btnAnexo
-            // 
-            btnAnexo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAnexo.Image = Properties.Resources.anexar_arquivo;
-            btnAnexo.Location = new Point(885, 52);
-            btnAnexo.Name = "btnAnexo";
-            btnAnexo.Size = new Size(38, 40);
-            btnAnexo.TabIndex = 4;
-            btnAnexo.TabStop = false;
-            btnAnexo.UseVisualStyleBackColor = true;
-            // 
             // label3
             // 
             label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Location = new Point(671, 4);
+            label3.Location = new Point(712, 4);
             label3.Name = "label3";
             label3.Size = new Size(163, 15);
             label3.TabIndex = 24;
@@ -856,7 +895,7 @@
             txtMarca.Location = new Point(166, 24);
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "Diga o nome de sua marca";
-            txtMarca.Size = new Size(503, 23);
+            txtMarca.Size = new Size(544, 23);
             txtMarca.TabIndex = 2;
             txtMarca.Leave += textMarca_Leave;
             // 
@@ -913,7 +952,7 @@
             txtInforProdServ.Multiline = true;
             txtInforProdServ.Name = "txtInforProdServ";
             txtInforProdServ.ScrollBars = ScrollBars.Vertical;
-            txtInforProdServ.Size = new Size(983, 66);
+            txtInforProdServ.Size = new Size(1024, 66);
             txtInforProdServ.TabIndex = 11;
             txtInforProdServ.Leave += txtInforProdServ_Leave;
             // 
@@ -944,7 +983,7 @@
             tabPagePublicoCopy.Location = new Point(4, 24);
             tabPagePublicoCopy.Name = "tabPagePublicoCopy";
             tabPagePublicoCopy.Padding = new Padding(3);
-            tabPagePublicoCopy.Size = new Size(995, 391);
+            tabPagePublicoCopy.Size = new Size(1039, 406);
             tabPagePublicoCopy.TabIndex = 1;
             tabPagePublicoCopy.Text = "PUBLICO ALVO";
             tabPagePublicoCopy.UseVisualStyleBackColor = true;
@@ -1190,7 +1229,7 @@
             txtPropostaValor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtPropostaValor.Location = new Point(653, 20);
             txtPropostaValor.Name = "txtPropostaValor";
-            txtPropostaValor.Size = new Size(336, 23);
+            txtPropostaValor.Size = new Size(353, 23);
             txtPropostaValor.TabIndex = 4;
             txtPropostaValor.Leave += txtPropostaValor_Leave;
             // 
@@ -1284,7 +1323,7 @@
             tabControles.Location = new Point(4, 24);
             tabControles.Name = "tabControles";
             tabControles.Padding = new Padding(3);
-            tabControles.Size = new Size(995, 391);
+            tabControles.Size = new Size(1039, 406);
             tabControles.TabIndex = 2;
             tabControles.Text = "CONTROLES";
             tabControles.UseVisualStyleBackColor = true;
@@ -1425,7 +1464,7 @@
             btnMic.AccessibleRole = AccessibleRole.Cursor;
             btnMic.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnMic.Image = Properties.Resources.conversacao__1_;
-            btnMic.Location = new Point(987, 41);
+            btnMic.Location = new Point(1026, 35);
             btnMic.Name = "btnMic";
             btnMic.Size = new Size(27, 22);
             btnMic.TabIndex = 12;
@@ -1438,9 +1477,9 @@
             // 
             chatControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             chatControl.BackColor = Color.White;
-            chatControl.Location = new Point(5, 3);
+            chatControl.Location = new Point(9, 3);
             chatControl.Name = "chatControl";
-            chatControl.Size = new Size(1006, 35);
+            chatControl.Size = new Size(1045, 26);
             chatControl.TabIndex = 10;
             chatControl.TabStop = false;
             chatControl.Tag = "Chat";
@@ -1452,15 +1491,15 @@
             txtPrompt.AccessibleDescription = "Enter para enviar";
             txtPrompt.AccessibleName = "Prompt de comando por texto";
             txtPrompt.AccessibleRole = AccessibleRole.Text;
-            txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             txtPrompt.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtPrompt.AutoCompleteSource = AutoCompleteSource.FileSystem;
-            txtPrompt.Location = new Point(5, 41);
+            txtPrompt.Location = new Point(9, 35);
             txtPrompt.Multiline = true;
             txtPrompt.Name = "txtPrompt";
             txtPrompt.PlaceholderText = "Comando ";
             txtPrompt.ScrollBars = ScrollBars.Vertical;
-            txtPrompt.Size = new Size(984, 22);
+            txtPrompt.Size = new Size(1013, 22);
             txtPrompt.TabIndex = 11;
             txtPrompt.Tag = "Prompt";
             txtPrompt.KeyDown += txtPrompt_KeyDown;
@@ -1525,7 +1564,6 @@
             abrirToolStripButton.Name = "abrirToolStripButton";
             abrirToolStripButton.Size = new Size(23, 22);
             abrirToolStripButton.Text = "&Abrir";
-            abrirToolStripButton.Click += abrirToolStripButton_Click;
             // 
             // salvarToolStripButton
             // 
@@ -1740,6 +1778,7 @@
             ImeMode = ImeMode.On;
             MainMenuStrip = menuStrip1;
             Name = "FrmPrincipal";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AIBAM";
             Load += FrmPrincipal_Load;
             statusStrip1.ResumeLayout(false);
@@ -1769,6 +1808,8 @@
             tabCopy.ResumeLayout(false);
             tabPageBriefing.ResumeLayout(false);
             tabPageBriefing.PerformLayout();
+            toolStrip5.ResumeLayout(false);
+            toolStrip5.PerformLayout();
             gBMetas.ResumeLayout(false);
             gBMetas.PerformLayout();
             gBLancamento.ResumeLayout(false);
@@ -1852,7 +1893,6 @@
         private TabControl tabCopy;
         private TabPage tabPageBriefing;
         private TabPage tabPagePublicoCopy;
-        private Button btnAnexo;
         private Label label3;
         private TextBox txtMarca;
         private Label label2;
@@ -1953,5 +1993,10 @@
         private BindingSource bindingSource1;
         private TextBox txtIdeiaPromovida;
         private OpenFileDialog openFileDialog1;
+        private ToolStrip toolStrip5;
+        private ToolStripButton toolStripButtonAdicionarArquivo;
+        private ToolStripButton toolStripButtonRemoverArquivo;
+        private Label lblArquivo;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

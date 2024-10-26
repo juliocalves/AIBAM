@@ -32,14 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfiguracoes));
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            btnCriarEstrutura = new Button();
-            btnDefinirDiretorio = new Button();
+            toolStrip1 = new ToolStrip();
+            abrirToolStripButton = new ToolStripButton();
+            salvarToolStripButton = new ToolStripButton();
             txtDiretorioRaiz = new TextBox();
             label1 = new Label();
             imageList1 = new ImageList(components);
             folderBrowserDialog1 = new FolderBrowserDialog();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -56,8 +58,7 @@
             // tabPage1
             // 
             tabPage1.AccessibleRole = AccessibleRole.ToolTip;
-            tabPage1.Controls.Add(btnCriarEstrutura);
-            tabPage1.Controls.Add(btnDefinirDiretorio);
+            tabPage1.Controls.Add(toolStrip1);
             tabPage1.Controls.Add(txtDiretorioRaiz);
             tabPage1.Controls.Add(label1);
             tabPage1.Location = new Point(27, 4);
@@ -65,28 +66,41 @@
             tabPage1.Padding = new Padding(3);
             tabPage1.Size = new Size(772, 442);
             tabPage1.TabIndex = 0;
+            tabPage1.Text = "DIRETORIOS";
             tabPage1.ToolTipText = "CONF DIRETORIO";
             tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnCriarEstrutura
+            // toolStrip1
             // 
-            btnCriarEstrutura.Image = Properties.Resources.pasta;
-            btnCriarEstrutura.Location = new Point(399, 16);
-            btnCriarEstrutura.Name = "btnCriarEstrutura";
-            btnCriarEstrutura.Size = new Size(38, 30);
-            btnCriarEstrutura.TabIndex = 5;
-            btnCriarEstrutura.UseVisualStyleBackColor = true;
-            btnCriarEstrutura.Click += btnCriarEstrutura_Click;
+            toolStrip1.Dock = DockStyle.None;
+            toolStrip1.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip1.Items.AddRange(new ToolStripItem[] { abrirToolStripButton, salvarToolStripButton });
+            toolStrip1.Location = new Point(363, 19);
+            toolStrip1.Name = "toolStrip1";
+            toolStrip1.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip1.Size = new Size(49, 25);
+            toolStrip1.TabIndex = 6;
+            toolStrip1.Text = "toolStrip1";
             // 
-            // btnDefinirDiretorio
+            // abrirToolStripButton
             // 
-            btnDefinirDiretorio.Image = Properties.Resources.pasta__1_;
-            btnDefinirDiretorio.Location = new Point(361, 16);
-            btnDefinirDiretorio.Name = "btnDefinirDiretorio";
-            btnDefinirDiretorio.Size = new Size(38, 30);
-            btnDefinirDiretorio.TabIndex = 4;
-            btnDefinirDiretorio.UseVisualStyleBackColor = true;
-            btnDefinirDiretorio.Click += btnDefinirDiretorio_Click;
+            abrirToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            abrirToolStripButton.Image = (Image)resources.GetObject("abrirToolStripButton.Image");
+            abrirToolStripButton.ImageTransparentColor = Color.Magenta;
+            abrirToolStripButton.Name = "abrirToolStripButton";
+            abrirToolStripButton.Size = new Size(23, 22);
+            abrirToolStripButton.Text = "&Definir Diretorio Raiz";
+            abrirToolStripButton.Click += abrirToolStripButton_Click;
+            // 
+            // salvarToolStripButton
+            // 
+            salvarToolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            salvarToolStripButton.Image = (Image)resources.GetObject("salvarToolStripButton.Image");
+            salvarToolStripButton.ImageTransparentColor = Color.Magenta;
+            salvarToolStripButton.Name = "salvarToolStripButton";
+            salvarToolStripButton.Size = new Size(23, 22);
+            salvarToolStripButton.Text = "&Salvar Diretorio";
+            salvarToolStripButton.Click += salvarToolStripButton_Click;
             // 
             // txtDiretorioRaiz
             // 
@@ -107,10 +121,10 @@
             // 
             // imageList1
             // 
-            imageList1.ColorDepth = ColorDepth.Depth8Bit;
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
             imageList1.ImageStream = (ImageListStreamer)resources.GetObject("imageList1.ImageStream");
             imageList1.TransparentColor = Color.Transparent;
-            imageList1.Images.SetKeyName(0, "diretorio-raiz.png");
+            imageList1.Images.SetKeyName(0, "diretorio-raiz (1).png");
             // 
             // FrmConfiguracoes
             // 
@@ -128,6 +142,8 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            toolStrip1.ResumeLayout(false);
+            toolStrip1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -139,7 +155,8 @@
         private TextBox txtDiretorioRaiz;
         private Label label1;
         private FolderBrowserDialog folderBrowserDialog1;
-        private Button btnDefinirDiretorio;
-        private Button btnCriarEstrutura;
+        private ToolStrip toolStrip1;
+        private ToolStripButton abrirToolStripButton;
+        private ToolStripButton salvarToolStripButton;
     }
 }

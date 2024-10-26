@@ -1,13 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using AIBAM.Classes;
-using System.IO;
-using System.Xml;
+﻿using AIBAM.Classes;
+
 using Newtonsoft.Json;
+
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace AIBAM
@@ -29,7 +24,7 @@ namespace AIBAM
 
 
         // Configurar o cliente de chat
-        ChatClient chatClient = new ChatClient("localhost", 8080);
+        readonly ChatClient chatClient = new ChatClient("localhost", 8080);
 
         PromptCopy promptCopy;
 
@@ -40,6 +35,24 @@ namespace AIBAM
             InitializeComponent();
             promptCopy = new();
             AdicionarEventosControles();
+            this.FormClosing += FrmConfiguracoes_FormClosing;
+        }
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+            AtualizaBarraProgresso();
+            SetStatus("Carregando ferramentas...");
+
+            Task.Run(() => chatClient.Connect());
+            SetStatus("Preparando UI...");
+            txtPrompt.Focus();
+            AtualizaBarraProgresso();
+            SetStatus("Pronto!");
+            SelecionaTipoChat(Settings.Default.TipoChat);
+        }
+
+        private void FrmConfiguracoes_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            chatClient.SendMessage("sair  ");
         }
 
         private void AdicionarEventosControles()
@@ -81,7 +94,6 @@ namespace AIBAM
         // Manipulador do evento
         private void ChatClient_OnMessageReceived(string response)
         {
-            // Adiciona a resposta ao controle de chat (chatControl)
             if (InvokeRequired)
             {
                 Invoke(new Action(() => chatControl.AddBotResponse(response)));
@@ -92,14 +104,16 @@ namespace AIBAM
             }
         }
 
-        private async void RequestToChat()
+        private void RequestToChat()
         {
             SetStatus("Enviando solicitação...");
             AtualizaCursor(true);
             AtualizaBarraProgresso();
 
+
             // Exibe o prompt (mensagem do usuário) no ChatControl
             chatControl.AddUserMessage(txtPrompt.Text);
+
 
             string _ = "chat " + txtPrompt.Text;
             // Envia a mensagem para o servidor via socket
@@ -229,7 +243,7 @@ namespace AIBAM
             toolMenu.DisplayStyle = toolMenu.Checked ? ToolStripItemDisplayStyle.ImageAndText : ToolStripItemDisplayStyle.Image;
             splitContainer1.SplitterDistance = toolMenu.Checked ? 200 : 25;
         }
-       
+
         private void SelecionaTipoChat(string ChatParametrizado)
         {
             AtualizaBarraProgresso();
@@ -265,19 +279,6 @@ namespace AIBAM
         {
             SelecionaTipoChat("true");
             Settings.Default.TipoChat = "true";
-        }
-
-        private void FrmPrincipal_Load(object sender, EventArgs e)
-        {
-            AtualizaBarraProgresso();
-            SetStatus("Carregando ferramentas...");
-
-            Task.Run(() => chatClient.Connect());
-            SetStatus("Preparando UI...");
-            txtPrompt.Focus();
-            AtualizaBarraProgresso();
-            SetStatus("Pronto!");
-            SelecionaTipoChat(Settings.Default.TipoChat);
         }
 
         private void cboSegmento_SelectedIndexChanged(object sender, EventArgs e)
@@ -496,7 +497,6 @@ namespace AIBAM
             toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
         }
 
-
         #region CONFIGURA PROMPT DE COPY
         #region PROMPTCOPY
         private void txtNomePromptCopy_Leave(object sender, EventArgs e)
@@ -673,7 +673,6 @@ namespace AIBAM
         }
         #endregion
         #endregion
-
 
         #region SALVA DADOS EM FORMATO JSON
         public void SaveToJson(dynamic obj, string nome)
@@ -934,34 +933,6 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
 
         #endregion
 
-        private string ObterTextoGroupBox(GroupBox groupBox)
-        {
-            // Itera pelos controles no GroupBox
-            foreach (Control control in groupBox.Controls)
-            {
-                // Verifica se o controle é um RadioButton e se está marcado
-                if (control is RadioButton radioButton && radioButton.Checked)
-                {
-                    return radioButton.Text; // Retorna o texto do RadioButton selecionado
-                }
-            }
-
-            return string.Empty; // Retorna vazio se nenhum RadioButton estiver selecionado
-        }
-
-        private List<string> ObterItensSelecionado(CheckedListBox ckList)
-        {
-            List<string> itensSelecionados = new List<string>();
-
-            // Itera pelos itens checados em ckList
-            foreach (var item in ckList.CheckedItems)
-            {
-                itensSelecionados.Add(item.ToString());
-            }
-
-            return itensSelecionados;
-        }
-
         #region AÇÕES PROMPT COPY
         private void salvarToolStripButton1_Click(object sender, EventArgs e)
         {
@@ -1204,9 +1175,72 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             else if (result == DialogResult.Cancel) { }
         }
 
-        private void abrirToolStripButton_Click(object sender, EventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            SetStatus("Configurando prompt");
+            MontaPrompt();
+            SetStatus("Promtpt pronto!");
+            SelecionaTipoChat("False");
+            txtPrompt.Text = textoPromptCopy;
+            RequestToChat();
 
         }
+
+        private void toolStripButtonAdicionarArquivo_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Todos os Arquivos (*.*)|*.*";
+            SetStatus("Carregando imagem");
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Armazena o caminho no Briefing atual
+                promptCopy.briefing.ArquivoImportado = openFileDialog1.FileName;
+
+                // Obtém apenas o nome do arquivo sem caminho e sem extensão
+                string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
+
+                // Exibe o nome do arquivo sem extensão na label
+                lblArquivo.Text = "Item carregado: " + fileNameWithoutExtension;
+                toolStripButtonRemoverArquivo.Visible = true;
+            }
+            SetStatus("Pronto");
+        }
+
+        private void toolStripButtonRemoverArquivo_Click(object sender, EventArgs e)
+        {
+            // Remove o arquivo do Briefing
+            promptCopy.briefing.ArquivoImportado = string.Empty;
+
+            // Atualiza a label e oculta o botão de remoção
+            lblArquivo.Text = string.Empty;
+            toolStripButtonRemoverArquivo.Visible = false;
+        }
+        private string ObterTextoGroupBox(GroupBox groupBox)
+        {
+            // Itera pelos controles no GroupBox
+            foreach (Control control in groupBox.Controls)
+            {
+                // Verifica se o controle é um RadioButton e se está marcado
+                if (control is RadioButton radioButton && radioButton.Checked)
+                {
+                    return radioButton.Text; // Retorna o texto do RadioButton selecionado
+                }
+            }
+
+            return string.Empty; // Retorna vazio se nenhum RadioButton estiver selecionado
+        }
+
+        private List<string> ObterItensSelecionado(CheckedListBox ckList)
+        {
+            List<string> itensSelecionados = new List<string>();
+
+            // Itera pelos itens checados em ckList
+            foreach (var item in ckList.CheckedItems)
+            {
+                itensSelecionados.Add(item.ToString());
+            }
+
+            return itensSelecionados;
+        }
+        
     }
 }

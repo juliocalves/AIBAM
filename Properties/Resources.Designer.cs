@@ -253,6 +253,16 @@ namespace AIBAM.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap remover_arquivo {
+            get {
+                object obj = ResourceManager.GetObject("remover-arquivo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap robo {
             get {
                 object obj = ResourceManager.GetObject("robo", resourceCulture);

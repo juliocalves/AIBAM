@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace AIBAM
+﻿namespace AIBAM
 {
     public partial class AdicionarListaControl : UserControl
     {
@@ -17,7 +14,7 @@ namespace AIBAM
             get { return lblDescricao.Text; }
             set { lblDescricao.Text = value; }
         }
-        
+
         public string NomeLista
         {
             get { return lblNomeLista.Text; }
@@ -70,7 +67,7 @@ namespace AIBAM
                 MessageBox.Show("Nenhum item selecionado para remover.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        
+
         private void txtItem_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -95,7 +92,7 @@ namespace AIBAM
 
         private void toolLimparLista_Click(object sender, EventArgs e)
         {
-             LimparLista();
+            LimparLista();
             MessageBox.Show("Todos os itens foram removidos.", "Lista Limpa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -168,7 +165,7 @@ namespace AIBAM
 
         private void toolSalvarLista_Click(object sender, EventArgs e)
         {
-            if(ckList.Items.Count > 0)
+            if (ckList.Items.Count > 0)
             {
                 saveFileDialog1.Filter = "Text Files (*.txt)|*.txt";
                 saveFileDialog1.Title = "Salvar Lista";
@@ -211,10 +208,10 @@ namespace AIBAM
         }
         public void SetItensSelecionados(List<string> itensSelecionados)
         {
-            if(itensSelecionados != null || itensSelecionados.Any())
+            if (itensSelecionados != null || itensSelecionados.Any())
             {
                 // Percorre todos os itens do CheckedListBox
-                foreach(var linha in itensSelecionados)
+                foreach (var linha in itensSelecionados)
                 {
                     ckList.Items.Add(linha, true); // Adiciona o item e marca o checkbox
                 }
