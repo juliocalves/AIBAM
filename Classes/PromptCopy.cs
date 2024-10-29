@@ -10,7 +10,7 @@
         }
 
         public string DescricaoCopy { get; set; }
-        public Briefing briefing { get; set; }
+        public BriefingCopy briefing { get; set; }
         public PublicoAlvo publicoAlvo { get; set; }
         public ControlesCopy controlesCopy { get; set; }
     }

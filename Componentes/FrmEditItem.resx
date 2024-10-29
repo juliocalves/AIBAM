@@ -117,63 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>295, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="abrirToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFRSURBVDhPjZOxSgNBEIbvCcQnkLyA4CP4DtaCnYWNttpo
-        aWkZsYggqIVgJdFCxEjUwiAheBAkpwEvmITced7sliv/mD03e1mThR9292a+/Wd2z/OskabpghDiWUq5
-        Yn+bOIbJ8dp+RT34H2pqiJSyIKVcJKJ1IYSa3zhTM8uH00GIqIQkqPwUsE4rTQZoCBFt23nZQGLxssHB
-        3tJBTnOrxwyHO7gcqjACME/DutOPszLuanX1+VJWUehnSpMBgCUG+O0en7R19MjJdg/6rXv1erE5ovfb
-        PY5jJ9oBIKgda30LGmgKDgDBnB3ATrURMMR04ZIJQD88bATXu7wBmFnrOPWaNwzAnF2YxHH1utS62skD
-        0Bw70KVO/fz3JjTgqxvkgv7T9yD86wE2wtpJLsildrWokiR50w8pRjJqsgNdQq/wMhmAnwUQ+7omKYqi
-        WeT/AAxhsnVSJ9X+AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="salvarToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABiSURBVDhPY/j69WvDt2/f/pODQXoZQIyYCfv+MwTPIQmD
-        9ID0gg1AlyQWYxjw4f1HovBwNoBUPEgNQPcvOqafAeh8dHFkAz4g5wV0hQQN+PLliwGyIegKCRoAAjBD
-        QAKkYgCA+uxAPyL32QAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
-        LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
-        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAhAQAAAJNU0Z0AUkBTAMBAQAB
-        GAEAARgBAAEQAQABEAEABP8BIQEACP8BQgFNATYHAAE2AwABKAMAAUADAAEQAwABAQEAASAGAAEQEgAB
-        TQFUAVoBsAFKAVsBaAHVAUoBWwFoAdUBSQFZAWYB1AMtAUUDCwEOAUoBWQFjAcwBSgFbAWgB1QFKAVsB
-        aAHVAUoBWQFjAcwDCwEOAy0BRQFRAWQBcAHKAVUBaAF3AcIBSgFbAWgB1QFOAVUBXAGxwAABRQFiAXUB
-        6QFwAcUC/wFsAb0C/wFqAbkC/wFLAVQBWQG1Ay4BRwFYAZsBxwH/AW8BwwL/AWsBuwL/AVMBkAHHAf8D
-        MAFMAUsBTgFSAacBcQHGAv8BbgHBAv8BagG6Av8BPgFjAYIB+cAAAUgBYQFwAeIBdAHNAv8BdAHMAv8B
-        awG7Av8BTQFTAVgBkQMtAUYBWwGgAccB/wF0Ac0C/wFyAckC/wFTAZABxwH/AzABTAFIAUwBTQGeAXQB
-        zQL/AXQBzQL/AW8BxAL/AT4BYwGCAfnAAAE5AUwBVwHlAUsBdQGNAe8BSgFVAVoBvwFKAVkBZAHRAT8B
-        QAFBAW4DKwFBAUMBaAF+AfYBSgFmAXcB4gFKAVUBWQG8AUMBVwFkAdwDGAEgAUgBSwFNAZoBUgGFAaAB
-        9QFKAVwBaAHVAUsBVgFcAcEBRwFUAV4BzcAAAxUBHQMZASMDJQE2CAAEAQMcAScDIwEyAxUBHQgAAwgB
-        CgMdASgDKwFB0AADQAF4EAADKgFAAyoBQBAAA0ABeNAAAysBQQNAAXgDQAF4A0ABeANAAXgDRQGaA0UB
-        mgNAAXgDQAF4A0ABeANAAXgDKwFB5AADKgFAAyoBQPgAAxEBFgMRARbsAAFBAVcBZwHgATcBYgGBAfwB
-        NwFiAYEB/AE4AWIBgQH8ATwBYQGGAf0BPAFhAYYB/QE8AWEBhgH9AUABVwFrAeXgAAE9AWQBfQH0AXQB
-        zQL/AXQBzQL/AXQBzQL/AXMBywL/AW4BwQL/AWoBuQL/ATcBYgGBAfzgAAE9AWQBfQH0AXQBzQL/AXQB
-        zQL/AXQBzQL/AXQBzQL/AXQBzQL/AW4BwAL/ATcBYgGBAfzgAAE9AWQBfQH0AXQBzQL/AXQBzQL/AXQB
-        zQL/AXQBzQL/AXQBzQL/AXMBygL/ATcBYgGBAfzgAAEnAToBTAHzAUABcwGeAf8BVgGZAdIB/wE3AWIB
-        hwH/ATcBYgGHAf8BNwFiAYcB/wE3AWIBhwH/ASUBOQFOAfjgAAFAAVEBagHZAVABlgL/AVABlgL/AUYB
-        ZAGPAeUBQgFRAWQB0QFCAVEBZAHRAUIBUQFkAdEBSQFNAVQBreAAAUgBSwFOAZsBSQFOAVYBswFJAU4B
-        VgGzATgCOQFf4AABQgFNAT4HAAE+AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/yEAARgBYwYAAd4B
-        ewYAAcABAwYAAf4BfwYAAf4BfwYAAfABDwYAAfABDwYAAfABDwYAAfABDwYAAfABDwYAAfABDwYAAfAB
-        /wYACw==
-</value>
-  </data>
-  <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>128, 17</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAAAAAAAEAIAAy1gAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAAAFv

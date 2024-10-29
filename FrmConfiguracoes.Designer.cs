@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfiguracoes));
+            TreeNode treeNode1 = new TreeNode("PROMPTS");
+            TreeNode treeNode2 = new TreeNode("AIBAM", new TreeNode[] { treeNode1 });
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             toolStrip1 = new ToolStrip();
@@ -39,6 +41,7 @@
             label1 = new Label();
             imageList1 = new ImageList(components);
             folderBrowserDialog1 = new FolderBrowserDialog();
+            treeView1 = new TreeView();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -58,6 +61,7 @@
             // tabPage1
             // 
             tabPage1.AccessibleRole = AccessibleRole.ToolTip;
+            tabPage1.Controls.Add(treeView1);
             tabPage1.Controls.Add(toolStrip1);
             tabPage1.Controls.Add(txtDiretorioRaiz);
             tabPage1.Controls.Add(label1);
@@ -126,11 +130,23 @@
             imageList1.TransparentColor = Color.Transparent;
             imageList1.Images.SetKeyName(0, "diretorio-raiz (1).png");
             // 
+            // treeView1
+            // 
+            treeView1.Location = new Point(3, 50);
+            treeView1.Name = "treeView1";
+            treeNode1.Name = "PROMPTS";
+            treeNode1.Text = "PROMPTS";
+            treeNode2.Name = "AIBAM";
+            treeNode2.Text = "AIBAM";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode2 });
+            treeView1.Size = new Size(409, 97);
+            treeView1.TabIndex = 7;
+            // 
             // FrmConfiguracoes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(448, 450);
             Controls.Add(tabControl1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
@@ -158,5 +174,6 @@
         private ToolStrip toolStrip1;
         private ToolStripButton abrirToolStripButton;
         private ToolStripButton salvarToolStripButton;
+        private TreeView treeView1;
     }
 }

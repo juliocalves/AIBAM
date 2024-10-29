@@ -1,4 +1,5 @@
 ﻿using AIBAM.Classes;
+using AIBAM.Templates;
 
 using Newtonsoft.Json;
 
@@ -22,7 +23,7 @@ namespace AIBAM
         private const byte VK_ESC = 0x1B;            // Tecla Escape (ESC)
         #endregion
 
-
+        internal Utils utils;
         // Configurar o cliente de chat
         readonly ChatClient chatClient = new ChatClient("localhost", 8080);
 
@@ -33,6 +34,7 @@ namespace AIBAM
         public FrmPrincipal()
         {
             InitializeComponent();
+            utils = new();
             promptCopy = new();
             AdicionarEventosControles();
             this.FormClosing += FrmConfiguracoes_FormClosing;
@@ -52,7 +54,9 @@ namespace AIBAM
 
         private void FrmConfiguracoes_FormClosing(object? sender, FormClosingEventArgs e)
         {
+#pragma warning disable CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
             chatClient.SendMessage("sair  ");
+#pragma warning restore CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
         }
 
         private void AdicionarEventosControles()
@@ -60,10 +64,11 @@ namespace AIBAM
 
             chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
             chatClient.OnConect += ChatClient_Status;
+            lstObjetivosEspecificos.OnExecutaAcao += AdicionarListaControl_OnStateChange;
             lstInteresses.OnExecutaAcao += AdicionarListaControl_OnStateChange;
             lstOcupacoes.OnExecutaAcao += AdicionarListaControl_OnStateChange;
             lstDores.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            listDiferenciais.OnExecutaAcao += AdicionarListaControl_OnStateChange;
+            lstDiferenciais.OnExecutaAcao += AdicionarListaControl_OnStateChange;
             lstPalavrasChave.OnExecutaAcao += AdicionarListaControl_OnStateChange;
         }
 
@@ -96,11 +101,13 @@ namespace AIBAM
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => chatControl.AddBotResponse(response)));
+                Invoke(new Action(() => chatControl1.AddBotResponse(response)));
+                Invoke(new Action(() => webControl1.AddBotResponse(response)));
             }
             else
             {
-                chatControl.AddBotResponse(response);
+                chatControl1.AddBotResponse(response);
+                webControl1.AddBotResponse(response);
             }
         }
 
@@ -112,12 +119,14 @@ namespace AIBAM
 
 
             // Exibe o prompt (mensagem do usuário) no ChatControl
-            chatControl.AddUserMessage(txtPrompt.Text);
-
+            chatControl1.AddUserMessage(txtPrompt.Text);
+            webControl1.AddUserMessage(txtPrompt.Text);
 
             string _ = "chat " + txtPrompt.Text;
             // Envia a mensagem para o servidor via socket
+#pragma warning disable CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
             chatClient.SendMessage(_);
+#pragma warning restore CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
 
             AtualizaBarraProgresso();
             AtualizaCursor(false);
@@ -163,7 +172,7 @@ namespace AIBAM
 
                     try
                     {
-                        string conversationText = chatControl.rTxtChat.Text;
+                        string conversationText = chatControl1.rTxtChat.Text;
                         File.WriteAllText(filePath, conversationText);
                         MessageBox.Show($"Conversação salva em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -498,80 +507,22 @@ namespace AIBAM
         }
 
         #region CONFIGURA PROMPT DE COPY
-        #region PROMPTCOPY
-        private void txtNomePromptCopy_Leave(object sender, EventArgs e)
+        private void ParsePromptCopy()
         {
             promptCopy.DescricaoCopy = txtNomePromptCopy.Text;
-        }
-
-        private void gBTipoVenda_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.TipoVenda = rdbProduto.Checked ? rdbProduto.Text : rdbServico.Text;
-        }
-
-        private void textMarca_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.Marca = txtMarca.Text;
-        }
-
-
-        private void txtLinkSite_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.LinkSite = txtLinkSite.Text;
-        }
-
-        private void cboSegmento_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.SegmentoNegocio = cboSegmento.Text;
-        }
-
-        private void cboSubSegmentos_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.SubSegmentoNegocio = cboSubSegmentos.Text;
-        }
-
-        private void gBLancamento_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.ELancamentoProdServ = rdbSim.Checked ? rdbSim.Text : rdbNao.Text;
-        }
-
-        private void txtLinkCatalogo_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.LinkCatalogoProdServ = txtLinkCatalogo.Text;
-        }
-
-        private void txtObservacoes_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.Observacoes = txtObservacoes.Text;
-        }
-
-        private void txtInforProdServ_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.InformacoesProdServ = txtInforProdServ.Text;
-        }
-
-        private void txtObjetivoGeral_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.ObjetivoGeral = txtObjetivoGeral.Text;
-        }
-
-        private void txtObjetivoEspecifico_Leave(object sender, EventArgs e)
-        {
-            promptCopy.briefing.ObjetivoEspecifico = txtObjetivoEspecifico.Text;
-        }
-
-        private void cboDestinoCopy_Leave(object sender, EventArgs e)
-        {
+            promptCopy.briefing.ObjetivoEspecifico = lstObjetivosEspecificos.GetItensSelecionados();
             promptCopy.briefing.DestinoCopy = cboDestinoCopy.Text;
-        }
-
-        private void txtMensagemCopy_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.MensagemTransmitida = txtMensagemCopy.Text;
-        }
-
-        private void gBMetas_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.metasCampanhas.AdicaoCarrinho = ckAdicao.Checked;
             promptCopy.briefing.metasCampanhas.CadastroFrm = chkCadastro.Checked;
             promptCopy.briefing.metasCampanhas.Clickslink = chkClick.Checked;
@@ -584,94 +535,26 @@ namespace AIBAM
             promptCopy.briefing.metasCampanhas.Seguidores = chkSeguidores.Checked;
             promptCopy.briefing.metasCampanhas.Vendas = chkVenda.Checked;
             promptCopy.briefing.metasCampanhas.Vizualizacoes = chkVizualizacao.Checked;
-        }
-        private void txtIdeiaPromovida_Leave(object sender, EventArgs e)
-        {
             promptCopy.briefing.IdeiaPromovida = txtIdeiaPromovida.Text;
-        }
-        #endregion
-        #region PUBLICO ALVO
-        private void gbRangeIdade_Leave(object sender, EventArgs e)
-        {
             promptCopy.publicoAlvo.IdadeInicial = (int)nIdadeInicial.Value;
             promptCopy.publicoAlvo.IdadeFinal = (int)nIdadeFinal.Value;
-        }
-
-        private void gbGenero_Leave(object sender, EventArgs e)
-        {
-            promptCopy.publicoAlvo.Genero = ObterTextoGroupBox(gbGenero);
-        }
-
-        private void cboNivelAcademico_Leave(object sender, EventArgs e)
-        {
+            promptCopy.publicoAlvo.Genero = utils.ObterTextoGroupBox(gbGenero);
             promptCopy.publicoAlvo.NivelAcademico = cboNivelAcademico.Text;
-        }
-
-        private void txtPropostaValor_Leave(object sender, EventArgs e)
-        {
             promptCopy.publicoAlvo.PropostaValor = txtPropostaValor.Text;
-        }
-
-        private void lstInteresses_Leave(object sender, EventArgs e)
-        {
             // Acessa o método GetItensSelecionados da instância 
             // Atribui os interesses selecionados à propriedade no promptCopy
             promptCopy.publicoAlvo.Interesses = lstInteresses.GetItensSelecionados();
-        }
-
-
-        private void lstOcupacoes_Leave(object sender, EventArgs e)
-        {
             promptCopy.publicoAlvo.Ocupacoes = lstOcupacoes.GetItensSelecionados();
-        }
-
-        private void lstDores_Leave(object sender, EventArgs e)
-        {
             promptCopy.publicoAlvo.Dores = lstDores.GetItensSelecionados();
-        }
-
-        private void listDiferenciais_Leave(object sender, EventArgs e)
-        {
-            promptCopy.publicoAlvo.DiferenciasCompetitivos = listDiferenciais.GetItensSelecionados();
-        }
-
-        private void gbNivelConsciencia_Leave(object sender, EventArgs e)
-        {
-            promptCopy.publicoAlvo.NivelConsciencia = ObterTextoGroupBox(gbNivelConsciencia);
-        }
-
-        private void txtOutrasInf_Leave(object sender, EventArgs e)
-        {
+            promptCopy.publicoAlvo.DiferenciasCompetitivos = lstDiferenciais.GetItensSelecionados();
+            promptCopy.publicoAlvo.NivelConsciencia = utils.ObterTextoGroupBox(gbNivelConsciencia);
             promptCopy.publicoAlvo.OutrasInf = txtOutrasInf.Text;
-
-        }
-        #endregion
-        #region CONTROLES CRIAÇÃO
-        private void nEntonacao_Leave(object sender, EventArgs e)
-        {
             promptCopy.controlesCopy.Entonacao = (int)nEntonacao.Value;
-        }
-
-        private void nOriginalidade_Leave(object sender, EventArgs e)
-        {
             promptCopy.controlesCopy.Originalidade = (int)nOriginalidade.Value;
-        }
-
-        private void ckSentimentos_Leave(object sender, EventArgs e)
-        {
-            promptCopy.controlesCopy.Sentimento = ObterItensSelecionado(ckSentimentos);
-        }
-
-        private void gbPerspectiva_Leave(object sender, EventArgs e)
-        {
-            promptCopy.controlesCopy.Perspectiva = ObterTextoGroupBox(gbPerspectiva);
-        }
-
-        private void lstPalavrasChave_Leave(object sender, EventArgs e)
-        {
+            promptCopy.controlesCopy.Sentimento = utils.ObterItensSelecionado(ckSentimentos);
+            promptCopy.controlesCopy.Perspectiva = utils.ObterTextoGroupBox(gbPerspectiva);
             promptCopy.controlesCopy.PalavrasChave = lstPalavrasChave.GetItensSelecionados();
         }
-        #endregion
         #endregion
 
         #region SALVA DADOS EM FORMATO JSON
@@ -698,248 +581,15 @@ namespace AIBAM
         }
         #endregion
 
-        #region  GERA TEXTO DE COPY PARAMETRIZADO
-        private void MontaPrompt()
-        {
-            textoPromptCopy = $@"Você é um copywriter experiente com mais de 25 anos de carreira. Um profissional com
-MBA especializado que escreve textos persuasivos e envolventes, com o objetivo de
-promover produtos, serviços ou ideias.
-Mas vamos além, você é um copywriter com textos publicitários vencedores de prêmios
-da mais alta importância. Por isso, você é capaz de produzir excelentes textos
-publicitários, seja ele impresso, online, em comerciais de TV, rádio ou qualquer outro
-meio de comunicação.
-Seu principal objetivo é criar mensagens que despertem interesse, gerem impacto
-emocional com o intuito de persuadir o leitor ou espectador a tomar uma ação
-específica, como fazer uma compra, se inscrever em uma lista de e-mails, solicitar mais
-informações ou compartilhar um conteúdo. Para alcançar esse objetivo, um você utiliza
-técnicas de redação persuasiva, conhecimento sobre o público-alvo, estratégias de
-marketing e branding.
-Além de escrever textos persuasivos, você também pode estar envolvido no processo
-criativo e na elaboração de conceitos para campanhas publicitárias. Em colaboração
-com equipes de marketing, publicidade ou agências de comunicação para desenvolver
-mensagens que sejam eficazes e estejam alinhadas com os objetivos do cliente.
-Em resumo, você é responsável por criar textos que vendem, seja para promover
-produtos, serviços, marcas ou ideias, utilizando técnicas persuasivas e estratégias de
-marketing para engajar o público-alvo e levá-lo a tomar ação.
-
-Você vai criar umas peças de texto que eu vou solicitar.
-Para isso, ira utilizar os detalhes do que queremos promover. 
-As iformações delimitadas por <ATENCAO></ATENCAO>, 
-são diretrizes para você considerar ao realizar as avaliações, sempre serão dispostas após o ponto critico.
-
-Primeiro ira avaliar o Briefing detalhado do cliente.
-
-{GerarTextoBriefing()}
-
-Segundo irá avaliar a Definição do público alvo do cliente.
-
-{GerarTextoPublicoAlvo()}
-
-Terceiro irá avaliar Controles para gerar a peça de texto.
-
-{GerarTextoControles()}
-";
-        }
-
-        private string GerarTextoControles()
-        {
-            StringBuilder texto = new StringBuilder();
-
-            texto.AppendLine("Controles:");
-            texto.AppendLine("===============================");
-            // Entonação
-            texto.AppendLine($"Entonação: {promptCopy.controlesCopy.Entonacao}");
-
-            texto.AppendLine("<ATENCAO>1-Muito informal e 10-Muito formal</ATENCAO>");
-
-            // Originalidade
-            texto.AppendLine($"Originalidade: {promptCopy.controlesCopy.Originalidade}");
-
-            // Sentimentos
-            if (promptCopy.controlesCopy.Sentimento?.Count > 0)
-            {
-                texto.AppendLine("Sentimentos:");
-                foreach (var sentimento in promptCopy.controlesCopy.Sentimento)
-                {
-                    texto.AppendLine($"- {sentimento}");
-                }
-                texto.AppendLine("<ATENCAO>Emoção(ções) que serão expressas no texto</ATENCAO>");
-            }
-
-            // Perspectiva
-            texto.AppendLine($"Perspectiva: {promptCopy.controlesCopy.Perspectiva}");
-            texto.AppendLine("<ATENCAO>Forma de escrita do texto</ATENCAO>");
-
-
-            // Palavras-chave
-            if (promptCopy.controlesCopy.PalavrasChave?.Count > 0)
-            {
-                texto.AppendLine("Palavras-chave:");
-                foreach (var palavraChave in promptCopy.controlesCopy.PalavrasChave)
-                {
-                    texto.AppendLine($"- {palavraChave}");
-                }
-            }
-            texto.AppendLine("===============================");
-            return texto.ToString();
-        }
-
-        private object GerarTextoPublicoAlvo()
-        {
-            StringBuilder texto = new StringBuilder();
-
-            texto.AppendLine("Público-Alvo:");
-            texto.AppendLine("===============================");
-
-            // Faixa de idade
-            texto.AppendLine($"Idade: de {promptCopy.publicoAlvo.IdadeInicial} a {promptCopy.publicoAlvo.IdadeFinal} anos.");
-
-            // Gênero
-            texto.AppendLine($"Gênero: {promptCopy.publicoAlvo.Genero}");
-
-            // Nível Acadêmico
-            texto.AppendLine($"Nível Acadêmico: {promptCopy.publicoAlvo.NivelAcademico}");
-
-            // Proposta de Valor
-            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.PropostaValor))
-            {
-                texto.AppendLine($"Proposta de Valor: {promptCopy.publicoAlvo.PropostaValor}");
-            }
-
-            // Interesses
-            if (promptCopy.publicoAlvo.Interesses?.Count > 0)
-            {
-                texto.AppendLine("Interesses:");
-                foreach (var interesse in promptCopy.publicoAlvo.Interesses)
-                {
-                    texto.AppendLine($"- {interesse}");
-                }
-            }
-
-            // Ocupações
-            if (promptCopy.publicoAlvo.Ocupacoes?.Count > 0)
-            {
-                texto.AppendLine("Ocupações:");
-                foreach (var ocupacao in promptCopy.publicoAlvo.Ocupacoes)
-                {
-                    texto.AppendLine($"- {ocupacao}");
-                }
-            }
-
-            // Dores
-            if (promptCopy.publicoAlvo.Dores?.Count > 0)
-            {
-                texto.AppendLine("Dores do público:");
-                foreach (var dor in promptCopy.publicoAlvo.Dores)
-                {
-                    texto.AppendLine($"- {dor}");
-                }
-                texto.AppendLine("<ATENCAO>Essa informação permitirá:\r\n● Destacar os pontos problemáticos, criando identificação e engajamento com a\r\nmensagem.\r\n● Apresentar o produto/serviço como a solução perfeita para suprir essa dor e\r\nnecessidade.\r\n● Enfatizar os benefícios como a transformação e o \"depois\" que o público-alvo\r\nterá ao utilizar o produto/serviço.\r\n● Antecipar objeções e quebras de confiança, tratando-as de forma empática.\r\n● Criar uma narrativa da jornada do usuário, da dor à solução, gerando\r\nenvolvimento emocional.</ATENCAO>");
-            }
-
-            // Diferenciais Competitivos
-            if (promptCopy.publicoAlvo.DiferenciasCompetitivos?.Count > 0)
-            {
-                texto.AppendLine("Diferenciais Competitivos:");
-                foreach (var diferencial in promptCopy.publicoAlvo.DiferenciasCompetitivos)
-                {
-                    texto.AppendLine($"- {diferencial}");
-                }
-            }
-
-            // Nível de Consciência
-            texto.AppendLine($"Nível de Consciência: {promptCopy.publicoAlvo.NivelConsciencia}");
-            texto.AppendLine("<ATENCAO>Baseado no nível de consciência, adapte a abordagem\r\nda cópia para o nível de prontidão e conhecimento do público - alvo, usando:\r\n● Educacional para inconscientes do problema\r\n● Identificação da dor para conscientes do problema\r\n● Apresentação da solução para conscientes da solução\r\n● Diferenciação e benefícios para conscientes do produto\r\n● Oferta irresistível para totalmente conscientes\r\n● Reforço de decisão para clientes</ATENCAO>");
-
-            // Outras Informações
-            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInf))
-            {
-                texto.AppendLine($"Outras Informações: {promptCopy.publicoAlvo.OutrasInf}");
-            }
-            texto.AppendLine("===============================");
-            return texto.ToString();
-
-        }
-
-        public string GerarTextoBriefing()
-        {
-            StringBuilder briefingTexto = new StringBuilder();
-
-            // Início do briefing
-            briefingTexto.AppendLine("Briefing:");
-            briefingTexto.AppendLine("===============================");
-
-            // Descrição do Prompt
-            briefingTexto.AppendLine($"Descrição do Copy: {promptCopy.DescricaoCopy}");
-
-            // Tipo de Venda
-            briefingTexto.AppendLine($"Tipo de Venda: {promptCopy.briefing.TipoVenda}");
-
-            // Marca
-            briefingTexto.AppendLine($"Marca: {promptCopy.briefing.Marca}");
-
-            // Ideia Promovida
-            briefingTexto.AppendLine($"Ideia Promovida: {promptCopy.briefing.IdeiaPromovida}");
-
-            // Link do Site
-            briefingTexto.AppendLine($"Link do Site: {promptCopy.briefing.LinkSite}");
-
-            // Segmento e Subsegmento de Negócio
-            briefingTexto.AppendLine($"Segmento de Negócio: {promptCopy.briefing.SegmentoNegocio}");
-            briefingTexto.AppendLine($"Subsegmento de Negócio: {promptCopy.briefing.SubSegmentoNegocio}");
-
-            // É lançamento de produto/serviço?
-            briefingTexto.AppendLine($"É lançamento de produto ou serviço?: {promptCopy.briefing.ELancamentoProdServ}");
-
-            // Link do Catálogo de Produto ou Serviço
-            briefingTexto.AppendLine($"Link do Catálogo: {promptCopy.briefing.LinkCatalogoProdServ}");
-
-            // Observações
-            briefingTexto.AppendLine($"Observações: {promptCopy.briefing.Observacoes}");
-
-            // Informações sobre Produto ou Serviço
-            briefingTexto.AppendLine($"Informações sobre Produto ou Serviço: {promptCopy.briefing.InformacoesProdServ}");
-
-            // Objetivos
-            briefingTexto.AppendLine($"Objetivo Geral: {promptCopy.briefing.ObjetivoGeral}");
-            briefingTexto.AppendLine($"Objetivo Específico: {promptCopy.briefing.ObjetivoEspecifico}");
-
-            // Destino do Copy
-            briefingTexto.AppendLine($"Destino do Copy: {promptCopy.briefing.DestinoCopy}");
-
-            // Mensagem a ser Transmitida
-            briefingTexto.AppendLine($"Mensagem a ser Transmitida: {promptCopy.briefing.MensagemTransmitida}");
-
-            // Metas da Campanha
-            briefingTexto.AppendLine("Metas da Campanha:");
-            briefingTexto.AppendLine($"- Adição ao Carrinho: {(promptCopy.briefing.metasCampanhas.AdicaoCarrinho ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Cadastro de Formulário: {(promptCopy.briefing.metasCampanhas.CadastroFrm ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Cliques no Link: {(promptCopy.briefing.metasCampanhas.Clickslink ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Compartilhamentos: {(promptCopy.briefing.metasCampanhas.Compartilhamentos ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Desempenho: {(promptCopy.briefing.metasCampanhas.Desempenho ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Engajamento: {(promptCopy.briefing.metasCampanhas.Engajamento ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Interação: {(promptCopy.briefing.metasCampanhas.Interacao ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Permanência na Página: {(promptCopy.briefing.metasCampanhas.PermanenciaPag ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Registro: {(promptCopy.briefing.metasCampanhas.Registro ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Seguidores: {(promptCopy.briefing.metasCampanhas.Seguidores ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Vendas: {(promptCopy.briefing.metasCampanhas.Vendas ? "Sim" : "Não")}");
-            briefingTexto.AppendLine($"- Visualizações: {(promptCopy.briefing.metasCampanhas.Vizualizacoes ? "Sim" : "Não")}");
-
-            // Final do briefing
-            briefingTexto.AppendLine("===============================");
-
-            return briefingTexto.ToString();
-        }
-
-        #endregion
-
         #region AÇÕES PROMPT COPY
         private void salvarToolStripButton1_Click(object sender, EventArgs e)
         {
             AtualizaBarraProgresso();
+            ParsePromptCopy();
             SetStatus("Iniciando processo salvar");
+            PromptCopyTemplate prompt = new(promptCopy);
             ///salva aquivo em formato de texto concatenado
-            MontaPrompt();
+            textoPromptCopy = prompt.MontaPrompt();
             saveFileDialog1 = new();
             saveFileDialog1.Filter = "Text files (*.txt)|*.txt";
             saveFileDialog1.Title = "Salvar Modelo Prompt";
@@ -980,6 +630,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
         }
         private void abrirToolStripButton1_Click(object sender, EventArgs e)
         {
+            
             // Configurações do diálogo de abertura de arquivo
             openFileDialog1.Filter = "JSON files (*.json)|*.json";
             openFileDialog1.Title = "Abrir Modelo Prompt";
@@ -994,7 +645,8 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
                 {
                     // Lê o conteúdo do arquivo JSON selecionado
                     string json = File.ReadAllText(filePath);
-
+                    promptCopy = new();
+                    LimparConteudoPromptCopy();
                     // Deserializa o conteúdo JSON para o objeto promptCopy
                     promptCopy = JsonConvert.DeserializeObject<PromptCopy>(json);
 
@@ -1008,7 +660,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
                     txtObservacoes.Text = promptCopy.briefing.Observacoes;
                     txtInforProdServ.Text = promptCopy.briefing.InformacoesProdServ;
                     txtObjetivoGeral.Text = promptCopy.briefing.ObjetivoGeral;
-                    txtObjetivoEspecifico.Text = promptCopy.briefing.ObjetivoEspecifico;
+                    lstObjetivosEspecificos.SetItensSelecionados(promptCopy.briefing.ObjetivoEspecifico);
                     cboDestinoCopy.Text = promptCopy.briefing.DestinoCopy;
                     txtMensagemCopy.Text = promptCopy.briefing.MensagemTransmitida;
                     txtIdeiaPromovida.Text = promptCopy.briefing.IdeiaPromovida;
@@ -1039,7 +691,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
                     lstInteresses.SetItensSelecionados(promptCopy.publicoAlvo.Interesses);
                     lstOcupacoes.SetItensSelecionados(promptCopy.publicoAlvo.Ocupacoes);
                     lstDores.SetItensSelecionados(promptCopy.publicoAlvo.Dores);
-                    listDiferenciais.SetItensSelecionados(promptCopy.publicoAlvo.DiferenciasCompetitivos);
+                    lstDiferenciais.SetItensSelecionados(promptCopy.publicoAlvo.DiferenciasCompetitivos);
 
                     // Atualiza o nível de consciência e outras informações
                     SetSelectedValue(gbNivelConsciencia, promptCopy.publicoAlvo.NivelConsciencia);
@@ -1050,6 +702,12 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
                     nOriginalidade.Value = promptCopy.controlesCopy.Originalidade;
                     SetSelectedValue(gbPerspectiva, promptCopy.controlesCopy.Perspectiva);
                     lstPalavrasChave.SetItensSelecionados(promptCopy.controlesCopy.PalavrasChave);
+
+                    lblArquivo.Text = promptCopy.briefing.ArquivoImportado;
+                    if (!string.IsNullOrEmpty(lblArquivo.Text))
+                    {
+                        toolStripButtonRemoverArquivo.Visible = true;
+                    }
 
                     // Atualiza o status de sucesso
                     SetStatus($"Modelo Prompt carregado de: {filePath}");
@@ -1089,7 +747,6 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             }
         }
 
-
         private void SetSelectedValue(GroupBox groupBox, string value)
         {
             foreach (Control control in groupBox.Controls)
@@ -1104,6 +761,11 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
 
         private void novaToolStripButton1_Click(object sender, EventArgs e)
         {
+            LimparConteudoPromptCopy();
+        }
+
+        private void LimparConteudoPromptCopy()
+        {
             // Limpa o conteúdo dos controles onde o prompt é exibido
             txtNomePromptCopy.Clear();
             txtMarca.Clear();
@@ -1114,7 +776,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             txtObservacoes.Clear();
             txtInforProdServ.Clear();
             txtObjetivoGeral.Clear();
-            txtObjetivoEspecifico.Clear();
+            lstObjetivosEspecificos.LimparLista();
             cboDestinoCopy.SelectedIndex = -1; // Limpa a seleção do ComboBox
             txtMensagemCopy.Clear();
             txtIdeiaPromovida.Clear();
@@ -1144,7 +806,7 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             lstInteresses.LimparLista();
             lstOcupacoes.LimparLista();
             lstDores.LimparLista();
-            listDiferenciais.LimparLista();
+            lstDiferenciais.LimparLista();
 
             // Limpa o nível de consciência e outras informações
             SetSelectedValue(gbNivelConsciencia, string.Empty); // Limpa o nível de consciência
@@ -1178,7 +840,10 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             SetStatus("Configurando prompt");
-            MontaPrompt();
+            ParsePromptCopy();
+            PromptCopyTemplate prompt = new(promptCopy);
+            ///salva aquivo em formato de texto concatenado
+            textoPromptCopy = prompt.MontaPrompt();
             SetStatus("Promtpt pronto!");
             SelecionaTipoChat("False");
             txtPrompt.Text = textoPromptCopy;
@@ -1214,33 +879,34 @@ Terceiro irá avaliar Controles para gerar a peça de texto.
             lblArquivo.Text = string.Empty;
             toolStripButtonRemoverArquivo.Visible = false;
         }
-        private string ObterTextoGroupBox(GroupBox groupBox)
-        {
-            // Itera pelos controles no GroupBox
-            foreach (Control control in groupBox.Controls)
-            {
-                // Verifica se o controle é um RadioButton e se está marcado
-                if (control is RadioButton radioButton && radioButton.Checked)
-                {
-                    return radioButton.Text; // Retorna o texto do RadioButton selecionado
-                }
-            }
+       
 
-            return string.Empty; // Retorna vazio se nenhum RadioButton estiver selecionado
+       
+
+        private void toolViewMarkdown_Click(object sender, EventArgs e)
+        {
+            Settings.Default.TipoChat = "MD";
+            webControl1.Visible = true;
+            toolViewMarkdown.Checked = true;
+            toolViewMarkdown.CheckState = CheckState.Checked;
+            toolViewTexto.Checked = false;
+            toolViewTexto.CheckState = CheckState.Unchecked;
         }
 
-        private List<string> ObterItensSelecionado(CheckedListBox ckList)
+        private void toolViewTexto_Click(object sender, EventArgs e)
         {
-            List<string> itensSelecionados = new List<string>();
-
-            // Itera pelos itens checados em ckList
-            foreach (var item in ckList.CheckedItems)
-            {
-                itensSelecionados.Add(item.ToString());
-            }
-
-            return itensSelecionados;
+            Settings.Default.TipoChat = "TXT";
+            webControl1.Visible = false;
+            toolViewMarkdown.Checked = false;
+            toolViewMarkdown.CheckState = CheckState.Unchecked;
+            toolViewTexto.Checked = true;
+            toolViewTexto.CheckState = CheckState.Checked;
         }
-        
+
+        private void novaToolStripButton_Click(object sender, EventArgs e)
+        {
+            FrmPrincipal frm = new();
+            frm.Show();
+        }
     }
 }

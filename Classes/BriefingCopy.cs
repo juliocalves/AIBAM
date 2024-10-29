@@ -3,9 +3,9 @@
     /// <summary>
     /// Classe representativa de Brieng para desenvolvimento de copy
     /// </summary>
-    public class Briefing
+    public class BriefingCopy
     {
-        public Briefing()
+        public BriefingCopy()
         {
             this.metasCampanhas = new();
         }
@@ -20,7 +20,7 @@
         public string? ELancamentoProdServ { get; set; }
         public string? InformacoesProdServ { get; set; }
         public string? ObjetivoGeral { get; set; }
-        public string? ObjetivoEspecifico { get; set; }
+        public List<string>? ObjetivoEspecifico { get; set; }
         public string? Observacoes { get; set; }
         public string? DestinoCopy { get; set; }
         public string? MensagemTransmitida { get; set; }

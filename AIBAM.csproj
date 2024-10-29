@@ -45,15 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PromptCopyTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PromptCopyTemplate.txt</LastGenOutput>
-    </None>
-    <None Update="PromptCopyTemplate.txt">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PromptCopyTemplate.tt</DependentUpon>
-    </None>
     <None Update="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

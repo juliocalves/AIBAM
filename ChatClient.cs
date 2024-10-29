@@ -1,4 +1,7 @@
-﻿using System.Net.Sockets;
+﻿using AIBAM.Classes;
+using Newtonsoft.Json;
+
+using System.Net.Sockets;
 using System.Text;
 
 namespace AIBAM
@@ -12,7 +15,9 @@ namespace AIBAM
         private readonly string _serverAddress;
         private readonly int _serverPort;
 
+#pragma warning disable CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere adicionar o modificador "obrigatório" ou declarar como anulável.
         public ChatClient(string serverAddress, int serverPort)
+#pragma warning restore CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere adicionar o modificador "obrigatório" ou declarar como anulável.
         {
             _serverAddress = serverAddress;
             _serverPort = serverPort;
@@ -71,7 +76,11 @@ namespace AIBAM
                     bytesRead = await _stream.ReadAsync(responseBuffer, 0, responseBuffer.Length);
                     if (bytesRead > 0)
                     {
+                        // Converte o buffer UTF-8 para string
                         string partialResponse = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
+
+                        // Deserializa o JSON para um objeto GeminiChunk
+                        //GeminiChunk geminiChunk = JsonConvert.DeserializeObject<GeminiChunk>(partialResponse);
 
                         // Dispara o evento para o trecho de mensagem recebido
                         OnMessageReceived?.Invoke(partialResponse);

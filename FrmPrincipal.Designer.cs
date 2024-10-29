@@ -50,6 +50,7 @@
             txtNomePromptCopy = new TextBox();
             tabCopy = new TabControl();
             tabPageBriefing = new TabPage();
+            lstObjetivosEspecificos = new AdicionarListaControl();
             lblArquivo = new Label();
             toolStrip5 = new ToolStrip();
             toolStripButtonAdicionarArquivo = new ToolStripButton();
@@ -75,8 +76,6 @@
             cboSubSegmentos = new ComboBox();
             label10 = new Label();
             cboSegmento = new ComboBox();
-            txtObjetivoEspecifico = new TextBox();
-            label9 = new Label();
             txtObjetivoGeral = new TextBox();
             label8 = new Label();
             gBLancamento = new GroupBox();
@@ -98,7 +97,7 @@
             txtInforProdServ = new TextBox();
             label1 = new Label();
             tabPagePublicoCopy = new TabPage();
-            listDiferenciais = new AdicionarListaControl();
+            lstDiferenciais = new AdicionarListaControl();
             lstDores = new AdicionarListaControl();
             lstOcupacoes = new AdicionarListaControl();
             lstInteresses = new AdicionarListaControl();
@@ -141,8 +140,37 @@
             label19 = new Label();
             nEntonacao = new NumericUpDown();
             label18 = new Label();
+            tabPagePesquisa = new TabPage();
+            tabControlConfPesquisa = new TabControl();
+            tabPage = new TabPage();
+            txtContextoProblema = new TextBox();
+            label30 = new Label();
+            txtJustificativa = new TextBox();
+            label29 = new Label();
+            txtPerguntaPesquisa = new TextBox();
+            label28 = new Label();
+            textBox1 = new TextBox();
+            label9 = new Label();
+            label27 = new Label();
+            label26 = new Label();
+            label25 = new Label();
+            dateTimePicker2 = new DateTimePicker();
+            dateTimePicker1 = new DateTimePicker();
+            label24 = new Label();
+            txtTituloPesquisa = new TextBox();
+            cboModeloPesquisa = new ComboBox();
+            label23 = new Label();
+            tabPagePublicoAlvoPesquisa = new TabPage();
+            toolStrip6 = new ToolStrip();
+            toolStripButton2 = new ToolStripButton();
+            toolStripButton3 = new ToolStripButton();
+            toolStripButton4 = new ToolStripButton();
+            toolStripButton5 = new ToolStripButton();
+            label22 = new Label();
+            txtDescricaoPromptPEsquisa = new TextBox();
+            webControl1 = new WebControl();
+            chatControl1 = new ChatControl();
             btnMic = new Button();
-            chatControl = new ChatControl();
             txtPrompt = new TextBox();
             toolStrip2 = new ToolStrip();
             toolChatLivre = new ToolStripButton();
@@ -166,6 +194,9 @@
             visualizarImpressãoToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator4 = new ToolStripSeparator();
             sairToolStripMenuItem = new ToolStripMenuItem();
+            exibirToolStripMenuItem = new ToolStripMenuItem();
+            toolViewMarkdown = new ToolStripMenuItem();
+            toolViewTexto = new ToolStripMenuItem();
             editarToolStripMenuItem = new ToolStripMenuItem();
             ferramentasToolStripMenuItem = new ToolStripMenuItem();
             personalizarToolStripMenuItem = new ToolStripMenuItem();
@@ -211,6 +242,10 @@
             ((System.ComponentModel.ISupportInitialize)nOriginalidade).BeginInit();
             gbPerspectiva.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nEntonacao).BeginInit();
+            tabPagePesquisa.SuspendLayout();
+            tabControlConfPesquisa.SuspendLayout();
+            tabPage.SuspendLayout();
+            toolStrip6.SuspendLayout();
             toolStrip2.SuspendLayout();
             toolStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -221,7 +256,7 @@
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripProgressBar1 });
             statusStrip1.Location = new Point(0, 639);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1059, 22);
+            statusStrip1.Size = new Size(1062, 22);
             statusStrip1.TabIndex = 0;
             // 
             // toolStripStatusLabel1
@@ -242,17 +277,18 @@
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
             toolStripContainer1.ContentPanel.ImeMode = ImeMode.On;
             toolStripContainer1.ContentPanel.RightToLeft = RightToLeft.No;
-            toolStripContainer1.ContentPanel.Size = new Size(1059, 590);
+            toolStripContainer1.ContentPanel.Size = new Size(1062, 590);
             toolStripContainer1.Dock = DockStyle.Fill;
             toolStripContainer1.Location = new Point(0, 24);
             toolStripContainer1.Name = "toolStripContainer1";
-            toolStripContainer1.Size = new Size(1059, 615);
+            toolStripContainer1.Size = new Size(1062, 615);
             toolStripContainer1.TabIndex = 1;
             toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
             toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip2);
+            toolStripContainer1.TopToolStripPanel.Controls.Add(toolStrip1);
             toolStripContainer1.TopToolStripPanel.ImeMode = ImeMode.On;
             toolStripContainer1.TopToolStripPanel.RenderMode = ToolStripRenderMode.Professional;
             // 
@@ -271,7 +307,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Size = new Size(1059, 590);
+            splitContainer1.Size = new Size(1062, 590);
             splitContainer1.SplitterDistance = 32;
             splitContainer1.TabIndex = 0;
             // 
@@ -309,25 +345,28 @@
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(webControl1);
+            splitContainer2.Panel2.Controls.Add(chatControl1);
             splitContainer2.Panel2.Controls.Add(btnMic);
-            splitContainer2.Panel2.Controls.Add(chatControl);
             splitContainer2.Panel2.Controls.Add(txtPrompt);
-            splitContainer2.Size = new Size(1059, 590);
+            splitContainer2.Size = new Size(1062, 590);
             splitContainer2.SplitterDistance = 519;
             splitContainer2.TabIndex = 0;
             // 
             // tabControlParametros
             // 
             tabControlParametros.Controls.Add(tabParamConteudo);
+            tabControlParametros.Controls.Add(tabPagePesquisa);
             tabControlParametros.Dock = DockStyle.Fill;
             tabControlParametros.Location = new Point(0, 0);
             tabControlParametros.Name = "tabControlParametros";
             tabControlParametros.SelectedIndex = 0;
-            tabControlParametros.Size = new Size(1059, 519);
+            tabControlParametros.Size = new Size(1062, 519);
             tabControlParametros.TabIndex = 0;
             // 
             // tabParamConteudo
             // 
+            tabParamConteudo.BackColor = SystemColors.Window;
             tabParamConteudo.Controls.Add(toolStrip4);
             tabParamConteudo.Controls.Add(label21);
             tabParamConteudo.Controls.Add(txtNomePromptCopy);
@@ -335,11 +374,10 @@
             tabParamConteudo.Location = new Point(4, 24);
             tabParamConteudo.Name = "tabParamConteudo";
             tabParamConteudo.Padding = new Padding(3);
-            tabParamConteudo.Size = new Size(1051, 491);
+            tabParamConteudo.Size = new Size(1054, 491);
             tabParamConteudo.TabIndex = 0;
-            tabParamConteudo.Text = "Conteudo";
+            tabParamConteudo.Text = "COPYWRITER";
             tabParamConteudo.ToolTipText = "Gera COPYWRITER com base em informações definidas";
-            tabParamConteudo.UseVisualStyleBackColor = true;
             // 
             // toolStrip4
             // 
@@ -347,7 +385,7 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { novaToolStripButton1, abrirToolStripButton1, salvarToolStripButton1, toolStripButton1 });
-            toolStrip4.Location = new Point(955, 22);
+            toolStrip4.Location = new Point(958, 22);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
             toolStrip4.Size = new Size(95, 25);
@@ -416,10 +454,10 @@
             txtNomePromptCopy.Name = "txtNomePromptCopy";
             txtNomePromptCopy.Size = new Size(491, 23);
             txtNomePromptCopy.TabIndex = 1;
-            txtNomePromptCopy.Leave += txtNomePromptCopy_Leave;
             // 
             // tabCopy
             // 
+            tabCopy.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabCopy.Controls.Add(tabPageBriefing);
             tabCopy.Controls.Add(tabPagePublicoCopy);
             tabCopy.Controls.Add(tabControles);
@@ -431,6 +469,8 @@
             // 
             // tabPageBriefing
             // 
+            tabPageBriefing.BackColor = SystemColors.Window;
+            tabPageBriefing.Controls.Add(lstObjetivosEspecificos);
             tabPageBriefing.Controls.Add(lblArquivo);
             tabPageBriefing.Controls.Add(toolStrip5);
             tabPageBriefing.Controls.Add(txtIdeiaPromovida);
@@ -442,8 +482,6 @@
             tabPageBriefing.Controls.Add(cboSubSegmentos);
             tabPageBriefing.Controls.Add(label10);
             tabPageBriefing.Controls.Add(cboSegmento);
-            tabPageBriefing.Controls.Add(txtObjetivoEspecifico);
-            tabPageBriefing.Controls.Add(label9);
             tabPageBriefing.Controls.Add(txtObjetivoGeral);
             tabPageBriefing.Controls.Add(label8);
             tabPageBriefing.Controls.Add(gBLancamento);
@@ -466,7 +504,15 @@
             tabPageBriefing.Size = new Size(1039, 406);
             tabPageBriefing.TabIndex = 0;
             tabPageBriefing.Text = "BRIEFING";
-            tabPageBriefing.UseVisualStyleBackColor = true;
+            // 
+            // lstObjetivosEspecificos
+            // 
+            lstObjetivosEspecificos.Descricao = "OBJETIVOS ESPECIFICOS";
+            lstObjetivosEspecificos.Location = new Point(704, 158);
+            lstObjetivosEspecificos.Name = "lstObjetivosEspecificos";
+            lstObjetivosEspecificos.NomeLista = "OBJETIVOS_ESPECIFICOS_COPY";
+            lstObjetivosEspecificos.Size = new Size(326, 148);
+            lstObjetivosEspecificos.TabIndex = 49;
             // 
             // lblArquivo
             // 
@@ -519,7 +565,6 @@
             txtIdeiaPromovida.PlaceholderText = "Descreva a ideia geral do texto";
             txtIdeiaPromovida.Size = new Size(317, 23);
             txtIdeiaPromovida.TabIndex = 3;
-            txtIdeiaPromovida.Leave += txtIdeiaPromovida_Leave;
             // 
             // txtMensagemCopy
             // 
@@ -528,7 +573,6 @@
             txtMensagemCopy.Name = "txtMensagemCopy";
             txtMensagemCopy.Size = new Size(511, 23);
             txtMensagemCopy.TabIndex = 15;
-            txtMensagemCopy.Leave += txtMensagemCopy_Leave;
             // 
             // label12
             // 
@@ -560,7 +604,6 @@
             gBMetas.TabIndex = 16;
             gBMetas.TabStop = false;
             gBMetas.Text = "METAS";
-            gBMetas.Leave += gBMetas_Leave;
             // 
             // chkInteracao
             // 
@@ -693,7 +736,6 @@
             cboDestinoCopy.Name = "cboDestinoCopy";
             cboDestinoCopy.Size = new Size(510, 23);
             cboDestinoCopy.TabIndex = 43;
-            cboDestinoCopy.Leave += cboDestinoCopy_Leave;
             // 
             // label11
             // 
@@ -713,7 +755,6 @@
             cboSubSegmentos.Name = "cboSubSegmentos";
             cboSubSegmentos.Size = new Size(237, 23);
             cboSubSegmentos.TabIndex = 7;
-            cboSubSegmentos.Leave += cboSubSegmentos_Leave;
             // 
             // label10
             // 
@@ -734,29 +775,6 @@
             cboSegmento.Size = new Size(177, 23);
             cboSegmento.TabIndex = 6;
             cboSegmento.SelectedIndexChanged += cboSegmento_SelectedIndexChanged;
-            cboSegmento.Leave += cboSegmento_Leave;
-            // 
-            // txtObjetivoEspecifico
-            // 
-            txtObjetivoEspecifico.AcceptsReturn = true;
-            txtObjetivoEspecifico.AcceptsTab = true;
-            txtObjetivoEspecifico.AllowDrop = true;
-            txtObjetivoEspecifico.Location = new Point(498, 245);
-            txtObjetivoEspecifico.Multiline = true;
-            txtObjetivoEspecifico.Name = "txtObjetivoEspecifico";
-            txtObjetivoEspecifico.ScrollBars = ScrollBars.Vertical;
-            txtObjetivoEspecifico.Size = new Size(490, 54);
-            txtObjetivoEspecifico.TabIndex = 13;
-            txtObjetivoEspecifico.Leave += txtObjetivoEspecifico_Leave;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(498, 227);
-            label9.Name = "label9";
-            label9.Size = new Size(136, 15);
-            label9.TabIndex = 38;
-            label9.Text = "OBJETIVOS ESPECIFICOS";
             // 
             // txtObjetivoGeral
             // 
@@ -767,9 +785,8 @@
             txtObjetivoGeral.Multiline = true;
             txtObjetivoGeral.Name = "txtObjetivoGeral";
             txtObjetivoGeral.ScrollBars = ScrollBars.Vertical;
-            txtObjetivoGeral.Size = new Size(490, 54);
+            txtObjetivoGeral.Size = new Size(691, 54);
             txtObjetivoGeral.TabIndex = 12;
-            txtObjetivoGeral.Leave += txtObjetivoGeral_Leave;
             // 
             // label8
             // 
@@ -785,13 +802,12 @@
             gBLancamento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             gBLancamento.Controls.Add(rdbNao);
             gBLancamento.Controls.Add(rdbSim);
-            gBLancamento.Location = new Point(782, 51);
+            gBLancamento.Location = new Point(741, 51);
             gBLancamento.Name = "gBLancamento";
             gBLancamento.Size = new Size(138, 41);
             gBLancamento.TabIndex = 8;
             gBLancamento.TabStop = false;
             gBLancamento.Text = "É UM LANÇAMENTO?";
-            gBLancamento.Leave += gBLancamento_Leave;
             // 
             // rdbNao
             // 
@@ -822,7 +838,6 @@
             txtObservacoes.Name = "txtObservacoes";
             txtObservacoes.Size = new Size(715, 23);
             txtObservacoes.TabIndex = 10;
-            txtObservacoes.Leave += txtObservacoes_Leave;
             // 
             // label7
             // 
@@ -840,7 +855,6 @@
             txtLinkCatalogo.PlaceholderText = "Cole o link do catalogo";
             txtLinkCatalogo.Size = new Size(303, 23);
             txtLinkCatalogo.TabIndex = 9;
-            txtLinkCatalogo.Leave += txtLinkCatalogo_Leave;
             // 
             // label6
             // 
@@ -867,7 +881,6 @@
             txtLinkSite.PlaceholderText = "Cole o link de seu site";
             txtLinkSite.Size = new Size(303, 23);
             txtLinkSite.TabIndex = 5;
-            txtLinkSite.Leave += txtLinkSite_Leave;
             // 
             // label4
             // 
@@ -891,13 +904,12 @@
             // txtMarca
             // 
             txtMarca.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMarca.CharacterCasing = CharacterCasing.Lower;
+            txtMarca.CharacterCasing = CharacterCasing.Upper;
             txtMarca.Location = new Point(166, 24);
             txtMarca.Name = "txtMarca";
             txtMarca.PlaceholderText = "Diga o nome de sua marca";
             txtMarca.Size = new Size(544, 23);
             txtMarca.TabIndex = 2;
-            txtMarca.Leave += textMarca_Leave;
             // 
             // label2
             // 
@@ -918,7 +930,6 @@
             gBTipoVenda.TabIndex = 1;
             gBTipoVenda.TabStop = false;
             gBTipoVenda.Text = "O QUE VOCÊ VENDE?";
-            gBTipoVenda.Leave += gBTipoVenda_Leave;
             // 
             // rdbServico
             // 
@@ -952,9 +963,8 @@
             txtInforProdServ.Multiline = true;
             txtInforProdServ.Name = "txtInforProdServ";
             txtInforProdServ.ScrollBars = ScrollBars.Vertical;
-            txtInforProdServ.Size = new Size(1024, 66);
+            txtInforProdServ.Size = new Size(691, 66);
             txtInforProdServ.TabIndex = 11;
-            txtInforProdServ.Leave += txtInforProdServ_Leave;
             // 
             // label1
             // 
@@ -967,7 +977,7 @@
             // 
             // tabPagePublicoCopy
             // 
-            tabPagePublicoCopy.Controls.Add(listDiferenciais);
+            tabPagePublicoCopy.Controls.Add(lstDiferenciais);
             tabPagePublicoCopy.Controls.Add(lstDores);
             tabPagePublicoCopy.Controls.Add(lstOcupacoes);
             tabPagePublicoCopy.Controls.Add(lstInteresses);
@@ -988,45 +998,41 @@
             tabPagePublicoCopy.Text = "PUBLICO ALVO";
             tabPagePublicoCopy.UseVisualStyleBackColor = true;
             // 
-            // listDiferenciais
+            // lstDiferenciais
             // 
-            listDiferenciais.Descricao = "DIFERENCIAIS COMPETITIVOS";
-            listDiferenciais.Location = new Point(2, 225);
-            listDiferenciais.Name = "listDiferenciais";
-            listDiferenciais.NomeLista = "DIFERENCIAIS_COMPETITIVOS";
-            listDiferenciais.Size = new Size(327, 148);
-            listDiferenciais.TabIndex = 8;
-            listDiferenciais.Leave += listDiferenciais_Leave;
+            lstDiferenciais.Descricao = "DIREFERENCIAIS COMPETITIVOS";
+            lstDiferenciais.Location = new Point(2, 218);
+            lstDiferenciais.Name = "lstDiferenciais";
+            lstDiferenciais.NomeLista = "DIFERENCIAIS_COMPETITIVOS";
+            lstDiferenciais.Size = new Size(326, 148);
+            lstDiferenciais.TabIndex = 27;
             // 
             // lstDores
             // 
-            lstDores.Descricao = "DORES DO PUBLICO ALVO";
-            lstDores.Location = new Point(663, 71);
+            lstDores.Descricao = "DORES";
+            lstDores.Location = new Point(664, 68);
             lstDores.Name = "lstDores";
             lstDores.NomeLista = "DORES_PUBLICO_ALVO";
-            lstDores.Size = new Size(325, 148);
-            lstDores.TabIndex = 7;
-            lstDores.Leave += lstDores_Leave;
+            lstDores.Size = new Size(326, 148);
+            lstDores.TabIndex = 26;
             // 
             // lstOcupacoes
             // 
-            lstOcupacoes.Descricao = "OCUPAÇÕES DO PUBLICO ALVO";
-            lstOcupacoes.Location = new Point(330, 71);
+            lstOcupacoes.Descricao = "OCUPAÇÕES";
+            lstOcupacoes.Location = new Point(332, 68);
             lstOcupacoes.Name = "lstOcupacoes";
-            lstOcupacoes.NomeLista = "OCUPACAO_PUBLICO_ALVO";
-            lstOcupacoes.Size = new Size(325, 148);
-            lstOcupacoes.TabIndex = 6;
-            lstOcupacoes.Leave += lstOcupacoes_Leave;
+            lstOcupacoes.NomeLista = "OCUPACOES_PUBLICO_ALVO";
+            lstOcupacoes.Size = new Size(326, 148);
+            lstOcupacoes.TabIndex = 25;
             // 
             // lstInteresses
             // 
-            lstInteresses.Descricao = "INTERESSES DO PUBLICO ALVO";
-            lstInteresses.Location = new Point(2, 71);
+            lstInteresses.Descricao = "INTERESSES";
+            lstInteresses.Location = new Point(2, 68);
             lstInteresses.Name = "lstInteresses";
             lstInteresses.NomeLista = "INTERESSES_PUBLICO_ALVO";
-            lstInteresses.Size = new Size(327, 148);
-            lstInteresses.TabIndex = 5;
-            lstInteresses.Leave += lstInteresses_Leave;
+            lstInteresses.Size = new Size(326, 148);
+            lstInteresses.TabIndex = 24;
             // 
             // txtOutrasInf
             // 
@@ -1035,7 +1041,6 @@
             txtOutrasInf.Name = "txtOutrasInf";
             txtOutrasInf.Size = new Size(355, 136);
             txtOutrasInf.TabIndex = 10;
-            txtOutrasInf.Leave += txtOutrasInf_Leave;
             // 
             // label16
             // 
@@ -1062,7 +1067,6 @@
             gbGenero.TabIndex = 2;
             gbGenero.TabStop = false;
             gbGenero.Text = "GÊNERO";
-            gbGenero.Leave += gbGenero_Leave;
             // 
             // radioButton16
             // 
@@ -1160,7 +1164,6 @@
             gbNivelConsciencia.TabIndex = 9;
             gbNivelConsciencia.TabStop = false;
             gbNivelConsciencia.Text = "NÍVEL CONSCIÊNCIA";
-            gbNivelConsciencia.Leave += gbNivelConsciencia_Leave;
             // 
             // radioButton8
             // 
@@ -1231,7 +1234,6 @@
             txtPropostaValor.Name = "txtPropostaValor";
             txtPropostaValor.Size = new Size(353, 23);
             txtPropostaValor.TabIndex = 4;
-            txtPropostaValor.Leave += txtPropostaValor_Leave;
             // 
             // label15
             // 
@@ -1246,12 +1248,11 @@
             // 
             cboNivelAcademico.BackColor = Color.LavenderBlush;
             cboNivelAcademico.FormattingEnabled = true;
-            cboNivelAcademico.Items.AddRange(new object[] { "Ensino Fundamental Incompleto", "", "Ensino Fundamental Completo", "", "Ensino Médio Incompleto", "", "Ensino Médio Completo", "Técnico", "", "Graduação Incompleta", "", "Graduação Completa", "", "Pós-Graduação Incompleta", "", "Pós-Graduação Completa", "", "Mestrado Incompleto", "", "Mestrado Completo", "", "Doutorado Incompleto", "", "Doutorado Completo", "", "MBA", "Livre Docência", "", "Pós-Doutorado" });
+            cboNivelAcademico.Items.AddRange(new object[] { "Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Técnico", "Graduação Incompleta", "Graduação Completa", "Pós-Graduação Incompleta", "Pós-Graduação Completa", "Mestrado Incompleto", "Mestrado Completo", "Doutorado Incompleto", "Doutorado Completo", "MBA", "Livre Docência", "Pós-Doutorado" });
             cboNivelAcademico.Location = new Point(443, 20);
             cboNivelAcademico.Name = "cboNivelAcademico";
             cboNivelAcademico.Size = new Size(204, 23);
             cboNivelAcademico.TabIndex = 3;
-            cboNivelAcademico.Leave += cboNivelAcademico_Leave;
             // 
             // label17
             // 
@@ -1274,7 +1275,6 @@
             gbRangeIdade.TabIndex = 0;
             gbRangeIdade.TabStop = false;
             gbRangeIdade.Text = "RANGE IDADE";
-            gbRangeIdade.Leave += gbRangeIdade_Leave;
             // 
             // nIdadeFinal
             // 
@@ -1331,12 +1331,11 @@
             // lstPalavrasChave
             // 
             lstPalavrasChave.Descricao = "PALAVRAS CHAVE";
-            lstPalavrasChave.Location = new Point(577, 2);
+            lstPalavrasChave.Location = new Point(580, 2);
             lstPalavrasChave.Name = "lstPalavrasChave";
-            lstPalavrasChave.NomeLista = "PALAVRAS_CHAVE";
-            lstPalavrasChave.Size = new Size(327, 148);
-            lstPalavrasChave.TabIndex = 7;
-            lstPalavrasChave.Leave += lstPalavrasChave_Leave;
+            lstPalavrasChave.NomeLista = "PALAVRAS_CHAVE_COPY";
+            lstPalavrasChave.Size = new Size(326, 148);
+            lstPalavrasChave.TabIndex = 6;
             // 
             // nOriginalidade
             // 
@@ -1353,7 +1352,6 @@
             nOriginalidade.TabIndex = 2;
             nOriginalidade.Value = new decimal(new int[] { 5, 0, 0, 0 });
             nOriginalidade.Enter += nOriginalidade_Enter;
-            nOriginalidade.Leave += nOriginalidade_Leave;
             // 
             // label20
             // 
@@ -1369,13 +1367,12 @@
             gbPerspectiva.Controls.Add(radioButton19);
             gbPerspectiva.Controls.Add(radioButton18);
             gbPerspectiva.Controls.Add(radioButton17);
-            gbPerspectiva.Location = new Point(461, 2);
+            gbPerspectiva.Location = new Point(465, 2);
             gbPerspectiva.Name = "gbPerspectiva";
             gbPerspectiva.Size = new Size(110, 100);
             gbPerspectiva.TabIndex = 4;
             gbPerspectiva.TabStop = false;
             gbPerspectiva.Text = "PERSPECTIVA";
-            gbPerspectiva.Leave += gbPerspectiva_Leave;
             // 
             // radioButton19
             // 
@@ -1421,7 +1418,6 @@
             ckSentimentos.Name = "ckSentimentos";
             ckSentimentos.Size = new Size(377, 130);
             ckSentimentos.TabIndex = 3;
-            ckSentimentos.Leave += ckSentimentos_Leave;
             // 
             // label19
             // 
@@ -1447,7 +1443,6 @@
             nEntonacao.TabIndex = 1;
             nEntonacao.Value = new decimal(new int[] { 5, 0, 0, 0 });
             nEntonacao.Enter += nEntonacao_Enter;
-            nEntonacao.Leave += nEntonacao_Leave;
             // 
             // label18
             // 
@@ -1458,13 +1453,319 @@
             label18.TabIndex = 0;
             label18.Text = "Entonação";
             // 
+            // tabPagePesquisa
+            // 
+            tabPagePesquisa.Controls.Add(tabControlConfPesquisa);
+            tabPagePesquisa.Controls.Add(toolStrip6);
+            tabPagePesquisa.Controls.Add(label22);
+            tabPagePesquisa.Controls.Add(txtDescricaoPromptPEsquisa);
+            tabPagePesquisa.Location = new Point(4, 24);
+            tabPagePesquisa.Name = "tabPagePesquisa";
+            tabPagePesquisa.Padding = new Padding(3);
+            tabPagePesquisa.Size = new Size(1054, 491);
+            tabPagePesquisa.TabIndex = 1;
+            tabPagePesquisa.Text = "PESQUISA";
+            tabPagePesquisa.UseVisualStyleBackColor = true;
+            // 
+            // tabControlConfPesquisa
+            // 
+            tabControlConfPesquisa.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControlConfPesquisa.Controls.Add(tabPage);
+            tabControlConfPesquisa.Controls.Add(tabPagePublicoAlvoPesquisa);
+            tabControlConfPesquisa.Location = new Point(2, 53);
+            tabControlConfPesquisa.Name = "tabControlConfPesquisa";
+            tabControlConfPesquisa.SelectedIndex = 0;
+            tabControlConfPesquisa.Size = new Size(1051, 435);
+            tabControlConfPesquisa.TabIndex = 6;
+            // 
+            // tabPage
+            // 
+            tabPage.Controls.Add(txtContextoProblema);
+            tabPage.Controls.Add(label30);
+            tabPage.Controls.Add(txtJustificativa);
+            tabPage.Controls.Add(label29);
+            tabPage.Controls.Add(txtPerguntaPesquisa);
+            tabPage.Controls.Add(label28);
+            tabPage.Controls.Add(textBox1);
+            tabPage.Controls.Add(label9);
+            tabPage.Controls.Add(label27);
+            tabPage.Controls.Add(label26);
+            tabPage.Controls.Add(label25);
+            tabPage.Controls.Add(dateTimePicker2);
+            tabPage.Controls.Add(dateTimePicker1);
+            tabPage.Controls.Add(label24);
+            tabPage.Controls.Add(txtTituloPesquisa);
+            tabPage.Controls.Add(cboModeloPesquisa);
+            tabPage.Controls.Add(label23);
+            tabPage.Location = new Point(4, 24);
+            tabPage.Name = "tabPage";
+            tabPage.Padding = new Padding(3);
+            tabPage.Size = new Size(1043, 407);
+            tabPage.TabIndex = 0;
+            tabPage.Text = "BRIEFING";
+            tabPage.UseVisualStyleBackColor = true;
+            // 
+            // txtContextoProblema
+            // 
+            txtContextoProblema.BackColor = Color.Ivory;
+            txtContextoProblema.CharacterCasing = CharacterCasing.Upper;
+            txtContextoProblema.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtContextoProblema.Location = new Point(666, 70);
+            txtContextoProblema.Name = "txtContextoProblema";
+            txtContextoProblema.Size = new Size(327, 23);
+            txtContextoProblema.TabIndex = 50;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Location = new Point(667, 52);
+            label30.Name = "label30";
+            label30.Size = new Size(132, 15);
+            label30.TabIndex = 49;
+            label30.Text = "CONTEXTO PROBLEMA";
+            // 
+            // txtJustificativa
+            // 
+            txtJustificativa.BackColor = Color.Ivory;
+            txtJustificativa.CharacterCasing = CharacterCasing.Upper;
+            txtJustificativa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtJustificativa.Location = new Point(335, 70);
+            txtJustificativa.Name = "txtJustificativa";
+            txtJustificativa.Size = new Size(327, 23);
+            txtJustificativa.TabIndex = 48;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(336, 52);
+            label29.Name = "label29";
+            label29.Size = new Size(83, 15);
+            label29.TabIndex = 47;
+            label29.Text = "JUSTIFICATIVA";
+            // 
+            // txtPerguntaPesquisa
+            // 
+            txtPerguntaPesquisa.BackColor = Color.Ivory;
+            txtPerguntaPesquisa.CharacterCasing = CharacterCasing.Upper;
+            txtPerguntaPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtPerguntaPesquisa.Location = new Point(710, 24);
+            txtPerguntaPesquisa.Name = "txtPerguntaPesquisa";
+            txtPerguntaPesquisa.Size = new Size(327, 23);
+            txtPerguntaPesquisa.TabIndex = 46;
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Location = new Point(711, 6);
+            label28.Name = "label28";
+            label28.Size = new Size(122, 15);
+            label28.TabIndex = 45;
+            label28.Text = "PERGUNTA PESQUISA";
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = Color.Ivory;
+            textBox1.CharacterCasing = CharacterCasing.Upper;
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox1.Location = new Point(2, 70);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(327, 23);
+            textBox1.TabIndex = 43;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(3, 52);
+            label9.Name = "label9";
+            label9.Size = new Size(97, 15);
+            label9.TabIndex = 42;
+            label9.Text = "OBJETIVO GERAL";
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Location = new Point(888, 3);
+            label27.Name = "label27";
+            label27.Size = new Size(0, 15);
+            label27.TabIndex = 39;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Location = new Point(609, 3);
+            label26.Name = "label26";
+            label26.Size = new Size(78, 15);
+            label26.TabIndex = 38;
+            label26.Text = "Data Termino";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(508, 3);
+            label25.Name = "label25";
+            label25.Size = new Size(63, 15);
+            label25.TabIndex = 37;
+            label25.Text = "Data Inicio";
+            // 
+            // dateTimePicker2
+            // 
+            dateTimePicker2.Format = DateTimePickerFormat.Short;
+            dateTimePicker2.Location = new Point(609, 25);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.Size = new Size(95, 23);
+            dateTimePicker2.TabIndex = 36;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Format = DateTimePickerFormat.Short;
+            dateTimePicker1.Location = new Point(508, 25);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(95, 23);
+            dateTimePicker1.TabIndex = 35;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(185, 3);
+            label24.Name = "label24";
+            label24.Size = new Size(79, 15);
+            label24.TabIndex = 34;
+            label24.Text = "Titulo Projeto";
+            // 
+            // txtTituloPesquisa
+            // 
+            txtTituloPesquisa.BackColor = Color.Ivory;
+            txtTituloPesquisa.CharacterCasing = CharacterCasing.Upper;
+            txtTituloPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtTituloPesquisa.Location = new Point(185, 24);
+            txtTituloPesquisa.Name = "txtTituloPesquisa";
+            txtTituloPesquisa.Size = new Size(317, 23);
+            txtTituloPesquisa.TabIndex = 33;
+            // 
+            // cboModeloPesquisa
+            // 
+            cboModeloPesquisa.BackColor = Color.LavenderBlush;
+            cboModeloPesquisa.FormattingEnabled = true;
+            cboModeloPesquisa.Items.AddRange(new object[] { "Pesquisa de Mercado", "Pesquisa de Segmentação", "Pesquisa de Produto", "Pesquisa de Preço", "Pesquisa de Promoção", "Pesquisa de Distribuição", "Pesquisa de UX", "Pesquisa de ciências sociais" });
+            cboModeloPesquisa.Location = new Point(2, 24);
+            cboModeloPesquisa.Name = "cboModeloPesquisa";
+            cboModeloPesquisa.Size = new Size(177, 23);
+            cboModeloPesquisa.TabIndex = 1;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(3, 3);
+            label23.Name = "label23";
+            label23.Size = new Size(112, 15);
+            label23.TabIndex = 32;
+            label23.Text = "MODELO PESQUISA";
+            // 
+            // tabPagePublicoAlvoPesquisa
+            // 
+            tabPagePublicoAlvoPesquisa.Location = new Point(4, 24);
+            tabPagePublicoAlvoPesquisa.Name = "tabPagePublicoAlvoPesquisa";
+            tabPagePublicoAlvoPesquisa.Padding = new Padding(3);
+            tabPagePublicoAlvoPesquisa.Size = new Size(1043, 407);
+            tabPagePublicoAlvoPesquisa.TabIndex = 1;
+            tabPagePublicoAlvoPesquisa.Text = "PUBLICO ALVO";
+            tabPagePublicoAlvoPesquisa.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip6
+            // 
+            toolStrip6.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            toolStrip6.Dock = DockStyle.None;
+            toolStrip6.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip6.Items.AddRange(new ToolStripItem[] { toolStripButton2, toolStripButton3, toolStripButton4, toolStripButton5 });
+            toolStrip6.Location = new Point(959, 22);
+            toolStrip6.Name = "toolStrip6";
+            toolStrip6.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip6.Size = new Size(95, 25);
+            toolStrip6.TabIndex = 5;
+            toolStrip6.Text = "toolStrip6";
+            // 
+            // toolStripButton2
+            // 
+            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton2.Image = (Image)resources.GetObject("toolStripButton2.Image");
+            toolStripButton2.ImageTransparentColor = Color.Magenta;
+            toolStripButton2.Name = "toolStripButton2";
+            toolStripButton2.Size = new Size(23, 22);
+            toolStripButton2.Text = "&Nova";
+            toolStripButton2.ToolTipText = "Novo Prompt";
+            // 
+            // toolStripButton3
+            // 
+            toolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton3.Image = (Image)resources.GetObject("toolStripButton3.Image");
+            toolStripButton3.ImageTransparentColor = Color.Magenta;
+            toolStripButton3.Name = "toolStripButton3";
+            toolStripButton3.Size = new Size(23, 22);
+            toolStripButton3.Text = "&Abrir";
+            toolStripButton3.ToolTipText = "Abrir Prompt ";
+            // 
+            // toolStripButton4
+            // 
+            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
+            toolStripButton4.ImageTransparentColor = Color.Magenta;
+            toolStripButton4.Name = "toolStripButton4";
+            toolStripButton4.Size = new Size(23, 22);
+            toolStripButton4.Text = "&Salvar Prompt";
+            toolStripButton4.ToolTipText = "Salvar Prompt";
+            // 
+            // toolStripButton5
+            // 
+            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton5.Image = Properties.Resources.bate_papo;
+            toolStripButton5.ImageTransparentColor = Color.Magenta;
+            toolStripButton5.Name = "toolStripButton5";
+            toolStripButton5.Size = new Size(23, 22);
+            toolStripButton5.Text = "&Enviar Prompt";
+            toolStripButton5.TextDirection = ToolStripTextDirection.Horizontal;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(2, 3);
+            label22.Name = "label22";
+            label22.Size = new Size(121, 15);
+            label22.TabIndex = 4;
+            label22.Text = "DESCRIÇÃO PROMPT";
+            // 
+            // txtDescricaoPromptPEsquisa
+            // 
+            txtDescricaoPromptPEsquisa.BackColor = Color.Ivory;
+            txtDescricaoPromptPEsquisa.CharacterCasing = CharacterCasing.Upper;
+            txtDescricaoPromptPEsquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtDescricaoPromptPEsquisa.Location = new Point(2, 24);
+            txtDescricaoPromptPEsquisa.Name = "txtDescricaoPromptPEsquisa";
+            txtDescricaoPromptPEsquisa.Size = new Size(491, 23);
+            txtDescricaoPromptPEsquisa.TabIndex = 3;
+            // 
+            // webControl1
+            // 
+            webControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            webControl1.Location = new Point(9, 3);
+            webControl1.Name = "webControl1";
+            webControl1.Size = new Size(1047, 26);
+            webControl1.TabIndex = 14;
+            // 
+            // chatControl1
+            // 
+            chatControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            chatControl1.Location = new Point(11, 3);
+            chatControl1.Name = "chatControl1";
+            chatControl1.Size = new Size(1045, 26);
+            chatControl1.TabIndex = 13;
+            // 
             // btnMic
             // 
             btnMic.AccessibleDescription = "Ativa/Desativa Captura por voz";
             btnMic.AccessibleRole = AccessibleRole.Cursor;
             btnMic.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnMic.Image = Properties.Resources.conversacao__1_;
-            btnMic.Location = new Point(1026, 35);
+            btnMic.Location = new Point(1029, 35);
             btnMic.Name = "btnMic";
             btnMic.Size = new Size(27, 22);
             btnMic.TabIndex = 12;
@@ -1473,17 +1774,6 @@
             btnMic.UseVisualStyleBackColor = true;
             btnMic.Click += btnMic_Click;
             // 
-            // chatControl
-            // 
-            chatControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            chatControl.BackColor = Color.White;
-            chatControl.Location = new Point(9, 3);
-            chatControl.Name = "chatControl";
-            chatControl.Size = new Size(1045, 26);
-            chatControl.TabIndex = 10;
-            chatControl.TabStop = false;
-            chatControl.Tag = "Chat";
-            // 
             // txtPrompt
             // 
             txtPrompt.AcceptsReturn = true;
@@ -1491,7 +1781,7 @@
             txtPrompt.AccessibleDescription = "Enter para enviar";
             txtPrompt.AccessibleName = "Prompt de comando por texto";
             txtPrompt.AccessibleRole = AccessibleRole.Text;
-            txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtPrompt.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtPrompt.AutoCompleteSource = AutoCompleteSource.FileSystem;
             txtPrompt.Location = new Point(9, 35);
@@ -1541,7 +1831,7 @@
             toolStrip1.BackColor = SystemColors.Control;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.Items.AddRange(new ToolStripItem[] { novaToolStripButton, abrirToolStripButton, salvarToolStripButton, imprimirToolStripButton, toolStripSeparator, ajudaToolStripButton });
-            toolStrip1.Location = new Point(63, 24);
+            toolStrip1.Location = new Point(61, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.RenderMode = ToolStripRenderMode.Professional;
             toolStrip1.Size = new Size(133, 25);
@@ -1554,7 +1844,8 @@
             novaToolStripButton.ImageTransparentColor = Color.Magenta;
             novaToolStripButton.Name = "novaToolStripButton";
             novaToolStripButton.Size = new Size(23, 22);
-            novaToolStripButton.Text = "&Nova";
+            novaToolStripButton.Text = "&Novo Chat";
+            novaToolStripButton.Click += novaToolStripButton_Click;
             // 
             // abrirToolStripButton
             // 
@@ -1563,7 +1854,7 @@
             abrirToolStripButton.ImageTransparentColor = Color.Magenta;
             abrirToolStripButton.Name = "abrirToolStripButton";
             abrirToolStripButton.Size = new Size(23, 22);
-            abrirToolStripButton.Text = "&Abrir";
+            abrirToolStripButton.Text = "&Abrir Presset";
             // 
             // salvarToolStripButton
             // 
@@ -1605,10 +1896,10 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { arquivoToolStripMenuItem, editarToolStripMenuItem, ferramentasToolStripMenuItem, ajudaToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { arquivoToolStripMenuItem, exibirToolStripMenuItem, editarToolStripMenuItem, ferramentasToolStripMenuItem, ajudaToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1059, 24);
+            menuStrip1.Size = new Size(1062, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -1691,6 +1982,33 @@
             sairToolStripMenuItem.Size = new Size(180, 22);
             sairToolStripMenuItem.Text = "S&air";
             // 
+            // exibirToolStripMenuItem
+            // 
+            exibirToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolViewMarkdown, toolViewTexto });
+            exibirToolStripMenuItem.Name = "exibirToolStripMenuItem";
+            exibirToolStripMenuItem.ShortcutKeyDisplayString = "";
+            exibirToolStripMenuItem.Size = new Size(47, 20);
+            exibirToolStripMenuItem.Text = "Exibir";
+            // 
+            // toolViewMarkdown
+            // 
+            toolViewMarkdown.Checked = true;
+            toolViewMarkdown.CheckState = CheckState.Checked;
+            toolViewMarkdown.Name = "toolViewMarkdown";
+            toolViewMarkdown.ShortcutKeys = Keys.Control | Keys.Shift | Keys.M;
+            toolViewMarkdown.Size = new Size(236, 22);
+            toolViewMarkdown.Text = "&Chat Markdown";
+            toolViewMarkdown.Click += toolViewMarkdown_Click;
+            // 
+            // toolViewTexto
+            // 
+            toolViewTexto.Name = "toolViewTexto";
+            toolViewTexto.ShortcutKeyDisplayString = "";
+            toolViewTexto.ShortcutKeys = Keys.Control | Keys.Shift | Keys.T;
+            toolViewTexto.Size = new Size(236, 22);
+            toolViewTexto.Text = "&Chat Texto";
+            toolViewTexto.Click += toolViewTexto_Click;
+            // 
             // editarToolStripMenuItem
             // 
             editarToolStripMenuItem.Name = "editarToolStripMenuItem";
@@ -1769,15 +2087,17 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(1059, 661);
-            Controls.Add(toolStrip1);
+            BackColor = SystemColors.Window;
+            ClientSize = new Size(1062, 661);
             Controls.Add(toolStripContainer1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             ImeMode = ImeMode.On;
+            KeyPreview = true;
             MainMenuStrip = menuStrip1;
             Name = "FrmPrincipal";
+            SizeGripStyle = SizeGripStyle.Show;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AIBAM";
             Load += FrmPrincipal_Load;
@@ -1832,6 +2152,13 @@
             gbPerspectiva.ResumeLayout(false);
             gbPerspectiva.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nEntonacao).EndInit();
+            tabPagePesquisa.ResumeLayout(false);
+            tabPagePesquisa.PerformLayout();
+            tabControlConfPesquisa.ResumeLayout(false);
+            tabPage.ResumeLayout(false);
+            tabPage.PerformLayout();
+            toolStrip6.ResumeLayout(false);
+            toolStrip6.PerformLayout();
             toolStrip2.ResumeLayout(false);
             toolStrip2.PerformLayout();
             toolStrip1.ResumeLayout(false);
@@ -1913,8 +2240,6 @@
         private Label label7;
         private TextBox txtObjetivoGeral;
         private Label label8;
-        private TextBox txtObjetivoEspecifico;
-        private Label label9;
         private ComboBox cboSegmento;
         private ComboBox cboSubSegmentos;
         private Label label10;
@@ -1942,14 +2267,11 @@
         private Label label13;
         private Label label17;
         private ComboBox cboNivelAcademico;
-        private AdicionarListaControl adicionarListaControl12;
-        private AdicionarListaControl adicionarListaControl11;
         private TextBox txtPropostaValor;
         private Label label15;
         private GroupBox gbNivelConsciencia;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
-        private AdicionarListaControl adicionarListaControl14;
         private RadioButton radioButton8;
         private RadioButton radioButton7;
         private RadioButton radioButton6;
@@ -1969,10 +2291,6 @@
         private Label label18;
         private NumericUpDown nEntonacao;
         private ToolTip toolTip1;
-        private AdicionarListaControl lstDores;
-        private AdicionarListaControl lstOcupacoes;
-        private AdicionarListaControl lstInteresses;
-        private AdicionarListaControl listDiferenciais;
         private CheckedListBox ckSentimentos;
         private Label label19;
         private GroupBox gbPerspectiva;
@@ -1981,7 +2299,6 @@
         private RadioButton radioButton19;
         private RadioButton radioButton18;
         private RadioButton radioButton17;
-        private AdicionarListaControl lstPalavrasChave;
         private Label label21;
         private TextBox txtNomePromptCopy;
         private ToolStrip toolStrip4;
@@ -1989,8 +2306,6 @@
         private ToolStripButton abrirToolStripButton1;
         private ToolStripButton salvarToolStripButton1;
         private ToolStripButton toolStripButton1;
-        private BindingSource promptCopyBindingSource;
-        private BindingSource bindingSource1;
         private TextBox txtIdeiaPromovida;
         private OpenFileDialog openFileDialog1;
         private ToolStrip toolStrip5;
@@ -1998,5 +2313,45 @@
         private ToolStripButton toolStripButtonRemoverArquivo;
         private Label lblArquivo;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private WebControl webControl;
+        private ToolStripMenuItem exibirToolStripMenuItem;
+        private ToolStripMenuItem toolViewMarkdown;
+        private ToolStripMenuItem toolViewTexto;
+        private TabPage tabPagePesquisa;
+        private TabControl tabControlConfPesquisa;
+        private TabPage tabPage;
+        private TabPage tabPagePublicoAlvoPesquisa;
+        private ToolStrip toolStrip6;
+        private ToolStripButton toolStripButton2;
+        private ToolStripButton toolStripButton3;
+        private ToolStripButton toolStripButton4;
+        private ToolStripButton toolStripButton5;
+        private Label label22;
+        private TextBox txtDescricaoPromptPEsquisa;
+        private ComboBox cboModeloPesquisa;
+        private Label label23;
+        private Label label26;
+        private Label label25;
+        private DateTimePicker dateTimePicker2;
+        private DateTimePicker dateTimePicker1;
+        private Label label24;
+        private TextBox txtTituloPesquisa;
+        private Label label27;
+        private TextBox textBox1;
+        private Label label9;
+        private TextBox txtJustificativa;
+        private Label label29;
+        private TextBox txtPerguntaPesquisa;
+        private Label label28;
+        private TextBox txtContextoProblema;
+        private Label label30;
+        private AdicionarListaControl lstObjetivosEspecificos;
+        private AdicionarListaControl lstInteresses;
+        private AdicionarListaControl lstOcupacoes;
+        private AdicionarListaControl lstDores;
+        private AdicionarListaControl lstDiferenciais;
+        private AdicionarListaControl lstPalavrasChave;
+        private ChatControl chatControl1;
+        private WebControl webControl1;
     }
 }

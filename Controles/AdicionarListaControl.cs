@@ -1,9 +1,13 @@
-﻿namespace AIBAM
+﻿using AIBAM.Componentes;
+
+namespace AIBAM
 {
     public partial class AdicionarListaControl : UserControl
     {
         public event Action<string> OnExecutaAcao;
+#pragma warning disable CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere adicionar o modificador "obrigatório" ou declarar como anulável.
         public AdicionarListaControl()
+#pragma warning restore CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere adicionar o modificador "obrigatório" ou declarar como anulável.
         {
             InitializeComponent();
         }
@@ -156,12 +160,13 @@
             // Itera pelos itens checados em ckList
             foreach (var item in ckList.CheckedItems)
             {
+#pragma warning disable CS8604 // Possível argumento de referência nula.
                 itensSelecionados.Add(item.ToString());
+#pragma warning restore CS8604 // Possível argumento de referência nula.
             }
 
             return itensSelecionados;
         }
-
 
         private void toolSalvarLista_Click(object sender, EventArgs e)
         {
@@ -216,6 +221,24 @@
                     ckList.Items.Add(linha, true); // Adiciona o item e marca o checkbox
                 }
             }
+        }
+
+        private void ckList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int index = ckList.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches)
+            {
+                string currentItemText = ckList.Items[index].ToString();
+
+                using (var editForm = new FrmEditItem(currentItemText))
+                {
+                    if (editForm.ShowDialog() == DialogResult.OK)
+                    {
+                        ckList.Items[index] = editForm.ItemText; // Atualiza o item
+                    }
+                }
+            }
+            ckList.SetSelected(index, true); // Mantém o item selecionado
         }
     }
 }

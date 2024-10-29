@@ -71,6 +71,7 @@
             ckList.TabIndex = 7;
             ckList.TabStop = false;
             ckList.KeyDown += ckList_KeyDown;
+            ckList.MouseDoubleClick += ckList_MouseDoubleClick;
             // 
             // toolStrip4
             // 
@@ -78,10 +79,10 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { toolNovoItemLista, toolAbrirLista, toolSalvarLista, toolLimparLista, toolRemoverSelecionados });
-            toolStrip4.Location = new Point(177, 17);
+            toolStrip4.Location = new Point(208, 17);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip4.Size = new Size(149, 25);
+            toolStrip4.Size = new Size(118, 25);
             toolStrip4.TabIndex = 9;
             toolStrip4.Text = "toolStrip4";
             // 
