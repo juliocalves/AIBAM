@@ -9,7 +9,7 @@ namespace AIBAM.Classes
         public string TituloProjeto { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataTermino { get; set; }
-        public List<string> Responsaveis { get; set; } = new List<string>();
+        //public List<string> Responsaveis { get; set; } = new List<string>();
 
         // Objetivo da Pesquisa
         public string ObjetivoGeral { get; set; }

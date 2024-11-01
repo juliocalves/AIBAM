@@ -34,7 +34,7 @@ namespace AIBAM
         public FrmPrincipal()
         {
             InitializeComponent();
-            utils = new();
+            utils = new(SetStatus);
             promptCopy = new();
             AdicionarEventosControles();
             this.FormClosing += FrmConfiguracoes_FormClosing;
@@ -557,29 +557,6 @@ namespace AIBAM
         }
         #endregion
 
-        #region SALVA DADOS EM FORMATO JSON
-        public void SaveToJson(dynamic obj, string nome)
-        {
-            // Caminho do diretório de execução
-            string directoryPath = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS");
-            string filePath = Path.Combine(directoryPath, $"{nome}.json");
-
-            try
-            {
-                // Serializa o objeto promptCopy em JSON
-                string json = JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented);
-
-                // Salva o arquivo JSON no diretório de execução
-                File.WriteAllText(filePath, json);
-
-                SetStatus("Dados salvos com sucesso!");
-            }
-            catch (Exception ex)
-            {
-                SetStatus($"Erro ao salvar os dados: {ex.Message}");
-            }
-        }
-        #endregion
 
         #region AÇÕES PROMPT COPY
         private void salvarToolStripButton1_Click(object sender, EventArgs e)
@@ -602,7 +579,7 @@ namespace AIBAM
             {
                 string filePath = saveFileDialog1.FileName;
                 ///salva arquivo em dbjson para iteração
-                SaveToJson(promptCopy, txtNomePromptCopy.Text);
+                utils.SaveToJson(promptCopy, txtNomePromptCopy.Text);
                 try
                 {
                     File.WriteAllText(filePath, textoPromptCopy);
@@ -630,7 +607,7 @@ namespace AIBAM
         }
         private void abrirToolStripButton1_Click(object sender, EventArgs e)
         {
-            
+
             // Configurações do diálogo de abertura de arquivo
             openFileDialog1.Filter = "JSON files (*.json)|*.json";
             openFileDialog1.Title = "Abrir Modelo Prompt";
@@ -879,9 +856,9 @@ namespace AIBAM
             lblArquivo.Text = string.Empty;
             toolStripButtonRemoverArquivo.Visible = false;
         }
-       
 
-       
+
+
 
         private void toolViewMarkdown_Click(object sender, EventArgs e)
         {
@@ -906,6 +883,13 @@ namespace AIBAM
         private void novaToolStripButton_Click(object sender, EventArgs e)
         {
             FrmPrincipal frm = new();
+            frm.Show();
+        }
+
+        private void catalogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmCatalogoProdServ frm = new();
+            frm.OnStatusUpdate += SetStatus;
             frm.Show();
         }
     }

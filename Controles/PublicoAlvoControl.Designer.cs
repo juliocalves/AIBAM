@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listDiferenciais = new AdicionarListaControl();
             lstDores = new AdicionarListaControl();
             lstOcupacoes = new AdicionarListaControl();
             lstInteresses = new AdicionarListaControl();
@@ -50,8 +49,6 @@
             radioButton5 = new RadioButton();
             radioButton4 = new RadioButton();
             radioButton3 = new RadioButton();
-            txtPropostaValor = new TextBox();
-            label15 = new Label();
             cboNivelAcademico = new ComboBox();
             label17 = new Label();
             gbRangeIdade = new GroupBox();
@@ -65,15 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)nIdadeFinal).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nIdadeInicial).BeginInit();
             SuspendLayout();
-            // 
-            // listDiferenciais
-            // 
-            listDiferenciais.Descricao = "DIFERENCIAIS COMPETITIVOS";
-            listDiferenciais.Location = new Point(3, 226);
-            listDiferenciais.Name = "listDiferenciais";
-            listDiferenciais.NomeLista = "DIFERENCIAIS_COMPETITIVOS";
-            listDiferenciais.Size = new Size(327, 148);
-            listDiferenciais.TabIndex = 31;
             // 
             // lstDores
             // 
@@ -295,23 +283,6 @@
             radioButton3.Text = "Inconsciente do problema";
             radioButton3.UseVisualStyleBackColor = true;
             // 
-            // txtPropostaValor
-            // 
-            txtPropostaValor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPropostaValor.Location = new Point(657, 21);
-            txtPropostaValor.Name = "txtPropostaValor";
-            txtPropostaValor.Size = new Size(332, 23);
-            txtPropostaValor.TabIndex = 27;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(654, 4);
-            label15.Name = "label15";
-            label15.Size = new Size(99, 15);
-            label15.TabIndex = 35;
-            label15.Text = "Proposta de Valor";
-            // 
             // cboNivelAcademico
             // 
             cboNivelAcademico.BackColor = Color.LavenderBlush;
@@ -382,7 +353,6 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(listDiferenciais);
             Controls.Add(lstDores);
             Controls.Add(lstOcupacoes);
             Controls.Add(lstInteresses);
@@ -390,13 +360,11 @@
             Controls.Add(label16);
             Controls.Add(gbGenero);
             Controls.Add(gbNivelConsciencia);
-            Controls.Add(txtPropostaValor);
-            Controls.Add(label15);
             Controls.Add(cboNivelAcademico);
             Controls.Add(label17);
             Controls.Add(gbRangeIdade);
             Name = "PublicoAlvoControl";
-            Size = new Size(996, 385);
+            Size = new Size(1217, 612);
             gbGenero.ResumeLayout(false);
             gbGenero.PerformLayout();
             gbNivelConsciencia.ResumeLayout(false);
@@ -410,8 +378,6 @@
         }
 
         #endregion
-
-        private AdicionarListaControl listDiferenciais;
         private AdicionarListaControl lstDores;
         private AdicionarListaControl lstOcupacoes;
         private AdicionarListaControl lstInteresses;
@@ -433,8 +399,6 @@
         private RadioButton radioButton5;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
-        private TextBox txtPropostaValor;
-        private Label label15;
         private ComboBox cboNivelAcademico;
         private Label label17;
         private GroupBox gbRangeIdade;

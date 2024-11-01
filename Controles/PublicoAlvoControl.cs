@@ -16,6 +16,8 @@ namespace AIBAM.Controles
     {
         public PublicoAlvo publicoAlvo;
         internal Utils utils;
+        // Delegado para atualizar o status no Form principal
+        public Action<string>? statusUpdater;
         public PublicoAlvoControl()
         {
             InitializeComponent();
@@ -23,16 +25,14 @@ namespace AIBAM.Controles
         private void ParsePublicoAlvo()
         {
             publicoAlvo = new();
-            utils = new();
+            utils = new(statusUpdater);
             publicoAlvo.IdadeInicial = (int)nIdadeInicial.Value;
             publicoAlvo.IdadeFinal = (int)nIdadeFinal.Value;
             publicoAlvo.Genero = utils.ObterTextoGroupBox(gbGenero);
             publicoAlvo.NivelAcademico = cboNivelAcademico.Text;
-            publicoAlvo.PropostaValor = txtPropostaValor.Text;
             publicoAlvo.Interesses = lstInteresses.GetItensSelecionados();
             publicoAlvo.Ocupacoes = lstOcupacoes.GetItensSelecionados();
             publicoAlvo.Dores = lstDores.GetItensSelecionados();
-            publicoAlvo.DiferenciasCompetitivos = listDiferenciais.GetItensSelecionados();
             publicoAlvo.NivelConsciencia = utils.ObterTextoGroupBox(gbNivelConsciencia);
             publicoAlvo.OutrasInf = txtOutrasInf.Text;
         }

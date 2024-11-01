@@ -143,6 +143,12 @@
             tabPagePesquisa = new TabPage();
             tabControlConfPesquisa = new TabControl();
             tabPage = new TabPage();
+            toolStrip7 = new ToolStrip();
+            btnNovoPublicoAlvo = new ToolStripButton();
+            btnAbrirPublicoAlvo = new ToolStripButton();
+            textBox2 = new TextBox();
+            label31 = new Label();
+            lstObjetivosEspecificosPesquisa = new AdicionarListaControl();
             txtContextoProblema = new TextBox();
             label30 = new Label();
             txtJustificativa = new TextBox();
@@ -207,6 +213,8 @@
             pesquisarToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator7 = new ToolStripSeparator();
             sobreToolStripMenuItem = new ToolStripMenuItem();
+            produtosToolStripMenuItem = new ToolStripMenuItem();
+            catalogoToolStripMenuItem = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
             openFileDialog1 = new OpenFileDialog();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -245,6 +253,7 @@
             tabPagePesquisa.SuspendLayout();
             tabControlConfPesquisa.SuspendLayout();
             tabPage.SuspendLayout();
+            toolStrip7.SuspendLayout();
             toolStrip6.SuspendLayout();
             toolStrip2.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -507,6 +516,7 @@
             // 
             // lstObjetivosEspecificos
             // 
+            lstObjetivosEspecificos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lstObjetivosEspecificos.Descricao = "OBJETIVOS ESPECIFICOS";
             lstObjetivosEspecificos.Location = new Point(704, 158);
             lstObjetivosEspecificos.Name = "lstObjetivosEspecificos";
@@ -1480,6 +1490,10 @@
             // 
             // tabPage
             // 
+            tabPage.Controls.Add(toolStrip7);
+            tabPage.Controls.Add(textBox2);
+            tabPage.Controls.Add(label31);
+            tabPage.Controls.Add(lstObjetivosEspecificosPesquisa);
             tabPage.Controls.Add(txtContextoProblema);
             tabPage.Controls.Add(label30);
             tabPage.Controls.Add(txtJustificativa);
@@ -1505,6 +1519,69 @@
             tabPage.Text = "BRIEFING";
             tabPage.UseVisualStyleBackColor = true;
             // 
+            // toolStrip7
+            // 
+            toolStrip7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            toolStrip7.Dock = DockStyle.None;
+            toolStrip7.GripStyle = ToolStripGripStyle.Hidden;
+            toolStrip7.Items.AddRange(new ToolStripItem[] { btnNovoPublicoAlvo, btnAbrirPublicoAlvo });
+            toolStrip7.Location = new Point(665, 112);
+            toolStrip7.Name = "toolStrip7";
+            toolStrip7.RenderMode = ToolStripRenderMode.Professional;
+            toolStrip7.Size = new Size(49, 25);
+            toolStrip7.TabIndex = 54;
+            toolStrip7.Text = "toolStrip7";
+            // 
+            // btnNovoPublicoAlvo
+            // 
+            btnNovoPublicoAlvo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnNovoPublicoAlvo.Image = (Image)resources.GetObject("btnNovoPublicoAlvo.Image");
+            btnNovoPublicoAlvo.ImageTransparentColor = Color.Magenta;
+            btnNovoPublicoAlvo.Name = "btnNovoPublicoAlvo";
+            btnNovoPublicoAlvo.Size = new Size(23, 22);
+            btnNovoPublicoAlvo.Text = "&Nova";
+            btnNovoPublicoAlvo.ToolTipText = "Novo Prompt";
+            // 
+            // btnAbrirPublicoAlvo
+            // 
+            btnAbrirPublicoAlvo.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnAbrirPublicoAlvo.Image = (Image)resources.GetObject("btnAbrirPublicoAlvo.Image");
+            btnAbrirPublicoAlvo.ImageTransparentColor = Color.Magenta;
+            btnAbrirPublicoAlvo.Name = "btnAbrirPublicoAlvo";
+            btnAbrirPublicoAlvo.Size = new Size(23, 22);
+            btnAbrirPublicoAlvo.Text = "&Abrir";
+            btnAbrirPublicoAlvo.ToolTipText = "Abrir Prompt ";
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = Color.Ivory;
+            textBox2.CharacterCasing = CharacterCasing.Upper;
+            textBox2.Enabled = false;
+            textBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox2.Location = new Point(333, 114);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(327, 23);
+            textBox2.TabIndex = 53;
+            textBox2.TabStop = false;
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new Point(337, 96);
+            label31.Name = "label31";
+            label31.Size = new Size(125, 15);
+            label31.TabIndex = 52;
+            label31.Text = "PERFIL PUBLICO ALVO";
+            // 
+            // lstObjetivosEspecificosPesquisa
+            // 
+            lstObjetivosEspecificosPesquisa.Descricao = "OBJETIVOS ESPECIFICOS";
+            lstObjetivosEspecificosPesquisa.Location = new Point(2, 94);
+            lstObjetivosEspecificosPesquisa.Name = "lstObjetivosEspecificosPesquisa";
+            lstObjetivosEspecificosPesquisa.NomeLista = "OBJETIVOS_ESPECIFICOS_PESQUISA";
+            lstObjetivosEspecificosPesquisa.Size = new Size(326, 148);
+            lstObjetivosEspecificosPesquisa.TabIndex = 51;
+            // 
             // txtContextoProblema
             // 
             txtContextoProblema.BackColor = Color.Ivory;
@@ -1512,7 +1589,7 @@
             txtContextoProblema.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             txtContextoProblema.Location = new Point(666, 70);
             txtContextoProblema.Name = "txtContextoProblema";
-            txtContextoProblema.Size = new Size(327, 23);
+            txtContextoProblema.Size = new Size(371, 23);
             txtContextoProblema.TabIndex = 50;
             // 
             // label30
@@ -1896,7 +1973,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { arquivoToolStripMenuItem, exibirToolStripMenuItem, editarToolStripMenuItem, ferramentasToolStripMenuItem, ajudaToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { arquivoToolStripMenuItem, exibirToolStripMenuItem, editarToolStripMenuItem, ferramentasToolStripMenuItem, ajudaToolStripMenuItem, produtosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1062, 24);
@@ -2074,6 +2151,20 @@
             sobreToolStripMenuItem.Size = new Size(124, 22);
             sobreToolStripMenuItem.Text = "&Sobre...";
             // 
+            // produtosToolStripMenuItem
+            // 
+            produtosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { catalogoToolStripMenuItem });
+            produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
+            produtosToolStripMenuItem.Size = new Size(67, 20);
+            produtosToolStripMenuItem.Text = "&Produtos";
+            // 
+            // catalogoToolStripMenuItem
+            // 
+            catalogoToolStripMenuItem.Name = "catalogoToolStripMenuItem";
+            catalogoToolStripMenuItem.Size = new Size(180, 22);
+            catalogoToolStripMenuItem.Text = "&Catalogo";
+            catalogoToolStripMenuItem.Click += catalogoToolStripMenuItem_Click;
+            // 
             // toolTip1
             // 
             toolTip1.BackColor = Color.Ivory;
@@ -2157,6 +2248,8 @@
             tabControlConfPesquisa.ResumeLayout(false);
             tabPage.ResumeLayout(false);
             tabPage.PerformLayout();
+            toolStrip7.ResumeLayout(false);
+            toolStrip7.PerformLayout();
             toolStrip6.ResumeLayout(false);
             toolStrip6.PerformLayout();
             toolStrip2.ResumeLayout(false);
@@ -2353,5 +2446,13 @@
         private AdicionarListaControl lstPalavrasChave;
         private ChatControl chatControl1;
         private WebControl webControl1;
+        private AdicionarListaControl lstObjetivosEspecificosPesquisa;
+        private TextBox textBox2;
+        private Label label31;
+        private ToolStrip toolStrip7;
+        private ToolStripButton btnNovoPublicoAlvo;
+        private ToolStripButton btnAbrirPublicoAlvo;
+        private ToolStripMenuItem produtosToolStripMenuItem;
+        private ToolStripMenuItem catalogoToolStripMenuItem;
     }
 }

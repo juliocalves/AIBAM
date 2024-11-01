@@ -45,6 +45,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="jtech_dal">
+      <HintPath>..\jtech_finances\jtech_dal\bin\Debug\jtech_dal.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
