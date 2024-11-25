@@ -18,7 +18,10 @@ namespace AIBAM
             get { return lblDescricao.Text; }
             set { lblDescricao.Text = value; }
         }
-
+        public void DesabilitaAcoes()
+        {
+            toolStrip4.Enabled = false;
+        }
         public string NomeLista
         {
             get { return lblNomeLista.Text; }
@@ -30,7 +33,23 @@ namespace AIBAM
         {
             string item = txtItem.Text.Trim();
 
-            if (!string.IsNullOrEmpty(item))
+            // Verifica se há itens separados por vírgula
+            if (!string.IsNullOrEmpty(item) && item.Contains(","))
+            {
+                // Divide a string por vírgula e itera sobre cada item
+                var itens = item.Split(',');
+                foreach (var i in itens)
+                {
+                    if (!ckList.Items.Contains(item))
+                    {
+                        var trimmedItem = i.Trim(); // Remove espaços em branco ao redor de cada item
+                        ckList.Items.Add(trimmedItem.ToUpper(), true); // Adiciona item e marca o checkbox
+                        ScrollToLastItem(ckList);
+                    }
+                }
+                txtItem.Clear(); // Limpa o campo de entrada após adicionar
+            }
+            else if (!string.IsNullOrEmpty(item))
             {
                 // Verifica se o item já está na lista
                 if (!ckList.Items.Contains(item))

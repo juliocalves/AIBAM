@@ -8,7 +8,6 @@ namespace AIBAM
     public class Utils
     {
         private readonly Action<string> statusUpdater;
-
         // Construtor que aceita uma função para atualizar o status
         public Utils(Action<string> statusUpdater)
         {
@@ -90,7 +89,6 @@ namespace AIBAM
                 statusUpdater?.Invoke($"Erro ao salvar os dados: {ex.Message}");
             }
         }
-
         public void EditItemInJson(string filePath, Guid itemId, Produto updatedItem)
         {
             filePath = Path.Combine(Settings.Default.DiretorioRaiz, filePath);
@@ -125,6 +123,51 @@ namespace AIBAM
             catch (Exception ex)
             {
                 statusUpdater?.Invoke($"Erro ao atualizar o item: {ex.Message}");
+            }
+        }
+      
+        public void SetSelectedValue(CheckedListBox ckList, List<string> itens)
+        {
+            // Itera sobre todos os itens no CheckedListBox
+            for (int i = 0; i < ckList.Items.Count; i++)
+            {
+                // Verifica se o texto do item atual está na lista de itens fornecida
+                if (itens.Contains(ckList.Items[i].ToString()))
+                {
+                    // Marca o item se estiver na lista
+                    ckList.SetItemChecked(i, true);
+                }
+                else
+                {
+                    // Desmarca o item se não estiver na lista
+                    ckList.SetItemChecked(i, false);
+                }
+            }
+        }
+        public void SetSelectedValue(GroupBox groupBox, string value)
+        {
+            foreach (Control control in groupBox.Controls)
+            {
+                if (control is RadioButton radioButton)
+                {
+                    radioButton.Checked = radioButton.Text == value;
+                }
+            }
+        }
+        public void ApenasDecimal(object sender, KeyPressEventArgs e)
+        {
+            // Verifica se o caractere digitado é um número, vírgula ou tecla de controle (como backspace)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                // Se não for, cancela o evento, impedindo o caractere de ser inserido
+                e.Handled = true;
+            }
+
+            // Evita a inserção de mais de uma vírgula
+            TextBox txtBox = sender as TextBox;
+            if (e.KeyChar == ',' && txtBox.Text.Contains(","))
+            {
+                e.Handled = true;
             }
         }
     }

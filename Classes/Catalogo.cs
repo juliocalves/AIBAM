@@ -12,74 +12,48 @@ namespace AIBAM.Classes
         
             this.ProdutoList = new List<Produto>();
         }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
         public List<Produto> ProdutoList { get; set; }
-    }
-    public class Produto
-    {
-        public Produto() { }
-        public Guid Id { get; set; } 
-        public string NomeProd { get; set; }
-        public Decimal CustoProd { get; set; } = Decimal.Zero;
-        public Decimal ValorVendaProd { get; set; } = Decimal.Zero;
-        public Decimal ValorVendaPromocional { get; set; } = Decimal.Zero;
-        public Decimal PercentualDesconto { get; set; } = Decimal.Zero;
-        public Decimal LucroUnidade { get; set; } = Decimal.Zero;
-        public string LinkProd { get; set; }
-        public string CategoriaProd { get; set; }
-        public string GrupoProd { get; set; }
-        public string DescricaoProd { get; set; }
-        public List<string> TagsProd { get; set; }
-        public bool DescontoPix { get; set; }
+        // Relacionamento muitos-para-muitos
+       // public ICollection<CatalogoProduto> Produtos { get; set; } = new List<CatalogoProduto>();
+        public PublicoAlvo PublicoAlvo { get; set; }
+        public int PublicoAlvoId { get; set; }
+        public int ProdutoCount { get; set; } = 0;
+        public DateTime DataCriacao { get; set; } = DateTime.Now;
+        public DateTime DataAtualizacao { get; set; }
+        public decimal LucroMedio { get; set; }
+        public decimal CustoMedio { get; set; }
+        public bool AtivoInativo { get; set; }
 
-
-        /// <summary>
-        /// Calcula o valor do desconto e o lucro com base no valor promocional.
-        /// </summary>
-        /// <returns>Uma tupla contendo o valor do desconto e o lucro.</returns>
-        public void CalcularDescontoELucro()
+        public void AdicionarProdutoCatalogo(Produto produto)
         {
-            // Verifica se os valores são válidos
-            if (ValorVendaProd <= 0)
-            {
-                PercentualDesconto = 0;
-                LucroUnidade = 0;
-                return; // Se o valor de venda for inválido, não faz mais nada
-            }
-            // Calcula o valor do desconto
-            decimal desconto = ValorVendaProd - ValorVendaPromocional;
-         
-            // Calcula o percentual de desconto
-            decimal percentualDesconto = (desconto / ValorVendaProd) * 100;
-
-            // Calcula o lucro
-            decimal lucro = ValorVendaPromocional > 0
-                ? ValorVendaPromocional - CustoProd
-                : ValorVendaProd - CustoProd;
-
-            // Armazena os resultados
-            this.PercentualDesconto = ValorVendaPromocional > 0 ? Math.Max(0, percentualDesconto) : 0; // Garantir que o percentual não seja negativo
-            this.LucroUnidade = lucro; // Garantir que o lucro não seja negativo
+            ProdutoList.Add(produto);
+            ProdutoCount = ProdutoList.Count;
+            CalcularCustoMedio();
+            CalcularLucroMedio();
         }
-        public void AplicarDescontoPix()
+        public void RemoverProdutoCatalogo(Produto produto)
         {
-            // Se não houver valor promocional, define o valor promocional igual ao valor de venda
-            if (ValorVendaPromocional == 0)
-            {
-                ValorVendaPromocional = ValorVendaProd;
-            }
-            // Aplica o desconto adicional de 3% se o pagamento for via Pix
-            if (DescontoPix)
-            {
-                
-                ValorVendaPromocional -= ValorVendaPromocional * 0.03m; // Remove 3% do valor promocional
-            }
-            else
-            {
-                ValorVendaPromocional += ValorVendaPromocional * 0.03m;
-
-                ValorVendaPromocional = ValorVendaPromocional == ValorVendaProd ? 0 : ValorVendaPromocional; // ou você pode manter o valor promocional atual
-            }
+            ProdutoList.Remove(produto);
+            ProdutoCount = ProdutoList.Count;
+            CalcularCustoMedio();
+            CalcularLucroMedio();
+        }
+        // Calcula o custo médio
+        public decimal CalcularCustoMedio()
+        {
+            if (ProdutoCount == 0) return 0; // Evita divisão por zero
+            return ProdutoList.Sum(p => p.CustoProd) / ProdutoCount;
         }
 
+        // Calcula o lucro médio
+        public decimal CalcularLucroMedio()
+        {
+            if (ProdutoCount == 0) return 0; // Evita divisão por zero
+            return ProdutoList.Sum(p => p.LucroUnidade) / ProdutoCount;
+        }
     }
+
 }

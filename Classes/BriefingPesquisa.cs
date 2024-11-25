@@ -1,10 +1,16 @@
-﻿using System;
+﻿using AIBAM.Classes.BancoDados;
+
+using Microsoft.EntityFrameworkCore;
+
+using System;
 using System.Collections.Generic;
 
 namespace AIBAM.Classes
 {
     public class BriefingPesquisa
     {
+        #region PROPRIEDADES
+        public int Id { get; set; }
         // Dados Básicos do Projeto
         public string TituloProjeto { get; set; }
         public DateTime DataInicio { get; set; }
@@ -51,10 +57,12 @@ namespace AIBAM.Classes
         public List<string> LimitacoesPesquisa { get; set; } = new List<string>();
         public List<string> FontesReferencias { get; set; } = new List<string>();
         public string ObservacoesAdicionais { get; set; }
+        #endregion
 
         // Classe auxiliar para as etapas do cronograma
         public class EtapaCronograma
         {
+            public int Id { get; set; }
             public string NomeEtapa { get; set; }
             public DateTime DataInicioEtapa { get; set; }
             public DateTime DataTerminoEtapa { get; set; }
@@ -70,4 +78,43 @@ namespace AIBAM.Classes
                    $"Data de Início: {DataInicio.ToShortDateString()} - Data de Término: {DataTermino.ToShortDateString()}\n";
         }
     }
+    public class BriefingPesquisaService
+    {
+        private readonly AibamDbContext _db;
+
+        public BriefingPesquisaService(AibamDbContext db)
+        {
+            _db = db;
+        }
+        public async Task AdcionarBriefingsPesquisa(BriefingPesquisa briefingPesquisa)
+        {
+            _db.BriefingsPesquisa.Add(briefingPesquisa);
+            await _db.SaveChangesAsync();
+        }
+        public async Task<BriefingPesquisa> ObterBriefingsPesquisaPorIdAsync(int id)
+        {
+            return await _db.BriefingsPesquisa.FindAsync(id);
+        }
+        public async Task AtualizarBriefingsPesquisaAsync(BriefingPesquisa briefingPesquisa)
+        {
+            _db.BriefingsPesquisa.Update(briefingPesquisa);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task RemoverBriefingsPesquisaAsync(int id)
+        {
+            var briefingPesquisa = await ObterBriefingsPesquisaPorIdAsync(id);
+            if (briefingPesquisa != null)
+            {
+                _db.BriefingsPesquisa.Remove(briefingPesquisa);
+                await _db.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<BriefingPesquisa>> ListarBriefingsPesquisaAsync()
+        {
+            return await _db.BriefingsPesquisa.ToListAsync();
+        }
+    }
+
 }

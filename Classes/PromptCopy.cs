@@ -8,7 +8,7 @@
             this.publicoAlvo = new();
             this.controlesCopy = new();
         }
-
+        public int Id { get; set; }
         public string DescricaoCopy { get; set; }
         public BriefingCopy briefing { get; set; }
         public PublicoAlvo publicoAlvo { get; set; }

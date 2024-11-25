@@ -50,84 +50,9 @@
             txtNomePromptCopy = new TextBox();
             tabCopy = new TabControl();
             tabPageBriefing = new TabPage();
-            lstObjetivosEspecificos = new AdicionarListaControl();
-            lblArquivo = new Label();
-            toolStrip5 = new ToolStrip();
-            toolStripButtonAdicionarArquivo = new ToolStripButton();
-            toolStripButtonRemoverArquivo = new ToolStripButton();
-            txtIdeiaPromovida = new TextBox();
-            txtMensagemCopy = new TextBox();
-            label12 = new Label();
-            gBMetas = new GroupBox();
-            chkInteracao = new CheckBox();
-            chkSeguidores = new CheckBox();
-            chkRegistro = new CheckBox();
-            chkDesempenho = new CheckBox();
-            ckAdicao = new CheckBox();
-            chkCompartilhamento = new CheckBox();
-            chkVizualizacao = new CheckBox();
-            chkPermanencia = new CheckBox();
-            chkEngajamento = new CheckBox();
-            chkVenda = new CheckBox();
-            chkCadastro = new CheckBox();
-            chkClick = new CheckBox();
-            cboDestinoCopy = new ComboBox();
-            label11 = new Label();
-            cboSubSegmentos = new ComboBox();
-            label10 = new Label();
-            cboSegmento = new ComboBox();
-            txtObjetivoGeral = new TextBox();
-            label8 = new Label();
-            gBLancamento = new GroupBox();
-            rdbNao = new RadioButton();
-            rdbSim = new RadioButton();
-            txtObservacoes = new TextBox();
-            label7 = new Label();
-            txtLinkCatalogo = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
-            txtLinkSite = new TextBox();
-            label4 = new Label();
-            label3 = new Label();
-            txtMarca = new TextBox();
-            label2 = new Label();
-            gBTipoVenda = new GroupBox();
-            rdbServico = new RadioButton();
-            rdbProduto = new RadioButton();
-            txtInforProdServ = new TextBox();
-            label1 = new Label();
+            briefingCopyControl1 = new Forms.Controles.BriefingCopyControl();
             tabPagePublicoCopy = new TabPage();
-            lstDiferenciais = new AdicionarListaControl();
-            lstDores = new AdicionarListaControl();
-            lstOcupacoes = new AdicionarListaControl();
-            lstInteresses = new AdicionarListaControl();
-            txtOutrasInf = new TextBox();
-            label16 = new Label();
-            gbGenero = new GroupBox();
-            radioButton16 = new RadioButton();
-            radioButton15 = new RadioButton();
-            radioButton14 = new RadioButton();
-            radioButton13 = new RadioButton();
-            radioButton12 = new RadioButton();
-            radioButton11 = new RadioButton();
-            radioButton10 = new RadioButton();
-            radioButton9 = new RadioButton();
-            gbNivelConsciencia = new GroupBox();
-            radioButton8 = new RadioButton();
-            radioButton7 = new RadioButton();
-            radioButton6 = new RadioButton();
-            radioButton5 = new RadioButton();
-            radioButton4 = new RadioButton();
-            radioButton3 = new RadioButton();
-            txtPropostaValor = new TextBox();
-            label15 = new Label();
-            cboNivelAcademico = new ComboBox();
-            label17 = new Label();
-            gbRangeIdade = new GroupBox();
-            nIdadeFinal = new NumericUpDown();
-            label14 = new Label();
-            nIdadeInicial = new NumericUpDown();
-            label13 = new Label();
+            publicoAlvoControl1 = new Controles.PublicoAlvoControl();
             tabControles = new TabPage();
             lstPalavrasChave = new AdicionarListaControl();
             nOriginalidade = new NumericUpDown();
@@ -174,6 +99,7 @@
             toolStripButton5 = new ToolStripButton();
             label22 = new Label();
             txtDescricaoPromptPEsquisa = new TextBox();
+            splitContainer3 = new SplitContainer();
             webControl1 = new WebControl();
             chatControl1 = new ChatControl();
             btnMic = new Button();
@@ -215,6 +141,8 @@
             sobreToolStripMenuItem = new ToolStripMenuItem();
             produtosToolStripMenuItem = new ToolStripMenuItem();
             catalogoToolStripMenuItem = new ToolStripMenuItem();
+            produtoToolStripMenuItem = new ToolStripMenuItem();
+            publicoAlvoToolStripMenuItem = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
             openFileDialog1 = new OpenFileDialog();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -236,16 +164,7 @@
             toolStrip4.SuspendLayout();
             tabCopy.SuspendLayout();
             tabPageBriefing.SuspendLayout();
-            toolStrip5.SuspendLayout();
-            gBMetas.SuspendLayout();
-            gBLancamento.SuspendLayout();
-            gBTipoVenda.SuspendLayout();
             tabPagePublicoCopy.SuspendLayout();
-            gbGenero.SuspendLayout();
-            gbNivelConsciencia.SuspendLayout();
-            gbRangeIdade.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nIdadeFinal).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)nIdadeInicial).BeginInit();
             tabControles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nOriginalidade).BeginInit();
             gbPerspectiva.SuspendLayout();
@@ -255,6 +174,10 @@
             tabPage.SuspendLayout();
             toolStrip7.SuspendLayout();
             toolStrip6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer3).BeginInit();
+            splitContainer3.Panel1.SuspendLayout();
+            splitContainer3.Panel2.SuspendLayout();
+            splitContainer3.SuspendLayout();
             toolStrip2.SuspendLayout();
             toolStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -354,12 +277,9 @@
             // 
             // splitContainer2.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(webControl1);
-            splitContainer2.Panel2.Controls.Add(chatControl1);
-            splitContainer2.Panel2.Controls.Add(btnMic);
-            splitContainer2.Panel2.Controls.Add(txtPrompt);
+            splitContainer2.Panel2.Controls.Add(splitContainer3);
             splitContainer2.Size = new Size(1062, 590);
-            splitContainer2.SplitterDistance = 519;
+            splitContainer2.SplitterDistance = 477;
             splitContainer2.TabIndex = 0;
             // 
             // tabControlParametros
@@ -370,7 +290,7 @@
             tabControlParametros.Location = new Point(0, 0);
             tabControlParametros.Name = "tabControlParametros";
             tabControlParametros.SelectedIndex = 0;
-            tabControlParametros.Size = new Size(1062, 519);
+            tabControlParametros.Size = new Size(1062, 477);
             tabControlParametros.TabIndex = 0;
             // 
             // tabParamConteudo
@@ -383,7 +303,7 @@
             tabParamConteudo.Location = new Point(4, 24);
             tabParamConteudo.Name = "tabParamConteudo";
             tabParamConteudo.Padding = new Padding(3);
-            tabParamConteudo.Size = new Size(1054, 491);
+            tabParamConteudo.Size = new Size(1054, 449);
             tabParamConteudo.TabIndex = 0;
             tabParamConteudo.Text = "COPYWRITER";
             tabParamConteudo.ToolTipText = "Gera COPYWRITER com base em informações definidas";
@@ -458,7 +378,7 @@
             // 
             txtNomePromptCopy.BackColor = Color.Ivory;
             txtNomePromptCopy.CharacterCasing = CharacterCasing.Upper;
-            txtNomePromptCopy.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtNomePromptCopy.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtNomePromptCopy.Location = new Point(2, 24);
             txtNomePromptCopy.Name = "txtNomePromptCopy";
             txtNomePromptCopy.Size = new Size(491, 23);
@@ -466,6 +386,7 @@
             // 
             // tabCopy
             // 
+            tabCopy.AccessibleRole = AccessibleRole.None;
             tabCopy.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabCopy.Controls.Add(tabPageBriefing);
             tabCopy.Controls.Add(tabPagePublicoCopy);
@@ -473,852 +394,49 @@
             tabCopy.Location = new Point(3, 53);
             tabCopy.Name = "tabCopy";
             tabCopy.SelectedIndex = 0;
-            tabCopy.Size = new Size(1047, 434);
+            tabCopy.Size = new Size(1047, 393);
             tabCopy.TabIndex = 0;
             // 
             // tabPageBriefing
             // 
             tabPageBriefing.BackColor = SystemColors.Window;
-            tabPageBriefing.Controls.Add(lstObjetivosEspecificos);
-            tabPageBriefing.Controls.Add(lblArquivo);
-            tabPageBriefing.Controls.Add(toolStrip5);
-            tabPageBriefing.Controls.Add(txtIdeiaPromovida);
-            tabPageBriefing.Controls.Add(txtMensagemCopy);
-            tabPageBriefing.Controls.Add(label12);
-            tabPageBriefing.Controls.Add(gBMetas);
-            tabPageBriefing.Controls.Add(cboDestinoCopy);
-            tabPageBriefing.Controls.Add(label11);
-            tabPageBriefing.Controls.Add(cboSubSegmentos);
-            tabPageBriefing.Controls.Add(label10);
-            tabPageBriefing.Controls.Add(cboSegmento);
-            tabPageBriefing.Controls.Add(txtObjetivoGeral);
-            tabPageBriefing.Controls.Add(label8);
-            tabPageBriefing.Controls.Add(gBLancamento);
-            tabPageBriefing.Controls.Add(txtObservacoes);
-            tabPageBriefing.Controls.Add(label7);
-            tabPageBriefing.Controls.Add(txtLinkCatalogo);
-            tabPageBriefing.Controls.Add(label6);
-            tabPageBriefing.Controls.Add(label5);
-            tabPageBriefing.Controls.Add(txtLinkSite);
-            tabPageBriefing.Controls.Add(label4);
-            tabPageBriefing.Controls.Add(label3);
-            tabPageBriefing.Controls.Add(txtMarca);
-            tabPageBriefing.Controls.Add(label2);
-            tabPageBriefing.Controls.Add(gBTipoVenda);
-            tabPageBriefing.Controls.Add(txtInforProdServ);
-            tabPageBriefing.Controls.Add(label1);
+            tabPageBriefing.Controls.Add(briefingCopyControl1);
             tabPageBriefing.Location = new Point(4, 24);
             tabPageBriefing.Name = "tabPageBriefing";
             tabPageBriefing.Padding = new Padding(3);
-            tabPageBriefing.Size = new Size(1039, 406);
+            tabPageBriefing.Size = new Size(1039, 365);
             tabPageBriefing.TabIndex = 0;
             tabPageBriefing.Text = "BRIEFING";
             // 
-            // lstObjetivosEspecificos
-            // 
-            lstObjetivosEspecificos.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lstObjetivosEspecificos.Descricao = "OBJETIVOS ESPECIFICOS";
-            lstObjetivosEspecificos.Location = new Point(704, 158);
-            lstObjetivosEspecificos.Name = "lstObjetivosEspecificos";
-            lstObjetivosEspecificos.NomeLista = "OBJETIVOS_ESPECIFICOS_COPY";
-            lstObjetivosEspecificos.Size = new Size(326, 148);
-            lstObjetivosEspecificos.TabIndex = 49;
-            // 
-            // lblArquivo
-            // 
-            lblArquivo.AutoSize = true;
-            lblArquivo.ForeColor = Color.Maroon;
-            lblArquivo.Location = new Point(778, 96);
-            lblArquivo.Name = "lblArquivo";
-            lblArquivo.Size = new Size(0, 15);
-            lblArquivo.TabIndex = 48;
-            // 
-            // toolStrip5
-            // 
-            toolStrip5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            toolStrip5.Dock = DockStyle.None;
-            toolStrip5.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip5.Items.AddRange(new ToolStripItem[] { toolStripButtonAdicionarArquivo, toolStripButtonRemoverArquivo });
-            toolStrip5.Location = new Point(1013, 61);
-            toolStrip5.Name = "toolStrip5";
-            toolStrip5.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip5.Size = new Size(26, 25);
-            toolStrip5.TabIndex = 47;
-            toolStrip5.Text = "toolStrip5";
-            // 
-            // toolStripButtonAdicionarArquivo
-            // 
-            toolStripButtonAdicionarArquivo.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonAdicionarArquivo.Image = Properties.Resources.anexar_arquivo;
-            toolStripButtonAdicionarArquivo.ImageTransparentColor = Color.Magenta;
-            toolStripButtonAdicionarArquivo.Name = "toolStripButtonAdicionarArquivo";
-            toolStripButtonAdicionarArquivo.Size = new Size(23, 22);
-            toolStripButtonAdicionarArquivo.Text = "&Importar Arquivo";
-            toolStripButtonAdicionarArquivo.Click += toolStripButtonAdicionarArquivo_Click;
-            // 
-            // toolStripButtonRemoverArquivo
-            // 
-            toolStripButtonRemoverArquivo.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonRemoverArquivo.Image = Properties.Resources.remover_arquivo;
-            toolStripButtonRemoverArquivo.ImageTransparentColor = Color.Magenta;
-            toolStripButtonRemoverArquivo.Name = "toolStripButtonRemoverArquivo";
-            toolStripButtonRemoverArquivo.Size = new Size(23, 22);
-            toolStripButtonRemoverArquivo.Text = "&Remover arquivo";
-            toolStripButtonRemoverArquivo.Visible = false;
-            toolStripButtonRemoverArquivo.Click += toolStripButtonRemoverArquivo_Click;
-            // 
-            // txtIdeiaPromovida
-            // 
-            txtIdeiaPromovida.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            txtIdeiaPromovida.Location = new Point(712, 24);
-            txtIdeiaPromovida.Name = "txtIdeiaPromovida";
-            txtIdeiaPromovida.PlaceholderText = "Descreva a ideia geral do texto";
-            txtIdeiaPromovida.Size = new Size(317, 23);
-            txtIdeiaPromovida.TabIndex = 3;
-            // 
-            // txtMensagemCopy
-            // 
-            txtMensagemCopy.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMensagemCopy.Location = new Point(7, 360);
-            txtMensagemCopy.Name = "txtMensagemCopy";
-            txtMensagemCopy.Size = new Size(511, 23);
-            txtMensagemCopy.TabIndex = 15;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(3, 344);
-            label12.Name = "label12";
-            label12.Size = new Size(297, 15);
-            label12.TabIndex = 46;
-            label12.Text = "MENSAGEM A SER TRANSMITIDA COM A CAMPANHA";
-            // 
-            // gBMetas
-            // 
-            gBMetas.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            gBMetas.Controls.Add(chkInteracao);
-            gBMetas.Controls.Add(chkSeguidores);
-            gBMetas.Controls.Add(chkRegistro);
-            gBMetas.Controls.Add(chkDesempenho);
-            gBMetas.Controls.Add(ckAdicao);
-            gBMetas.Controls.Add(chkCompartilhamento);
-            gBMetas.Controls.Add(chkVizualizacao);
-            gBMetas.Controls.Add(chkPermanencia);
-            gBMetas.Controls.Add(chkEngajamento);
-            gBMetas.Controls.Add(chkVenda);
-            gBMetas.Controls.Add(chkCadastro);
-            gBMetas.Controls.Add(chkClick);
-            gBMetas.Location = new Point(522, 303);
-            gBMetas.Name = "gBMetas";
-            gBMetas.Size = new Size(511, 75);
-            gBMetas.TabIndex = 16;
-            gBMetas.TabStop = false;
-            gBMetas.Text = "METAS";
-            // 
-            // chkInteracao
-            // 
-            chkInteracao.AutoSize = true;
-            chkInteracao.Location = new Point(282, 13);
-            chkInteracao.Name = "chkInteracao";
-            chkInteracao.Size = new Size(75, 19);
-            chkInteracao.TabIndex = 7;
-            chkInteracao.Text = "Interação";
-            chkInteracao.UseVisualStyleBackColor = true;
-            // 
-            // chkSeguidores
-            // 
-            chkSeguidores.AutoSize = true;
-            chkSeguidores.Location = new Point(419, 13);
-            chkSeguidores.Name = "chkSeguidores";
-            chkSeguidores.Size = new Size(84, 19);
-            chkSeguidores.TabIndex = 10;
-            chkSeguidores.Text = "Seguidores";
-            chkSeguidores.UseVisualStyleBackColor = true;
-            // 
-            // chkRegistro
-            // 
-            chkRegistro.AutoSize = true;
-            chkRegistro.Location = new Point(282, 51);
-            chkRegistro.Name = "chkRegistro";
-            chkRegistro.Size = new Size(69, 19);
-            chkRegistro.TabIndex = 9;
-            chkRegistro.Text = "Registro";
-            chkRegistro.UseVisualStyleBackColor = true;
-            // 
-            // chkDesempenho
-            // 
-            chkDesempenho.AutoSize = true;
-            chkDesempenho.Location = new Point(146, 31);
-            chkDesempenho.Name = "chkDesempenho";
-            chkDesempenho.Size = new Size(96, 19);
-            chkDesempenho.TabIndex = 5;
-            chkDesempenho.Text = "Desempenho";
-            chkDesempenho.UseVisualStyleBackColor = true;
-            // 
-            // ckAdicao
-            // 
-            ckAdicao.AutoSize = true;
-            ckAdicao.Location = new Point(10, 14);
-            ckAdicao.Name = "ckAdicao";
-            ckAdicao.Size = new Size(112, 19);
-            ckAdicao.TabIndex = 1;
-            ckAdicao.Text = "Adição Carrinho";
-            ckAdicao.UseVisualStyleBackColor = true;
-            // 
-            // chkCompartilhamento
-            // 
-            chkCompartilhamento.AutoSize = true;
-            chkCompartilhamento.Location = new Point(146, 13);
-            chkCompartilhamento.Name = "chkCompartilhamento";
-            chkCompartilhamento.Size = new Size(132, 19);
-            chkCompartilhamento.TabIndex = 4;
-            chkCompartilhamento.Text = "Compartilhamentos";
-            chkCompartilhamento.UseVisualStyleBackColor = true;
-            // 
-            // chkVizualizacao
-            // 
-            chkVizualizacao.AutoSize = true;
-            chkVizualizacao.Location = new Point(419, 50);
-            chkVizualizacao.Name = "chkVizualizacao";
-            chkVizualizacao.Size = new Size(95, 19);
-            chkVizualizacao.TabIndex = 12;
-            chkVizualizacao.Text = "Vizualizações";
-            chkVizualizacao.UseVisualStyleBackColor = true;
-            // 
-            // chkPermanencia
-            // 
-            chkPermanencia.AutoSize = true;
-            chkPermanencia.Location = new Point(282, 32);
-            chkPermanencia.Name = "chkPermanencia";
-            chkPermanencia.Size = new Size(134, 19);
-            chkPermanencia.TabIndex = 8;
-            chkPermanencia.Text = "Permanência Página";
-            chkPermanencia.UseVisualStyleBackColor = true;
-            // 
-            // chkEngajamento
-            // 
-            chkEngajamento.AutoSize = true;
-            chkEngajamento.Location = new Point(146, 48);
-            chkEngajamento.Name = "chkEngajamento";
-            chkEngajamento.Size = new Size(96, 19);
-            chkEngajamento.TabIndex = 6;
-            chkEngajamento.Text = "Engajamento";
-            chkEngajamento.UseVisualStyleBackColor = true;
-            // 
-            // chkVenda
-            // 
-            chkVenda.AutoSize = true;
-            chkVenda.Location = new Point(419, 32);
-            chkVenda.Name = "chkVenda";
-            chkVenda.Size = new Size(58, 19);
-            chkVenda.TabIndex = 11;
-            chkVenda.Text = "Venda";
-            chkVenda.UseVisualStyleBackColor = true;
-            // 
-            // chkCadastro
-            // 
-            chkCadastro.AutoSize = true;
-            chkCadastro.Location = new Point(10, 32);
-            chkCadastro.Name = "chkCadastro";
-            chkCadastro.Size = new Size(134, 19);
-            chkCadastro.TabIndex = 2;
-            chkCadastro.Text = "Cadastro Formulario";
-            chkCadastro.UseVisualStyleBackColor = true;
-            // 
-            // chkClick
-            // 
-            chkClick.AutoSize = true;
-            chkClick.Location = new Point(10, 51);
-            chkClick.Name = "chkClick";
-            chkClick.Size = new Size(82, 19);
-            chkClick.TabIndex = 3;
-            chkClick.Text = "Clicks Link";
-            chkClick.UseVisualStyleBackColor = true;
-            // 
-            // cboDestinoCopy
-            // 
-            cboDestinoCopy.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            cboDestinoCopy.BackColor = Color.LavenderBlush;
-            cboDestinoCopy.FormattingEnabled = true;
-            cboDestinoCopy.ItemHeight = 15;
-            cboDestinoCopy.Items.AddRange(new object[] { "E-mail Marketing", "Landing Page", "Página de Vendas", "Anúncios em Redes Sociais", "Blog Post (SEO)", "Roteiro para Vídeos", "Descrição de Produtos E-commerce", "Teste A/B", "Webinar/Palestras Online", "Conteúdo de Rede Social para Aumento de Audiência", "Impresso", "Radio" });
-            cboDestinoCopy.Location = new Point(8, 318);
-            cboDestinoCopy.Name = "cboDestinoCopy";
-            cboDestinoCopy.Size = new Size(510, 23);
-            cboDestinoCopy.TabIndex = 43;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(3, 301);
-            label11.Name = "label11";
-            label11.Size = new Size(89, 15);
-            label11.TabIndex = 42;
-            label11.Text = "DESTINO COPY";
-            // 
-            // cboSubSegmentos
-            // 
-            cboSubSegmentos.BackColor = Color.LavenderBlush;
-            cboSubSegmentos.FormattingEnabled = true;
-            cboSubSegmentos.Items.AddRange(new object[] { "Tecnologia da Informação (TI)", "Educação", "Saúde e Bem-Estar", "Alimentação e Bebidas", "Varejo", "Turismo e Hotelaria", "Construção Civil e Imobiliário", "Entretenimento e Cultura", "Finanças e Seguros", "Logística e Transporte", "Indústria", "Moda e Beleza", "Agronegócio", "Energia e Sustentabilidade", "Comunicação e Marketing" });
-            cboSubSegmentos.Location = new Point(498, 69);
-            cboSubSegmentos.Name = "cboSubSegmentos";
-            cboSubSegmentos.Size = new Size(237, 23);
-            cboSubSegmentos.TabIndex = 7;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(494, 55);
-            label10.Name = "label10";
-            label10.Size = new Size(92, 15);
-            label10.TabIndex = 40;
-            label10.Text = "SUB SEGMENTO";
-            // 
-            // cboSegmento
-            // 
-            cboSegmento.BackColor = Color.LavenderBlush;
-            cboSegmento.FormattingEnabled = true;
-            cboSegmento.Items.AddRange(new object[] { "Tecnologia da Informação (TI)", "Educação", "Saúde e Bem-Estar", "Alimentação e Bebidas", "Varejo", "Turismo e Hotelaria", "Construção Civil e Imobiliário", "Entretenimento e Cultura", "Finanças e Seguros", "Logística e Transporte", "Indústria", "Moda e Beleza", "Agronegócio", "Energia e Sustentabilidade", "Comunicação e Marketing" });
-            cboSegmento.Location = new Point(315, 69);
-            cboSegmento.Name = "cboSegmento";
-            cboSegmento.Size = new Size(177, 23);
-            cboSegmento.TabIndex = 6;
-            cboSegmento.SelectedIndexChanged += cboSegmento_SelectedIndexChanged;
-            // 
-            // txtObjetivoGeral
-            // 
-            txtObjetivoGeral.AcceptsReturn = true;
-            txtObjetivoGeral.AcceptsTab = true;
-            txtObjetivoGeral.AllowDrop = true;
-            txtObjetivoGeral.Location = new Point(6, 245);
-            txtObjetivoGeral.Multiline = true;
-            txtObjetivoGeral.Name = "txtObjetivoGeral";
-            txtObjetivoGeral.ScrollBars = ScrollBars.Vertical;
-            txtObjetivoGeral.Size = new Size(691, 54);
-            txtObjetivoGeral.TabIndex = 12;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(3, 227);
-            label8.Name = "label8";
-            label8.Size = new Size(97, 15);
-            label8.TabIndex = 36;
-            label8.Text = "OBJETIVO GERAL";
-            // 
-            // gBLancamento
-            // 
-            gBLancamento.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            gBLancamento.Controls.Add(rdbNao);
-            gBLancamento.Controls.Add(rdbSim);
-            gBLancamento.Location = new Point(741, 51);
-            gBLancamento.Name = "gBLancamento";
-            gBLancamento.Size = new Size(138, 41);
-            gBLancamento.TabIndex = 8;
-            gBLancamento.TabStop = false;
-            gBLancamento.Text = "É UM LANÇAMENTO?";
-            // 
-            // rdbNao
-            // 
-            rdbNao.AutoSize = true;
-            rdbNao.Checked = true;
-            rdbNao.Location = new Point(81, 16);
-            rdbNao.Name = "rdbNao";
-            rdbNao.Size = new Size(51, 19);
-            rdbNao.TabIndex = 1;
-            rdbNao.TabStop = true;
-            rdbNao.Text = "NÃO";
-            rdbNao.UseVisualStyleBackColor = true;
-            // 
-            // rdbSim
-            // 
-            rdbSim.AutoSize = true;
-            rdbSim.Location = new Point(12, 16);
-            rdbSim.Name = "rdbSim";
-            rdbSim.Size = new Size(45, 19);
-            rdbSim.TabIndex = 0;
-            rdbSim.Text = "SIM";
-            rdbSim.UseVisualStyleBackColor = true;
-            // 
-            // txtObservacoes
-            // 
-            txtObservacoes.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtObservacoes.Location = new Point(315, 114);
-            txtObservacoes.Name = "txtObservacoes";
-            txtObservacoes.Size = new Size(715, 23);
-            txtObservacoes.TabIndex = 10;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(311, 98);
-            label7.Name = "label7";
-            label7.Size = new Size(85, 15);
-            label7.TabIndex = 34;
-            label7.Text = "OBSERVAÇÕES";
-            // 
-            // txtLinkCatalogo
-            // 
-            txtLinkCatalogo.Location = new Point(6, 114);
-            txtLinkCatalogo.Name = "txtLinkCatalogo";
-            txtLinkCatalogo.PlaceholderText = "Cole o link do catalogo";
-            txtLinkCatalogo.Size = new Size(303, 23);
-            txtLinkCatalogo.TabIndex = 9;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(3, 98);
-            label6.Name = "label6";
-            label6.Size = new Size(295, 15);
-            label6.TabIndex = 32;
-            label6.Text = "VOCÊ POSSUI UM CATALOGO DE PRODUTO/SERVIÇO?";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(311, 55);
-            label5.Name = "label5";
-            label5.Size = new Size(68, 15);
-            label5.TabIndex = 30;
-            label5.Text = "SEGMENTO";
-            // 
-            // txtLinkSite
-            // 
-            txtLinkSite.Location = new Point(6, 69);
-            txtLinkSite.Name = "txtLinkSite";
-            txtLinkSite.PlaceholderText = "Cole o link de seu site";
-            txtLinkSite.Size = new Size(303, 23);
-            txtLinkSite.TabIndex = 5;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(3, 53);
-            label4.Name = "label4";
-            label4.Size = new Size(116, 15);
-            label4.TabIndex = 28;
-            label4.Text = "VOCÊ TEM UM SITE?";
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Location = new Point(712, 4);
-            label3.Name = "label3";
-            label3.Size = new Size(163, 15);
-            label3.TabIndex = 24;
-            label3.Text = "IDEIA QUE SERÁ PROMOVIDA";
-            // 
-            // txtMarca
-            // 
-            txtMarca.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMarca.CharacterCasing = CharacterCasing.Upper;
-            txtMarca.Location = new Point(166, 24);
-            txtMarca.Name = "txtMarca";
-            txtMarca.PlaceholderText = "Diga o nome de sua marca";
-            txtMarca.Size = new Size(544, 23);
-            txtMarca.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(162, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(122, 15);
-            label2.TabIndex = 22;
-            label2.Text = "QUAL É SUA MARCA?";
-            // 
-            // gBTipoVenda
-            // 
-            gBTipoVenda.Controls.Add(rdbServico);
-            gBTipoVenda.Controls.Add(rdbProduto);
-            gBTipoVenda.Location = new Point(6, 6);
-            gBTipoVenda.Name = "gBTipoVenda";
-            gBTipoVenda.Size = new Size(154, 41);
-            gBTipoVenda.TabIndex = 1;
-            gBTipoVenda.TabStop = false;
-            gBTipoVenda.Text = "O QUE VOCÊ VENDE?";
-            // 
-            // rdbServico
-            // 
-            rdbServico.AutoSize = true;
-            rdbServico.Location = new Point(86, 16);
-            rdbServico.Name = "rdbServico";
-            rdbServico.Size = new Size(63, 19);
-            rdbServico.TabIndex = 1;
-            rdbServico.Text = "Serviço";
-            rdbServico.UseVisualStyleBackColor = true;
-            // 
-            // rdbProduto
-            // 
-            rdbProduto.AutoSize = true;
-            rdbProduto.Checked = true;
-            rdbProduto.Location = new Point(12, 16);
-            rdbProduto.Name = "rdbProduto";
-            rdbProduto.Size = new Size(68, 19);
-            rdbProduto.TabIndex = 0;
-            rdbProduto.TabStop = true;
-            rdbProduto.Text = "Produto";
-            rdbProduto.UseVisualStyleBackColor = true;
-            // 
-            // txtInforProdServ
-            // 
-            txtInforProdServ.AcceptsReturn = true;
-            txtInforProdServ.AcceptsTab = true;
-            txtInforProdServ.AllowDrop = true;
-            txtInforProdServ.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtInforProdServ.Location = new Point(6, 158);
-            txtInforProdServ.Multiline = true;
-            txtInforProdServ.Name = "txtInforProdServ";
-            txtInforProdServ.ScrollBars = ScrollBars.Vertical;
-            txtInforProdServ.Size = new Size(691, 66);
-            txtInforProdServ.TabIndex = 11;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 140);
-            label1.Name = "label1";
-            label1.Size = new Size(235, 15);
-            label1.TabIndex = 19;
-            label1.Text = "INFORMAÇÕES SOBRE PRODUTO/SERVIÇO";
+            // briefingCopyControl1
+            // 
+            briefingCopyControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            briefingCopyControl1.Location = new Point(3, 6);
+            briefingCopyControl1.Name = "briefingCopyControl1";
+            briefingCopyControl1.Size = new Size(1033, 382);
+            briefingCopyControl1.TabIndex = 0;
             // 
             // tabPagePublicoCopy
             // 
-            tabPagePublicoCopy.Controls.Add(lstDiferenciais);
-            tabPagePublicoCopy.Controls.Add(lstDores);
-            tabPagePublicoCopy.Controls.Add(lstOcupacoes);
-            tabPagePublicoCopy.Controls.Add(lstInteresses);
-            tabPagePublicoCopy.Controls.Add(txtOutrasInf);
-            tabPagePublicoCopy.Controls.Add(label16);
-            tabPagePublicoCopy.Controls.Add(gbGenero);
-            tabPagePublicoCopy.Controls.Add(gbNivelConsciencia);
-            tabPagePublicoCopy.Controls.Add(txtPropostaValor);
-            tabPagePublicoCopy.Controls.Add(label15);
-            tabPagePublicoCopy.Controls.Add(cboNivelAcademico);
-            tabPagePublicoCopy.Controls.Add(label17);
-            tabPagePublicoCopy.Controls.Add(gbRangeIdade);
+            tabPagePublicoCopy.AutoScroll = true;
+            tabPagePublicoCopy.Controls.Add(publicoAlvoControl1);
             tabPagePublicoCopy.Location = new Point(4, 24);
             tabPagePublicoCopy.Name = "tabPagePublicoCopy";
             tabPagePublicoCopy.Padding = new Padding(3);
-            tabPagePublicoCopy.Size = new Size(1039, 406);
+            tabPagePublicoCopy.Size = new Size(1039, 365);
             tabPagePublicoCopy.TabIndex = 1;
             tabPagePublicoCopy.Text = "PUBLICO ALVO";
+            tabPagePublicoCopy.ToolTipText = "DEFINIÇÃO DE PUBLICO ALVO";
             tabPagePublicoCopy.UseVisualStyleBackColor = true;
             // 
-            // lstDiferenciais
+            // publicoAlvoControl1
             // 
-            lstDiferenciais.Descricao = "DIREFERENCIAIS COMPETITIVOS";
-            lstDiferenciais.Location = new Point(2, 218);
-            lstDiferenciais.Name = "lstDiferenciais";
-            lstDiferenciais.NomeLista = "DIFERENCIAIS_COMPETITIVOS";
-            lstDiferenciais.Size = new Size(326, 148);
-            lstDiferenciais.TabIndex = 27;
-            // 
-            // lstDores
-            // 
-            lstDores.Descricao = "DORES";
-            lstDores.Location = new Point(664, 68);
-            lstDores.Name = "lstDores";
-            lstDores.NomeLista = "DORES_PUBLICO_ALVO";
-            lstDores.Size = new Size(326, 148);
-            lstDores.TabIndex = 26;
-            // 
-            // lstOcupacoes
-            // 
-            lstOcupacoes.Descricao = "OCUPAÇÕES";
-            lstOcupacoes.Location = new Point(332, 68);
-            lstOcupacoes.Name = "lstOcupacoes";
-            lstOcupacoes.NomeLista = "OCUPACOES_PUBLICO_ALVO";
-            lstOcupacoes.Size = new Size(326, 148);
-            lstOcupacoes.TabIndex = 25;
-            // 
-            // lstInteresses
-            // 
-            lstInteresses.Descricao = "INTERESSES";
-            lstInteresses.Location = new Point(2, 68);
-            lstInteresses.Name = "lstInteresses";
-            lstInteresses.NomeLista = "INTERESSES_PUBLICO_ALVO";
-            lstInteresses.Size = new Size(326, 148);
-            lstInteresses.TabIndex = 24;
-            // 
-            // txtOutrasInf
-            // 
-            txtOutrasInf.Location = new Point(633, 232);
-            txtOutrasInf.Multiline = true;
-            txtOutrasInf.Name = "txtOutrasInf";
-            txtOutrasInf.Size = new Size(355, 136);
-            txtOutrasInf.TabIndex = 10;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(634, 219);
-            label16.Name = "label16";
-            label16.Size = new Size(167, 15);
-            label16.TabIndex = 23;
-            label16.Text = "Outras informações relevantes";
-            // 
-            // gbGenero
-            // 
-            gbGenero.Controls.Add(radioButton16);
-            gbGenero.Controls.Add(radioButton15);
-            gbGenero.Controls.Add(radioButton14);
-            gbGenero.Controls.Add(radioButton13);
-            gbGenero.Controls.Add(radioButton12);
-            gbGenero.Controls.Add(radioButton11);
-            gbGenero.Controls.Add(radioButton10);
-            gbGenero.Controls.Add(radioButton9);
-            gbGenero.Location = new Point(129, 2);
-            gbGenero.Name = "gbGenero";
-            gbGenero.Size = new Size(308, 65);
-            gbGenero.TabIndex = 2;
-            gbGenero.TabStop = false;
-            gbGenero.Text = "GÊNERO";
-            // 
-            // radioButton16
-            // 
-            radioButton16.AutoSize = true;
-            radioButton16.Location = new Point(108, 41);
-            radioButton16.Name = "radioButton16";
-            radioButton16.Size = new Size(105, 19);
-            radioButton16.TabIndex = 6;
-            radioButton16.Text = "GENDERQUEER";
-            radioButton16.UseVisualStyleBackColor = true;
-            // 
-            // radioButton15
-            // 
-            radioButton15.AutoSize = true;
-            radioButton15.Location = new Point(9, 42);
-            radioButton15.Name = "radioButton15";
-            radioButton15.Size = new Size(93, 19);
-            radioButton15.TabIndex = 5;
-            radioButton15.Text = "PANGÊNERO";
-            radioButton15.UseVisualStyleBackColor = true;
-            // 
-            // radioButton14
-            // 
-            radioButton14.AutoSize = true;
-            radioButton14.Location = new Point(230, 19);
-            radioButton14.Name = "radioButton14";
-            radioButton14.Size = new Size(78, 19);
-            radioButton14.TabIndex = 4;
-            radioButton14.Text = "AGÊNERO";
-            radioButton14.UseVisualStyleBackColor = true;
-            // 
-            // radioButton13
-            // 
-            radioButton13.AutoSize = true;
-            radioButton13.Location = new Point(147, 19);
-            radioButton13.Name = "radioButton13";
-            radioButton13.Size = new Size(83, 19);
-            radioButton13.TabIndex = 3;
-            radioButton13.Text = "N BINARIO";
-            radioButton13.UseVisualStyleBackColor = true;
-            // 
-            // radioButton12
-            // 
-            radioButton12.AutoSize = true;
-            radioButton12.Location = new Point(84, 19);
-            radioButton12.Name = "radioButton12";
-            radioButton12.Size = new Size(62, 19);
-            radioButton12.TabIndex = 2;
-            radioButton12.Text = "TRANS";
-            radioButton12.UseVisualStyleBackColor = true;
-            // 
-            // radioButton11
-            // 
-            radioButton11.AutoSize = true;
-            radioButton11.Location = new Point(44, 19);
-            radioButton11.Name = "radioButton11";
-            radioButton11.Size = new Size(36, 19);
-            radioButton11.TabIndex = 1;
-            radioButton11.Text = "M";
-            radioButton11.UseVisualStyleBackColor = true;
-            // 
-            // radioButton10
-            // 
-            radioButton10.AutoSize = true;
-            radioButton10.Checked = true;
-            radioButton10.Location = new Point(231, 42);
-            radioButton10.Name = "radioButton10";
-            radioButton10.Size = new Size(63, 19);
-            radioButton10.TabIndex = 7;
-            radioButton10.TabStop = true;
-            radioButton10.Text = "TODOS";
-            radioButton10.UseVisualStyleBackColor = true;
-            // 
-            // radioButton9
-            // 
-            radioButton9.AutoSize = true;
-            radioButton9.Location = new Point(9, 19);
-            radioButton9.Name = "radioButton9";
-            radioButton9.Size = new Size(31, 19);
-            radioButton9.TabIndex = 0;
-            radioButton9.Text = "F";
-            radioButton9.UseVisualStyleBackColor = true;
-            // 
-            // gbNivelConsciencia
-            // 
-            gbNivelConsciencia.Controls.Add(radioButton8);
-            gbNivelConsciencia.Controls.Add(radioButton7);
-            gbNivelConsciencia.Controls.Add(radioButton6);
-            gbNivelConsciencia.Controls.Add(radioButton5);
-            gbNivelConsciencia.Controls.Add(radioButton4);
-            gbNivelConsciencia.Controls.Add(radioButton3);
-            gbNivelConsciencia.Location = new Point(332, 218);
-            gbNivelConsciencia.Name = "gbNivelConsciencia";
-            gbNivelConsciencia.Size = new Size(286, 154);
-            gbNivelConsciencia.TabIndex = 9;
-            gbNivelConsciencia.TabStop = false;
-            gbNivelConsciencia.Text = "NÍVEL CONSCIÊNCIA";
-            // 
-            // radioButton8
-            // 
-            radioButton8.AutoSize = true;
-            radioButton8.Location = new Point(12, 134);
-            radioButton8.Name = "radioButton8";
-            radioButton8.Size = new Size(116, 19);
-            radioButton8.TabIndex = 5;
-            radioButton8.Text = "Cliente fidelizado";
-            radioButton8.UseVisualStyleBackColor = true;
-            // 
-            // radioButton7
-            // 
-            radioButton7.AutoSize = true;
-            radioButton7.Location = new Point(12, 111);
-            radioButton7.Name = "radioButton7";
-            radioButton7.Size = new Size(267, 19);
-            radioButton7.TabIndex = 4;
-            radioButton7.Text = "Totalmente consciente e pronto para comprar";
-            radioButton7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6
-            // 
-            radioButton6.AutoSize = true;
-            radioButton6.Location = new Point(12, 88);
-            radioButton6.Name = "radioButton6";
-            radioButton6.Size = new Size(201, 19);
-            radioButton6.TabIndex = 3;
-            radioButton6.Text = "Consciente do produto/categoria";
-            radioButton6.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5
-            // 
-            radioButton5.AutoSize = true;
-            radioButton5.Location = new Point(12, 63);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new Size(144, 19);
-            radioButton5.TabIndex = 2;
-            radioButton5.Text = "Consciente da solucao";
-            radioButton5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(12, 38);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(155, 19);
-            radioButton4.TabIndex = 1;
-            radioButton4.Text = "Consciente do problema";
-            radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            radioButton3.AutoSize = true;
-            radioButton3.Checked = true;
-            radioButton3.Location = new Point(12, 15);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(163, 19);
-            radioButton3.TabIndex = 0;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Inconsciente do problema";
-            radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // txtPropostaValor
-            // 
-            txtPropostaValor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPropostaValor.Location = new Point(653, 20);
-            txtPropostaValor.Name = "txtPropostaValor";
-            txtPropostaValor.Size = new Size(353, 23);
-            txtPropostaValor.TabIndex = 4;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(653, 3);
-            label15.Name = "label15";
-            label15.Size = new Size(99, 15);
-            label15.TabIndex = 18;
-            label15.Text = "Proposta de Valor";
-            // 
-            // cboNivelAcademico
-            // 
-            cboNivelAcademico.BackColor = Color.LavenderBlush;
-            cboNivelAcademico.FormattingEnabled = true;
-            cboNivelAcademico.Items.AddRange(new object[] { "Ensino Fundamental Incompleto", "Ensino Fundamental Completo", "Ensino Médio Incompleto", "Ensino Médio Completo", "Técnico", "Graduação Incompleta", "Graduação Completa", "Pós-Graduação Incompleta", "Pós-Graduação Completa", "Mestrado Incompleto", "Mestrado Completo", "Doutorado Incompleto", "Doutorado Completo", "MBA", "Livre Docência", "Pós-Doutorado" });
-            cboNivelAcademico.Location = new Point(443, 20);
-            cboNivelAcademico.Name = "cboNivelAcademico";
-            cboNivelAcademico.Size = new Size(204, 23);
-            cboNivelAcademico.TabIndex = 3;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(443, 3);
-            label17.Name = "label17";
-            label17.Size = new Size(95, 15);
-            label17.TabIndex = 13;
-            label17.Text = "Nível acadêmico";
-            // 
-            // gbRangeIdade
-            // 
-            gbRangeIdade.Controls.Add(nIdadeFinal);
-            gbRangeIdade.Controls.Add(label14);
-            gbRangeIdade.Controls.Add(nIdadeInicial);
-            gbRangeIdade.Controls.Add(label13);
-            gbRangeIdade.Location = new Point(2, 2);
-            gbRangeIdade.Name = "gbRangeIdade";
-            gbRangeIdade.Size = new Size(121, 61);
-            gbRangeIdade.TabIndex = 0;
-            gbRangeIdade.TabStop = false;
-            gbRangeIdade.Text = "RANGE IDADE";
-            // 
-            // nIdadeFinal
-            // 
-            nIdadeFinal.Location = new Point(59, 31);
-            nIdadeFinal.Name = "nIdadeFinal";
-            nIdadeFinal.Size = new Size(47, 23);
-            nIdadeFinal.TabIndex = 5;
-            nIdadeFinal.Value = new decimal(new int[] { 30, 0, 0, 0 });
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Location = new Point(55, 12);
-            label14.Name = "label14";
-            label14.Size = new Size(15, 15);
-            label14.TabIndex = 4;
-            label14.Text = "A";
-            // 
-            // nIdadeInicial
-            // 
-            nIdadeInicial.Location = new Point(6, 31);
-            nIdadeInicial.Name = "nIdadeInicial";
-            nIdadeInicial.Size = new Size(47, 23);
-            nIdadeInicial.TabIndex = 3;
-            nIdadeInicial.Value = new decimal(new int[] { 18, 0, 0, 0 });
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(2, 12);
-            label13.Name = "label13";
-            label13.Size = new Size(21, 15);
-            label13.TabIndex = 2;
-            label13.Text = "De";
+            publicoAlvoControl1.AutoScroll = true;
+            publicoAlvoControl1.Dock = DockStyle.Fill;
+            publicoAlvoControl1.Location = new Point(3, 3);
+            publicoAlvoControl1.Name = "publicoAlvoControl1";
+            publicoAlvoControl1.Size = new Size(1033, 359);
+            publicoAlvoControl1.TabIndex = 0;
             // 
             // tabControles
             // 
@@ -1333,7 +451,7 @@
             tabControles.Location = new Point(4, 24);
             tabControles.Name = "tabControles";
             tabControles.Padding = new Padding(3);
-            tabControles.Size = new Size(1039, 406);
+            tabControles.Size = new Size(1039, 365);
             tabControles.TabIndex = 2;
             tabControles.Text = "CONTROLES";
             tabControles.UseVisualStyleBackColor = true;
@@ -1472,7 +590,7 @@
             tabPagePesquisa.Location = new Point(4, 24);
             tabPagePesquisa.Name = "tabPagePesquisa";
             tabPagePesquisa.Padding = new Padding(3);
-            tabPagePesquisa.Size = new Size(1054, 491);
+            tabPagePesquisa.Size = new Size(1054, 449);
             tabPagePesquisa.TabIndex = 1;
             tabPagePesquisa.Text = "PESQUISA";
             tabPagePesquisa.UseVisualStyleBackColor = true;
@@ -1485,7 +603,7 @@
             tabControlConfPesquisa.Location = new Point(2, 53);
             tabControlConfPesquisa.Name = "tabControlConfPesquisa";
             tabControlConfPesquisa.SelectedIndex = 0;
-            tabControlConfPesquisa.Size = new Size(1051, 435);
+            tabControlConfPesquisa.Size = new Size(1051, 393);
             tabControlConfPesquisa.TabIndex = 6;
             // 
             // tabPage
@@ -1514,7 +632,7 @@
             tabPage.Location = new Point(4, 24);
             tabPage.Name = "tabPage";
             tabPage.Padding = new Padding(3);
-            tabPage.Size = new Size(1043, 407);
+            tabPage.Size = new Size(1043, 365);
             tabPage.TabIndex = 0;
             tabPage.Text = "BRIEFING";
             tabPage.UseVisualStyleBackColor = true;
@@ -1557,7 +675,7 @@
             textBox2.BackColor = Color.Ivory;
             textBox2.CharacterCasing = CharacterCasing.Upper;
             textBox2.Enabled = false;
-            textBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             textBox2.Location = new Point(333, 114);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(327, 23);
@@ -1586,7 +704,7 @@
             // 
             txtContextoProblema.BackColor = Color.Ivory;
             txtContextoProblema.CharacterCasing = CharacterCasing.Upper;
-            txtContextoProblema.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtContextoProblema.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtContextoProblema.Location = new Point(666, 70);
             txtContextoProblema.Name = "txtContextoProblema";
             txtContextoProblema.Size = new Size(371, 23);
@@ -1605,7 +723,7 @@
             // 
             txtJustificativa.BackColor = Color.Ivory;
             txtJustificativa.CharacterCasing = CharacterCasing.Upper;
-            txtJustificativa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtJustificativa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtJustificativa.Location = new Point(335, 70);
             txtJustificativa.Name = "txtJustificativa";
             txtJustificativa.Size = new Size(327, 23);
@@ -1624,7 +742,7 @@
             // 
             txtPerguntaPesquisa.BackColor = Color.Ivory;
             txtPerguntaPesquisa.CharacterCasing = CharacterCasing.Upper;
-            txtPerguntaPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtPerguntaPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtPerguntaPesquisa.Location = new Point(710, 24);
             txtPerguntaPesquisa.Name = "txtPerguntaPesquisa";
             txtPerguntaPesquisa.Size = new Size(327, 23);
@@ -1643,7 +761,7 @@
             // 
             textBox1.BackColor = Color.Ivory;
             textBox1.CharacterCasing = CharacterCasing.Upper;
-            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             textBox1.Location = new Point(2, 70);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(327, 23);
@@ -1713,7 +831,7 @@
             // 
             txtTituloPesquisa.BackColor = Color.Ivory;
             txtTituloPesquisa.CharacterCasing = CharacterCasing.Upper;
-            txtTituloPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtTituloPesquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtTituloPesquisa.Location = new Point(185, 24);
             txtTituloPesquisa.Name = "txtTituloPesquisa";
             txtTituloPesquisa.Size = new Size(317, 23);
@@ -1743,7 +861,7 @@
             tabPagePublicoAlvoPesquisa.Location = new Point(4, 24);
             tabPagePublicoAlvoPesquisa.Name = "tabPagePublicoAlvoPesquisa";
             tabPagePublicoAlvoPesquisa.Padding = new Padding(3);
-            tabPagePublicoAlvoPesquisa.Size = new Size(1043, 407);
+            tabPagePublicoAlvoPesquisa.Size = new Size(1043, 365);
             tabPagePublicoAlvoPesquisa.TabIndex = 1;
             tabPagePublicoAlvoPesquisa.Text = "PUBLICO ALVO";
             tabPagePublicoAlvoPesquisa.UseVisualStyleBackColor = true;
@@ -1814,27 +932,47 @@
             // 
             txtDescricaoPromptPEsquisa.BackColor = Color.Ivory;
             txtDescricaoPromptPEsquisa.CharacterCasing = CharacterCasing.Upper;
-            txtDescricaoPromptPEsquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            txtDescricaoPromptPEsquisa.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             txtDescricaoPromptPEsquisa.Location = new Point(2, 24);
             txtDescricaoPromptPEsquisa.Name = "txtDescricaoPromptPEsquisa";
             txtDescricaoPromptPEsquisa.Size = new Size(491, 23);
             txtDescricaoPromptPEsquisa.TabIndex = 3;
             // 
+            // splitContainer3
+            // 
+            splitContainer3.Dock = DockStyle.Fill;
+            splitContainer3.Location = new Point(0, 0);
+            splitContainer3.Name = "splitContainer3";
+            splitContainer3.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            splitContainer3.Panel1.Controls.Add(webControl1);
+            splitContainer3.Panel1.Controls.Add(chatControl1);
+            // 
+            // splitContainer3.Panel2
+            // 
+            splitContainer3.Panel2.Controls.Add(btnMic);
+            splitContainer3.Panel2.Controls.Add(txtPrompt);
+            splitContainer3.Size = new Size(1062, 109);
+            splitContainer3.SplitterDistance = 80;
+            splitContainer3.TabIndex = 0;
+            // 
             // webControl1
             // 
             webControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            webControl1.Location = new Point(9, 3);
+            webControl1.Location = new Point(9, 13);
             webControl1.Name = "webControl1";
-            webControl1.Size = new Size(1047, 26);
-            webControl1.TabIndex = 14;
+            webControl1.Size = new Size(1045, 55);
+            webControl1.TabIndex = 18;
             // 
             // chatControl1
             // 
             chatControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            chatControl1.Location = new Point(11, 3);
+            chatControl1.Location = new Point(9, 13);
             chatControl1.Name = "chatControl1";
-            chatControl1.Size = new Size(1045, 26);
-            chatControl1.TabIndex = 13;
+            chatControl1.Size = new Size(1045, 55);
+            chatControl1.TabIndex = 17;
             // 
             // btnMic
             // 
@@ -1842,10 +980,10 @@
             btnMic.AccessibleRole = AccessibleRole.Cursor;
             btnMic.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnMic.Image = Properties.Resources.conversacao__1_;
-            btnMic.Location = new Point(1029, 35);
+            btnMic.Location = new Point(1029, -6);
             btnMic.Name = "btnMic";
             btnMic.Size = new Size(27, 22);
-            btnMic.TabIndex = 12;
+            btnMic.TabIndex = 20;
             btnMic.Tag = "mic";
             btnMic.UseCompatibleTextRendering = true;
             btnMic.UseVisualStyleBackColor = true;
@@ -1858,16 +996,16 @@
             txtPrompt.AccessibleDescription = "Enter para enviar";
             txtPrompt.AccessibleName = "Prompt de comando por texto";
             txtPrompt.AccessibleRole = AccessibleRole.Text;
-            txtPrompt.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            txtPrompt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtPrompt.AutoCompleteMode = AutoCompleteMode.Suggest;
             txtPrompt.AutoCompleteSource = AutoCompleteSource.FileSystem;
-            txtPrompt.Location = new Point(9, 35);
+            txtPrompt.Location = new Point(6, 10);
             txtPrompt.Multiline = true;
             txtPrompt.Name = "txtPrompt";
             txtPrompt.PlaceholderText = "Comando ";
             txtPrompt.ScrollBars = ScrollBars.Vertical;
-            txtPrompt.Size = new Size(1013, 22);
-            txtPrompt.TabIndex = 11;
+            txtPrompt.Size = new Size(1021, 6);
+            txtPrompt.TabIndex = 19;
             txtPrompt.Tag = "Prompt";
             txtPrompt.KeyDown += txtPrompt_KeyDown;
             // 
@@ -1932,6 +1070,7 @@
             abrirToolStripButton.Name = "abrirToolStripButton";
             abrirToolStripButton.Size = new Size(23, 22);
             abrirToolStripButton.Text = "&Abrir Presset";
+            abrirToolStripButton.Click += abrirToolStripButton_Click;
             // 
             // salvarToolStripButton
             // 
@@ -2153,7 +1292,7 @@
             // 
             // produtosToolStripMenuItem
             // 
-            produtosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { catalogoToolStripMenuItem });
+            produtosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { catalogoToolStripMenuItem, produtoToolStripMenuItem, publicoAlvoToolStripMenuItem });
             produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
             produtosToolStripMenuItem.Size = new Size(67, 20);
             produtosToolStripMenuItem.Text = "&Produtos";
@@ -2161,9 +1300,23 @@
             // catalogoToolStripMenuItem
             // 
             catalogoToolStripMenuItem.Name = "catalogoToolStripMenuItem";
-            catalogoToolStripMenuItem.Size = new Size(180, 22);
+            catalogoToolStripMenuItem.Size = new Size(141, 22);
             catalogoToolStripMenuItem.Text = "&Catalogo";
             catalogoToolStripMenuItem.Click += catalogoToolStripMenuItem_Click;
+            // 
+            // produtoToolStripMenuItem
+            // 
+            produtoToolStripMenuItem.Name = "produtoToolStripMenuItem";
+            produtoToolStripMenuItem.Size = new Size(141, 22);
+            produtoToolStripMenuItem.Text = "&Produto";
+            produtoToolStripMenuItem.Click += produtoToolStripMenuItem_Click;
+            // 
+            // publicoAlvoToolStripMenuItem
+            // 
+            publicoAlvoToolStripMenuItem.Name = "publicoAlvoToolStripMenuItem";
+            publicoAlvoToolStripMenuItem.Size = new Size(141, 22);
+            publicoAlvoToolStripMenuItem.Text = "&Publico Alvo";
+            publicoAlvoToolStripMenuItem.Click += publicoAlvoToolStripMenuItem_Click;
             // 
             // toolTip1
             // 
@@ -2178,6 +1331,7 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            AutoSize = true;
             BackColor = SystemColors.Window;
             ClientSize = new Size(1062, 661);
             Controls.Add(toolStripContainer1);
@@ -2208,7 +1362,6 @@
             toolStrip3.PerformLayout();
             splitContainer2.Panel1.ResumeLayout(false);
             splitContainer2.Panel2.ResumeLayout(false);
-            splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
             splitContainer2.ResumeLayout(false);
             tabControlParametros.ResumeLayout(false);
@@ -2218,25 +1371,7 @@
             toolStrip4.PerformLayout();
             tabCopy.ResumeLayout(false);
             tabPageBriefing.ResumeLayout(false);
-            tabPageBriefing.PerformLayout();
-            toolStrip5.ResumeLayout(false);
-            toolStrip5.PerformLayout();
-            gBMetas.ResumeLayout(false);
-            gBMetas.PerformLayout();
-            gBLancamento.ResumeLayout(false);
-            gBLancamento.PerformLayout();
-            gBTipoVenda.ResumeLayout(false);
-            gBTipoVenda.PerformLayout();
             tabPagePublicoCopy.ResumeLayout(false);
-            tabPagePublicoCopy.PerformLayout();
-            gbGenero.ResumeLayout(false);
-            gbGenero.PerformLayout();
-            gbNivelConsciencia.ResumeLayout(false);
-            gbNivelConsciencia.PerformLayout();
-            gbRangeIdade.ResumeLayout(false);
-            gbRangeIdade.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nIdadeFinal).EndInit();
-            ((System.ComponentModel.ISupportInitialize)nIdadeInicial).EndInit();
             tabControles.ResumeLayout(false);
             tabControles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nOriginalidade).EndInit();
@@ -2252,6 +1387,11 @@
             toolStrip7.PerformLayout();
             toolStrip6.ResumeLayout(false);
             toolStrip6.PerformLayout();
+            splitContainer3.Panel1.ResumeLayout(false);
+            splitContainer3.Panel2.ResumeLayout(false);
+            splitContainer3.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer3).EndInit();
+            splitContainer3.ResumeLayout(false);
             toolStrip2.ResumeLayout(false);
             toolStrip2.PerformLayout();
             toolStrip1.ResumeLayout(false);
@@ -2305,81 +1445,12 @@
         private ToolStripButton toolChatLivre;
         private ToolStripButton toolChatParametrizado;
         private SplitContainer splitContainer2;
-        private Button btnMic;
         private ChatControl chatControl;
-        private TextBox txtPrompt;
         private TabControl tabControlParametros;
         private TabPage tabParamConteudo;
         private TabControl tabCopy;
         private TabPage tabPageBriefing;
         private TabPage tabPagePublicoCopy;
-        private Label label3;
-        private TextBox txtMarca;
-        private Label label2;
-        private GroupBox gBTipoVenda;
-        private RadioButton rdbServico;
-        private RadioButton rdbProduto;
-        private TextBox txtInforProdServ;
-        private Label label1;
-        private TextBox txtLinkSite;
-        private Label label4;
-        private Label label5;
-        private TextBox txtLinkCatalogo;
-        private Label label6;
-        private GroupBox gBLancamento;
-        private RadioButton rdbNao;
-        private RadioButton rdbSim;
-        private TextBox txtObservacoes;
-        private Label label7;
-        private TextBox txtObjetivoGeral;
-        private Label label8;
-        private ComboBox cboSegmento;
-        private ComboBox cboSubSegmentos;
-        private Label label10;
-        private Label label11;
-        private ComboBox cboDestinoCopy;
-        private GroupBox gBMetas;
-        private CheckBox chkVizualizacao;
-        private CheckBox chkPermanencia;
-        private CheckBox chkEngajamento;
-        private CheckBox chkVenda;
-        private CheckBox chkCadastro;
-        private CheckBox chkClick;
-        private CheckBox chkInteracao;
-        private CheckBox chkSeguidores;
-        private CheckBox chkRegistro;
-        private CheckBox chkDesempenho;
-        private CheckBox ckAdicao;
-        private CheckBox chkCompartilhamento;
-        private TextBox txtMensagemCopy;
-        private Label label12;
-        private GroupBox gbRangeIdade;
-        private NumericUpDown nIdadeFinal;
-        private Label label14;
-        private NumericUpDown nIdadeInicial;
-        private Label label13;
-        private Label label17;
-        private ComboBox cboNivelAcademico;
-        private TextBox txtPropostaValor;
-        private Label label15;
-        private GroupBox gbNivelConsciencia;
-        private RadioButton radioButton4;
-        private RadioButton radioButton3;
-        private RadioButton radioButton8;
-        private RadioButton radioButton7;
-        private RadioButton radioButton6;
-        private RadioButton radioButton5;
-        private GroupBox gbGenero;
-        private RadioButton radioButton11;
-        private RadioButton radioButton10;
-        private RadioButton radioButton9;
-        private Label label16;
-        private RadioButton radioButton16;
-        private RadioButton radioButton15;
-        private RadioButton radioButton14;
-        private RadioButton radioButton13;
-        private RadioButton radioButton12;
-        private TextBox txtOutrasInf;
         private TabPage tabControles;
         private Label label18;
         private NumericUpDown nEntonacao;
@@ -2399,12 +1470,7 @@
         private ToolStripButton abrirToolStripButton1;
         private ToolStripButton salvarToolStripButton1;
         private ToolStripButton toolStripButton1;
-        private TextBox txtIdeiaPromovida;
         private OpenFileDialog openFileDialog1;
-        private ToolStrip toolStrip5;
-        private ToolStripButton toolStripButtonAdicionarArquivo;
-        private ToolStripButton toolStripButtonRemoverArquivo;
-        private Label lblArquivo;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private WebControl webControl;
         private ToolStripMenuItem exibirToolStripMenuItem;
@@ -2438,14 +1504,7 @@
         private Label label28;
         private TextBox txtContextoProblema;
         private Label label30;
-        private AdicionarListaControl lstObjetivosEspecificos;
-        private AdicionarListaControl lstInteresses;
-        private AdicionarListaControl lstOcupacoes;
-        private AdicionarListaControl lstDores;
-        private AdicionarListaControl lstDiferenciais;
         private AdicionarListaControl lstPalavrasChave;
-        private ChatControl chatControl1;
-        private WebControl webControl1;
         private AdicionarListaControl lstObjetivosEspecificosPesquisa;
         private TextBox textBox2;
         private Label label31;
@@ -2454,5 +1513,14 @@
         private ToolStripButton btnAbrirPublicoAlvo;
         private ToolStripMenuItem produtosToolStripMenuItem;
         private ToolStripMenuItem catalogoToolStripMenuItem;
+        private ToolStripMenuItem publicoAlvoToolStripMenuItem;
+        private Controles.PublicoAlvoControl publicoAlvoControl1;
+        private SplitContainer splitContainer3;
+        private WebControl webControl1;
+        private ChatControl chatControl1;
+        private Button btnMic;
+        private TextBox txtPrompt;
+        private Forms.Controles.BriefingCopyControl briefingCopyControl1;
+        private ToolStripMenuItem produtoToolStripMenuItem;
     }
 }

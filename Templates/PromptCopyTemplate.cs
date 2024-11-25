@@ -166,10 +166,10 @@ Para isso, você emprega técnicas de redação persuasiva e estratégias de mar
             }
 
             // Diferenciais Competitivos
-            if (promptCopy.publicoAlvo.DiferenciasCompetitivos?.Count > 0)
+            if (promptCopy.publicoAlvo.DiferenciaisCompetitivos?.Count > 0)
             {
                 texto.AppendLine("### Diferenciais Competitivos:");
-                foreach (var diferencial in promptCopy.publicoAlvo.DiferenciasCompetitivos)
+                foreach (var diferencial in promptCopy.publicoAlvo.DiferenciaisCompetitivos)
                 {
                     texto.AppendLine($"- {diferencial}");
                 }
@@ -180,10 +180,10 @@ Para isso, você emprega técnicas de redação persuasiva e estratégias de mar
             texto.AppendLine($"- {promptCopy.publicoAlvo.NivelConsciencia}");
 
             // Outras Informações
-            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInf))
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInformacoes))
             {
                 texto.AppendLine($"### Outras Informações: ");
-                texto.AppendLine($"- {promptCopy.publicoAlvo.OutrasInf}");
+                texto.AppendLine($"- {promptCopy.publicoAlvo.OutrasInformacoes}");
 ;            }
 
             return texto.ToString();

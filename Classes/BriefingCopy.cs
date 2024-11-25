@@ -10,6 +10,8 @@
             this.metasCampanhas = new();
         }
 
+        #region PROPRIEDADES
+        public int Id { get; set; }
         public string? TipoVenda { get; set; }
         public string? Marca { get; set; }
         public string? IdeiaPromovida { get; set; }
@@ -26,5 +28,6 @@
         public string? MensagemTransmitida { get; set; }
         public MetasCampanha? metasCampanhas { get; set; }
         public string? ArquivoImportado { get; set; } = string.Empty;
+        #endregion
     }
 }

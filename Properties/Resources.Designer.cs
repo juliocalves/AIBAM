@@ -213,6 +213,16 @@ namespace AIBAM.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lista {
+            get {
+                object obj = ResourceManager.GetObject("lista", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pasta {
             get {
                 object obj = ResourceManager.GetObject("pasta", resourceCulture);
@@ -276,6 +286,16 @@ namespace AIBAM.Properties {
         internal static System.Drawing.Bitmap salve_ {
             get {
                 object obj = ResourceManager.GetObject("salve-", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap visualizar {
+            get {
+                object obj = ResourceManager.GetObject("visualizar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

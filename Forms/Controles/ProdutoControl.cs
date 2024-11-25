@@ -1,7 +1,6 @@
 ﻿using AIBAM.Classes;
-
-using System;
-using System.Windows.Forms;
+using AIBAM.Forms;
+using System.ComponentModel;
 
 namespace AIBAM.Controles
 {
@@ -14,15 +13,20 @@ namespace AIBAM.Controles
 
         // Delegado para atualizar o status no Form principal
         public event Action<string> OnStatusChanged;
-
+        // private readonly ProdutoService _produtoService;
 
         public ProdutoControl()
         {
+
+            //  _produtoService = new();
             InitializeComponent();
             prod = new Produto();
             util = new Utils(message => OnStatusChanged?.Invoke(message));
         }
-
+        private void ProdutoControl_Load(object sender, EventArgs e)
+        {
+            CarregarDadosComboBox();
+        }
         public Produto ParseProduto()
         {
             if (isUpdate)
@@ -51,25 +55,42 @@ namespace AIBAM.Controles
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            Salvar();
+        }
+        public void DesabilitaAcoes()
+        {
+            toolStrip4.Enabled = false;
+            adicionarListaControl1.DesabilitaAcoes();
+        }
+
+        public void Salvar()
+        {
             ParseProduto();
+            ProdutoService _produtoService = new();
+
             if (!isUpdate)
             {
-                util.SaveDataSetToJson(prod, "PRODUTOS");
 
+                _ = _produtoService.AdicionarProduto(prod);
                 // Atualiza o status após salvar
                 OnStatusChanged?.Invoke("Produto salvo com sucesso!");
             }
             else
             {
-                util.EditItemInJson(Path.Combine("DATASETS","PRODUTOS.json"), prod.Id,prod );
+                _ = _produtoService.AtualizarProdutoAsync(prod);
                 // Atualiza o status após salvar
                 isUpdate = false;
             }
-            btnLimpar.PerformClick();
 
+            btnLimpar.PerformClick();
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+        }
+
+        public void LimparCampos()
         {
             txtNomeProd.Text = string.Empty;
             txtLinkProd.Text = string.Empty;
@@ -105,43 +126,24 @@ namespace AIBAM.Controles
         }
         private void txtCusto_KeyPress(object sender, KeyPressEventArgs e)
         {
-            ApenasDecimal(sender, e);
+            util.ApenasDecimal(sender, e);
         }
         private void txtVenda_KeyPress(object sender, KeyPressEventArgs e)
         {
-            ApenasDecimal(sender, e);
+            util.ApenasDecimal(sender, e);
 
         }
         private void txtVrPromo_KeyPress(object sender, KeyPressEventArgs e)
         {
-            ApenasDecimal(sender, e);
-        }
-
-        private void ApenasDecimal(object sender, KeyPressEventArgs e)
-        {
-            // Verifica se o caractere digitado é um número, vírgula ou tecla de controle (como backspace)
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
-            {
-                // Se não for, cancela o evento, impedindo o caractere de ser inserido
-                e.Handled = true;
-            }
-
-            // Evita a inserção de mais de uma vírgula
-            TextBox txtBox = sender as TextBox;
-            if (e.KeyChar == ',' && txtBox.Text.Contains(","))
-            {
-                e.Handled = true;
-            }
+            util.ApenasDecimal(sender, e);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (!isSetItem)
-            {
-                prod.DescontoPix = checkBox1.Checked;
-                prod.AplicarDescontoPix();
-                AtualizarValores();
-            }
+
+            prod.DescontoPix = checkBox1.Checked;
+            prod.AplicarDescontoPix();
+            AtualizarValores();
         }
 
         private void AtualizarValores()
@@ -199,6 +201,7 @@ namespace AIBAM.Controles
             }
             isUpdate = true;
             isSetItem = false;
+            ParseProduto();
         }
         private void CarregarDadosComboBox()
         {
@@ -217,16 +220,16 @@ namespace AIBAM.Controles
                         cboGrupoProd.Items.Add(line.Trim());
                     }
 
-                    OnStatusChanged?.Invoke("Data loaded successfully.");
+                    OnStatusChanged?.Invoke("Dados carregados com sucesso.");
                 }
                 catch (Exception ex)
                 {
-                    OnStatusChanged?.Invoke($"Error loading data: {ex.Message}");
+                    OnStatusChanged?.Invoke($"Erro ao carregar dados: {ex.Message}");
                 }
             }
             else
             {
-                OnStatusChanged?.Invoke("File not found.");
+                OnStatusChanged?.Invoke("Arquivo não encontrado.");
             }
         }
 
@@ -247,21 +250,40 @@ namespace AIBAM.Controles
                         writer.WriteLine(groupName);
                     }
 
-                    OnStatusChanged?.Invoke("Group name saved successfully.");
+                    OnStatusChanged?.Invoke("Nome de grupo salvo com sucesso!.");
                 }
                 catch (Exception ex)
                 {
-                    OnStatusChanged?.Invoke($"Error saving group name: {ex.Message}");
+                    OnStatusChanged?.Invoke($"Erro ao salvar nome de grupo: {ex.Message}");
                 }
 
             }
         }
 
-        private void ProdutoControl_Load(object sender, EventArgs e)
+        private void txtLinkProd_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            CarregarDadosComboBox();
+            if (!string.IsNullOrEmpty(txtLinkProd.Text))
+            {
+                // Abre o link em uma nova janela com o WebView2
+                FrmWebView frmWebView = new FrmWebView(txtLinkProd.Text);
+                frmWebView.Show();
+            }
         }
 
-        
+        private void txtNomeProd_Leave(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtNomeProd.Text))
+            {
+                // Processa o nome do produto para criar o link
+                string nomeFormatado = txtNomeProd.Text
+                    .Trim()                       // Remove espaços extras
+                    .Replace(" ", "-")            // Substitui espaços por "-"
+                    .ToLower();                   // Converte para minúsculas
+
+                // Define o link formatado
+                txtLinkProd.Text = $"https://reserva.ink/peralta/{nomeFormatado}";
+            }
+        }
+
     }
 }

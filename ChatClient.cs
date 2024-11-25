@@ -1,6 +1,7 @@
 ﻿using AIBAM.Classes;
 using Newtonsoft.Json;
 
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 
@@ -22,20 +23,41 @@ namespace AIBAM
             _serverAddress = serverAddress;
             _serverPort = serverPort;
         }
+
         public async Task Connect()
         {
-            int maxRetries = 3;  // Número máximo de tentativas
-            int delayBetweenRetries = 10000;  // Tempo de espera entre tentativas (em milissegundos)
+            int maxRetries = 3; // Número máximo de tentativas
+            int delayBetweenRetries = 10000; // Tempo de espera entre tentativas (em milissegundos)
+            string serviceName = "aibam_service.exe"; // Nome do executável
+            string executionDirectory = @"A:\\DESKTOP\\WSocket\\dist";//AppDomain.CurrentDomain.BaseDirectory; // Diretório do executável
+            string servicePath = Path.Combine(executionDirectory, serviceName); // Caminho completo do serviço
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 try
                 {
+                    // Verifica se o processo está em execução
+                    if (!IsProcessRunning(serviceName))
+                    {
+                        if (File.Exists(servicePath))
+                        {
+                            // Inicia o processo se ele não estiver em execução
+                            Process.Start(servicePath);
+                            OnConect?.Invoke($"{serviceName} iniciado.");
+                            await Task.Delay(5000); // Aguarda 5 segundos para o serviço iniciar
+                        }
+                        else
+                        {
+                            throw new FileNotFoundException($"O arquivo {serviceName} não foi encontrado no diretório {executionDirectory}.");
+                        }
+                    }
+
+                    // Tenta conectar ao servidor
                     _client = new TcpClient();
                     await _client.ConnectAsync(_serverAddress, _serverPort);
                     _stream = _client.GetStream();
                     OnConect?.Invoke("Conectado ao servidor com sucesso!");
-                    break;  // Sai do loop se a conexão for bem-sucedida
+                    break; // Sai do loop se a conexão for bem-sucedida
                 }
                 catch (Exception ex)
                 {
@@ -45,12 +67,19 @@ namespace AIBAM
                     }
                     else
                     {
-                        OnConect?.Invoke($"Tentativa {attempt} de {maxRetries} falhou. Tentando novamente em 20 segundos...");
-                        await Task.Delay(delayBetweenRetries);  // Aguarda 20 segundos antes da próxima tentativa
+                        OnConect?.Invoke($"Tentativa {attempt} de {maxRetries} falhou. Tentando novamente em {delayBetweenRetries / 1000} segundos...");
+                        await Task.Delay(delayBetweenRetries); // Aguarda antes da próxima tentativa
                     }
                 }
             }
         }
+
+        // Método para verificar se o processo está em execução
+        private bool IsProcessRunning(string processName)
+        {
+            return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(processName)).Length > 0;
+        }
+
 
         public async Task SendMessage(string message)
         {

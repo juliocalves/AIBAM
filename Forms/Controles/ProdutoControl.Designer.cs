@@ -124,6 +124,7 @@
             txtLinkProd.Name = "txtLinkProd";
             txtLinkProd.Size = new Size(335, 23);
             txtLinkProd.TabIndex = 5;
+            txtLinkProd.MouseDoubleClick += txtLinkProd_MouseDoubleClick;
             // 
             // label4
             // 
@@ -162,6 +163,7 @@
             txtNomeProd.Name = "txtNomeProd";
             txtNomeProd.Size = new Size(336, 23);
             txtNomeProd.TabIndex = 1;
+            txtNomeProd.Leave += txtNomeProd_Leave;
             // 
             // label1
             // 
@@ -178,10 +180,10 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { btnLimpar, btnSalvar });
-            toolStrip4.Location = new Point(892, 28);
+            toolStrip4.Location = new Point(923, 28);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip4.Size = new Size(80, 25);
+            toolStrip4.Size = new Size(49, 25);
             toolStrip4.TabIndex = 54;
             toolStrip4.Text = "toolStrip4";
             // 

@@ -1,4 +1,5 @@
 ﻿using AIBAM.Classes;
+using AIBAM.Forms;
 using AIBAM.Templates;
 
 using Newtonsoft.Json;
@@ -36,14 +37,16 @@ namespace AIBAM
             InitializeComponent();
             utils = new(SetStatus);
             promptCopy = new();
-            AdicionarEventosControles();
             this.FormClosing += FrmConfiguracoes_FormClosing;
         }
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             AtualizaBarraProgresso();
             SetStatus("Carregando ferramentas...");
-
+            publicoAlvoControl1.utils = utils;
+            briefingCopyControl1.utils = utils;
+            chatClient.OnConect += ChatClient_Status;
+            chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
             Task.Run(() => chatClient.Connect());
             SetStatus("Preparando UI...");
             txtPrompt.Focus();
@@ -57,31 +60,6 @@ namespace AIBAM
 #pragma warning disable CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
             chatClient.SendMessage("sair  ");
 #pragma warning restore CS4014 // Como esta chamada não é esperada, a execução do método atual continua antes de a chamada ser concluída
-        }
-
-        private void AdicionarEventosControles()
-        {
-
-            chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
-            chatClient.OnConect += ChatClient_Status;
-            lstObjetivosEspecificos.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            lstInteresses.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            lstOcupacoes.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            lstDores.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            lstDiferenciais.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-            lstPalavrasChave.OnExecutaAcao += AdicionarListaControl_OnStateChange;
-        }
-
-        private void AdicionarListaControl_OnStateChange(string obj)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => SetStatus(obj)));
-            }
-            else
-            {
-                SetStatus(obj);
-            }
         }
 
         private void ChatClient_Status(string obj)
@@ -150,50 +128,46 @@ namespace AIBAM
         }
 
         // Salva a conversação em um arquivo Markdown
-        // Salva a conversação em um arquivo Markdown
         private void SaveConversation()
         {
             // Define o status antes de iniciar o salvamento
             SetStatus("Salvando a conversação...");
             AtualizaBarraProgresso();
 
-
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            saveFileDialog1.Filter = "Markdown files (*.md)|*.md|Text files (*.txt)|*.txt";
+            saveFileDialog1.Title = "Salvar Conversação";
+            saveFileDialog1.DefaultExt = "md";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "CONVERSAS");
+            saveFileDialog1.FileName = "CONVERSA_LIVRE";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                saveFileDialog.Filter = "Markdown files (*.md)|*.md|Text files (*.txt)|*.txt";
-                saveFileDialog.Title = "Salvar Conversação";
-                saveFileDialog.DefaultExt = "md";
-                saveFileDialog.AddExtension = true;
-                saveFileDialog.InitialDirectory = Path.Combine(Settings.Default.DiretorioRaiz, "CONVERSAS");
-                saveFileDialog.FileName = "CONVERSA_LIVRE";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                string filePath = saveFileDialog1.FileName;
+
+                try
                 {
-                    string filePath = saveFileDialog.FileName;
+                    string conversationText = chatControl1.rTxtChat.Text;
+                    File.WriteAllText(filePath, conversationText);
+                    MessageBox.Show($"Conversação salva em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    try
-                    {
-                        string conversationText = chatControl1.rTxtChat.Text;
-                        File.WriteAllText(filePath, conversationText);
-                        MessageBox.Show($"Conversação salva em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        // Atualiza o status após o salvamento bem-sucedido
-                        SetStatus("Conversação salva com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Mostra a mensagem de erro
-                        MessageBox.Show($"Erro ao salvar a conversação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        // Atualiza o status em caso de erro
-                        SetStatus("Erro ao salvar a conversação.");
-                    }
+                    // Atualiza o status após o salvamento bem-sucedido
+                    SetStatus("Conversação salva com sucesso!");
                 }
-                else
+                catch (Exception ex)
                 {
-                    // Atualiza o status se o usuário cancelar a operação de salvamento
-                    SetStatus("Operação de salvamento cancelada.");
+                    // Mostra a mensagem de erro
+                    MessageBox.Show($"Erro ao salvar a conversação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Atualiza o status em caso de erro
+                    SetStatus("Erro ao salvar a conversação.");
                 }
             }
+            else
+            {
+                // Atualiza o status se o usuário cancelar a operação de salvamento
+                SetStatus("Operação de salvamento cancelada.");
+            }
+
             AtualizaBarraProgresso();
             // Limpa e foca no txtPrompt
             txtPrompt.Clear();
@@ -215,13 +189,21 @@ namespace AIBAM
             SaveConversation();
         }
 
-        // Detecta Enter para enviar o prompt
+        // Detecta Enter ou Ctrl+Enter no campo de texto
         private void txtPrompt_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.Control && e.KeyCode == Keys.Enter)
             {
-                e.SuppressKeyPress = true;
-                RequestToChat();
+                // Adiciona uma quebra de linha no texto sem enviar a mensagem
+                int selectionStart = txtPrompt.SelectionStart;
+                txtPrompt.Text = txtPrompt.Text.Insert(selectionStart, Environment.NewLine);
+                txtPrompt.SelectionStart = selectionStart + Environment.NewLine.Length;
+                e.SuppressKeyPress = true; // Evita o comportamento padrão do Enter
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // Evita o comportamento padrão do Enter
+                RequestToChat(); // Envia a mensagem
             }
         }
 
@@ -283,224 +265,16 @@ namespace AIBAM
             SelecionaTipoChat("false");
             Settings.Default.TipoChat = "false";
         }
-
         private void toolChatParametrizado_Click(object sender, EventArgs e)
         {
             SelecionaTipoChat("true");
             Settings.Default.TipoChat = "true";
         }
 
-        private void cboSegmento_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboSegmento.SelectedItem != null && !string.IsNullOrEmpty(cboSegmento.SelectedItem.ToString()))
-            {
-                // Limpa os itens do ComboBox de subsegmentos
-                cboSubSegmentos.Items.Clear();
-
-                // Obtém o segmento selecionado
-                string segmentoSelecionado = cboSegmento.SelectedItem.ToString();
-
-                // Adiciona os subsegmentos de acordo com o segmento selecionado
-                switch (segmentoSelecionado)
-                {
-                    case "Tecnologia da Informação (TI)":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Desenvolvimento de Software",
-                "Consultoria em TI",
-                "Segurança da Informação",
-                "Infraestrutura de Redes",
-                "Serviços em Nuvem (Cloud Computing)",
-                "Desenvolvimento de Aplicativos Mobile"
-                        });
-                        break;
-
-                    case "Educação":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Escolas e Universidades",
-                "Cursos Online (EAD)",
-                "Formação Profissional",
-                "Treinamento Corporativo",
-                "Plataformas de Ensino à Distância",
-                "Educação Infantil"
-                        });
-                        break;
-
-                    case "Saúde e Bem-Estar":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Clínicas Médicas e Odontológicas",
-                "Farmácias",
-                "Hospitais",
-                "Academias e Centros de Fitness",
-                "Terapias Alternativas (Fisioterapia, Acupuntura)",
-                "Saúde Mental (Psicologia e Psiquiatria)"
-                        });
-                        break;
-
-                    case "Alimentação e Bebidas":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Restaurantes e Bares",
-                "Fast Food",
-                "Food Trucks",
-                "Indústria Alimentícia",
-                "Delivery de Alimentos",
-                "Cafeterias"
-                        });
-                        break;
-
-                    case "Varejo":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Supermercados",
-                "Lojas de Roupas e Acessórios",
-                "E-commerce",
-                "Lojas de Conveniência",
-                "Lojas de Móveis e Decoração",
-                "Produtos Eletrônicos"
-                        });
-                        break;
-
-                    case "Turismo e Hotelaria":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Agências de Viagens",
-                "Hotéis e Resorts",
-                "Pousadas e Hostels",
-                "Turismo de Aventura",
-                "Turismo de Luxo",
-                "Aluguel de Temporada"
-                        });
-                        break;
-
-                    case "Construção Civil e Imobiliário":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Construtoras e Incorporadoras",
-                "Arquitetura e Design de Interiores",
-                "Corretoras de Imóveis",
-                "Engenharia Civil",
-                "Venda e Aluguel de Imóveis",
-                "Manutenção Predial"
-                        });
-                        break;
-
-                    case "Entretenimento e Cultura":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Produtoras de Eventos",
-                "Cinema e Produção Audiovisual",
-                "Música e Shows",
-                "Parques Temáticos",
-                "Editoração e Publicação",
-                "Streaming de Conteúdo"
-                        });
-                        break;
-
-                    case "Finanças e Seguros":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Bancos e Instituições Financeiras",
-                "Fintechs",
-                "Corretoras de Seguros",
-                "Consultoria Financeira",
-                "Investimentos e Bolsa de Valores",
-                "Cartões de Crédito e Pagamentos"
-                        });
-                        break;
-
-                    case "Logística e Transporte":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Transporte de Cargas",
-                "Empresas de Transporte Público",
-                "Aluguel de Veículos",
-                "Logística e Armazenagem",
-                "Transporte Internacional (Importação e Exportação)",
-                "Entregas de Pequenas Mercadorias"
-                        });
-                        break;
-
-                    case "Indústria":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Indústria Automobilística",
-                "Indústria Têxtil",
-                "Indústria Química",
-                "Indústria de Plásticos",
-                "Indústria de Alimentos e Bebidas",
-                "Indústria Metalúrgica"
-                        });
-                        break;
-
-                    case "Moda e Beleza":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Salões de Beleza e Barbearias",
-                "Indústria de Cosméticos",
-                "Lojas de Roupas e Acessórios",
-                "Consultoria de Imagem",
-                "Maquiagem e Estética",
-                "Spa e Clínicas de Beleza"
-                        });
-                        break;
-
-                    case "Agronegócio":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Produção Agrícola",
-                "Pecuária",
-                "Produção de Alimentos Orgânicos",
-                "Agroindústria",
-                "Máquinas e Equipamentos Agrícolas",
-                "Exportação de Produtos Agrícolas"
-                        });
-                        break;
-
-                    case "Energia e Sustentabilidade":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Energia Renovável (Solar, Eólica)",
-                "Mineração",
-                "Tratamento de Resíduos",
-                "Consultoria Ambiental",
-                "Eficiência Energética",
-                "Gestão de Recursos Naturais"
-                        });
-                        break;
-
-                    case "Comunicação e Marketing":
-                        cboSubSegmentos.Items.AddRange(new string[]
-                        {
-                "Agências de Publicidade",
-                "Marketing Digital",
-                "Relações Públicas",
-                "Consultoria em Branding",
-                "Produção de Conteúdo",
-                "Mídias Sociais"
-                        });
-                        break;
-
-                    default:
-                        cboSubSegmentos.Items.Clear();
-                        break;
-                }
-
-                // Opcional: Seleciona o primeiro subsegmento automaticamente
-                if (cboSubSegmentos.Items.Count > 0)
-                {
-                    cboSubSegmentos.SelectedIndex = 0;
-                }
-
-            }
-        }
         private void nEntonacao_Enter(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(nEntonacao, " 1-Pouco Informal e 10-Muito Formal");
         }
-
         private void nOriginalidade_Enter(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(nOriginalidade, " 1-Pouco Original e 10-Muito Original");
@@ -510,45 +284,12 @@ namespace AIBAM
         private void ParsePromptCopy()
         {
             promptCopy.DescricaoCopy = txtNomePromptCopy.Text;
-            promptCopy.briefing.TipoVenda = rdbProduto.Checked ? rdbProduto.Text : rdbServico.Text;
-            promptCopy.briefing.Marca = txtMarca.Text;
-            promptCopy.briefing.LinkSite = txtLinkSite.Text;
-            promptCopy.briefing.SegmentoNegocio = cboSegmento.Text;
-            promptCopy.briefing.SubSegmentoNegocio = cboSubSegmentos.Text;
-            promptCopy.briefing.ELancamentoProdServ = rdbSim.Checked ? rdbSim.Text : rdbNao.Text;
-            promptCopy.briefing.LinkCatalogoProdServ = txtLinkCatalogo.Text;
-            promptCopy.briefing.Observacoes = txtObservacoes.Text;
-            promptCopy.briefing.InformacoesProdServ = txtInforProdServ.Text;
-            promptCopy.briefing.ObjetivoGeral = txtObjetivoGeral.Text;
-            promptCopy.briefing.ObjetivoEspecifico = lstObjetivosEspecificos.GetItensSelecionados();
-            promptCopy.briefing.DestinoCopy = cboDestinoCopy.Text;
-            promptCopy.briefing.MensagemTransmitida = txtMensagemCopy.Text;
-            promptCopy.briefing.metasCampanhas.AdicaoCarrinho = ckAdicao.Checked;
-            promptCopy.briefing.metasCampanhas.CadastroFrm = chkCadastro.Checked;
-            promptCopy.briefing.metasCampanhas.Clickslink = chkClick.Checked;
-            promptCopy.briefing.metasCampanhas.Compartilhamentos = chkCompartilhamento.Checked;
-            promptCopy.briefing.metasCampanhas.Desempenho = chkDesempenho.Checked;
-            promptCopy.briefing.metasCampanhas.Engajamento = chkEngajamento.Checked;
-            promptCopy.briefing.metasCampanhas.Interacao = chkInteracao.Checked;
-            promptCopy.briefing.metasCampanhas.PermanenciaPag = chkPermanencia.Checked;
-            promptCopy.briefing.metasCampanhas.Registro = chkRegistro.Checked;
-            promptCopy.briefing.metasCampanhas.Seguidores = chkSeguidores.Checked;
-            promptCopy.briefing.metasCampanhas.Vendas = chkVenda.Checked;
-            promptCopy.briefing.metasCampanhas.Vizualizacoes = chkVizualizacao.Checked;
-            promptCopy.briefing.IdeiaPromovida = txtIdeiaPromovida.Text;
-            promptCopy.publicoAlvo.IdadeInicial = (int)nIdadeInicial.Value;
-            promptCopy.publicoAlvo.IdadeFinal = (int)nIdadeFinal.Value;
-            promptCopy.publicoAlvo.Genero = utils.ObterTextoGroupBox(gbGenero);
-            promptCopy.publicoAlvo.NivelAcademico = cboNivelAcademico.Text;
-            promptCopy.publicoAlvo.PropostaValor = txtPropostaValor.Text;
-            // Acessa o método GetItensSelecionados da instância 
-            // Atribui os interesses selecionados à propriedade no promptCopy
-            promptCopy.publicoAlvo.Interesses = lstInteresses.GetItensSelecionados();
-            promptCopy.publicoAlvo.Ocupacoes = lstOcupacoes.GetItensSelecionados();
-            promptCopy.publicoAlvo.Dores = lstDores.GetItensSelecionados();
-            promptCopy.publicoAlvo.DiferenciasCompetitivos = lstDiferenciais.GetItensSelecionados();
-            promptCopy.publicoAlvo.NivelConsciencia = utils.ObterTextoGroupBox(gbNivelConsciencia);
-            promptCopy.publicoAlvo.OutrasInf = txtOutrasInf.Text;
+            //ATRIBUI BRIEFING COPY
+            promptCopy.briefing = briefingCopyControl1.RetornaBriefing();
+            //ATRIBUI PUBLICO ALVO DE CONTROLE PUBLICO ALVO
+            promptCopy.publicoAlvo = publicoAlvoControl1.RetonaPublicoAlvo();
+
+            //ATRIBUI CONTROLES DE CRIAÇÃO COPY
             promptCopy.controlesCopy.Entonacao = (int)nEntonacao.Value;
             promptCopy.controlesCopy.Originalidade = (int)nOriginalidade.Value;
             promptCopy.controlesCopy.Sentimento = utils.ObterItensSelecionado(ckSentimentos);
@@ -578,28 +319,19 @@ namespace AIBAM
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveFileDialog1.FileName;
-                ///salva arquivo em dbjson para iteração
                 utils.SaveToJson(promptCopy, txtNomePromptCopy.Text);
                 try
                 {
                     File.WriteAllText(filePath, textoPromptCopy);
-                    MessageBox.Show($"Modelo Prompt salvo em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Atualiza o status após o salvamento bem-sucedido
                     SetStatus("Modelo Prompt salva com sucesso!");
                 }
                 catch (Exception ex)
                 {
-                    // Mostra a mensagem de erro
-                    MessageBox.Show($"Erro ao salvar a Modelo Prompt: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // Atualiza o status em caso de erro
                     SetStatus("Erro ao salvar a Modelo Prompt.");
                 }
             }
             else
             {
-                // Atualiza o status se o usuário cancelar a operação de salvamento
                 SetStatus("Operação de salvamento cancelada.");
             }
 
@@ -626,65 +358,19 @@ namespace AIBAM
                     LimparConteudoPromptCopy();
                     // Deserializa o conteúdo JSON para o objeto promptCopy
                     promptCopy = JsonConvert.DeserializeObject<PromptCopy>(json);
-
                     // Atualiza os campos da interface com os dados do promptCopy
                     txtNomePromptCopy.Text = promptCopy.DescricaoCopy;
-                    txtMarca.Text = promptCopy.briefing.Marca;
-                    txtLinkSite.Text = promptCopy.briefing.LinkSite;
-                    cboSegmento.Text = promptCopy.briefing.SegmentoNegocio;
-                    cboSubSegmentos.Text = promptCopy.briefing.SubSegmentoNegocio;
-                    txtLinkCatalogo.Text = promptCopy.briefing.LinkCatalogoProdServ;
-                    txtObservacoes.Text = promptCopy.briefing.Observacoes;
-                    txtInforProdServ.Text = promptCopy.briefing.InformacoesProdServ;
-                    txtObjetivoGeral.Text = promptCopy.briefing.ObjetivoGeral;
-                    lstObjetivosEspecificos.SetItensSelecionados(promptCopy.briefing.ObjetivoEspecifico);
-                    cboDestinoCopy.Text = promptCopy.briefing.DestinoCopy;
-                    txtMensagemCopy.Text = promptCopy.briefing.MensagemTransmitida;
-                    txtIdeiaPromovida.Text = promptCopy.briefing.IdeiaPromovida;
-
-                    // Atualiza os valores de metas de campanhas
-                    ckAdicao.Checked = promptCopy.briefing.metasCampanhas.AdicaoCarrinho;
-                    chkCadastro.Checked = promptCopy.briefing.metasCampanhas.CadastroFrm;
-                    chkClick.Checked = promptCopy.briefing.metasCampanhas.Clickslink;
-                    chkCompartilhamento.Checked = promptCopy.briefing.metasCampanhas.Compartilhamentos;
-                    chkDesempenho.Checked = promptCopy.briefing.metasCampanhas.Desempenho;
-                    chkEngajamento.Checked = promptCopy.briefing.metasCampanhas.Engajamento;
-                    chkInteracao.Checked = promptCopy.briefing.metasCampanhas.Interacao;
-                    chkPermanencia.Checked = promptCopy.briefing.metasCampanhas.PermanenciaPag;
-                    chkRegistro.Checked = promptCopy.briefing.metasCampanhas.Registro;
-                    chkSeguidores.Checked = promptCopy.briefing.metasCampanhas.Seguidores;
-                    chkVenda.Checked = promptCopy.briefing.metasCampanhas.Vendas;
-                    chkVizualizacao.Checked = promptCopy.briefing.metasCampanhas.Vizualizacoes;
-
-                    // Atualiza o público-alvo
-                    nIdadeInicial.Value = promptCopy.publicoAlvo.IdadeInicial;
-                    nIdadeFinal.Value = promptCopy.publicoAlvo.IdadeFinal;
-                    // Presume que ObterTextoGroupBox retorna o valor correto
-                    SetSelectedValue(gbGenero, promptCopy.publicoAlvo.Genero);
-                    cboNivelAcademico.Text = promptCopy.publicoAlvo.NivelAcademico;
-                    txtPropostaValor.Text = promptCopy.publicoAlvo.PropostaValor;
-
-                    // Atribui os interesses e ocupações usando o método GetItensSelecionados
-                    lstInteresses.SetItensSelecionados(promptCopy.publicoAlvo.Interesses);
-                    lstOcupacoes.SetItensSelecionados(promptCopy.publicoAlvo.Ocupacoes);
-                    lstDores.SetItensSelecionados(promptCopy.publicoAlvo.Dores);
-                    lstDiferenciais.SetItensSelecionados(promptCopy.publicoAlvo.DiferenciasCompetitivos);
-
-                    // Atualiza o nível de consciência e outras informações
-                    SetSelectedValue(gbNivelConsciencia, promptCopy.publicoAlvo.NivelConsciencia);
-                    txtOutrasInf.Text = promptCopy.publicoAlvo.OutrasInf;
-                    SetSelectedValue(ckSentimentos, promptCopy.controlesCopy.Sentimento);
+                    //ATRIBUI PUBLICO ALVO NO CONTROLE 
+                    publicoAlvoControl1.AtribuirPublicoAlvo(promptCopy.publicoAlvo);
                     // Atualiza os controles de criação
+                    utils.SetSelectedValue(ckSentimentos, promptCopy.controlesCopy.Sentimento);
                     nEntonacao.Value = promptCopy.controlesCopy.Entonacao;
                     nOriginalidade.Value = promptCopy.controlesCopy.Originalidade;
-                    SetSelectedValue(gbPerspectiva, promptCopy.controlesCopy.Perspectiva);
+                    utils.SetSelectedValue(gbPerspectiva, promptCopy.controlesCopy.Perspectiva);
                     lstPalavrasChave.SetItensSelecionados(promptCopy.controlesCopy.PalavrasChave);
 
-                    lblArquivo.Text = promptCopy.briefing.ArquivoImportado;
-                    if (!string.IsNullOrEmpty(lblArquivo.Text))
-                    {
-                        toolStripButtonRemoverArquivo.Visible = true;
-                    }
+                    //ATRIBUIR BRIEFING
+                    briefingCopyControl1.AtribuirBriefing(promptCopy.briefing);
 
                     // Atualiza o status de sucesso
                     SetStatus($"Modelo Prompt carregado de: {filePath}");
@@ -705,37 +391,6 @@ namespace AIBAM
             }
         }
 
-        private void SetSelectedValue(CheckedListBox ckList, List<string> itens)
-        {
-            // Itera sobre todos os itens no CheckedListBox
-            for (int i = 0; i < ckList.Items.Count; i++)
-            {
-                // Verifica se o texto do item atual está na lista de itens fornecida
-                if (itens.Contains(ckList.Items[i].ToString()))
-                {
-                    // Marca o item se estiver na lista
-                    ckList.SetItemChecked(i, true);
-                }
-                else
-                {
-                    // Desmarca o item se não estiver na lista
-                    ckList.SetItemChecked(i, false);
-                }
-            }
-        }
-
-        private void SetSelectedValue(GroupBox groupBox, string value)
-        {
-            foreach (Control control in groupBox.Controls)
-            {
-                if (control is RadioButton radioButton)
-                {
-                    radioButton.Checked = radioButton.Text == value;
-                }
-            }
-        }
-
-
         private void novaToolStripButton1_Click(object sender, EventArgs e)
         {
             LimparConteudoPromptCopy();
@@ -745,56 +400,18 @@ namespace AIBAM
         {
             // Limpa o conteúdo dos controles onde o prompt é exibido
             txtNomePromptCopy.Clear();
-            txtMarca.Clear();
-            txtLinkSite.Clear();
-            cboSegmento.SelectedIndex = -1; // Limpa a seleção do ComboBox
-            cboSubSegmentos.SelectedIndex = -1; // Limpa a seleção do ComboBox
-            txtLinkCatalogo.Clear();
-            txtObservacoes.Clear();
-            txtInforProdServ.Clear();
-            txtObjetivoGeral.Clear();
-            lstObjetivosEspecificos.LimparLista();
-            cboDestinoCopy.SelectedIndex = -1; // Limpa a seleção do ComboBox
-            txtMensagemCopy.Clear();
-            txtIdeiaPromovida.Clear();
 
-            // Limpa os campos de metas de campanhas
-            ckAdicao.Checked = false;
-            chkCadastro.Checked = false;
-            chkClick.Checked = false;
-            chkCompartilhamento.Checked = false;
-            chkDesempenho.Checked = false;
-            chkEngajamento.Checked = false;
-            chkInteracao.Checked = false;
-            chkPermanencia.Checked = false;
-            chkRegistro.Checked = false;
-            chkSeguidores.Checked = false;
-            chkVenda.Checked = false;
-            chkVizualizacao.Checked = false;
-
-            // Limpa o público-alvo
-            nIdadeInicial.Value = nIdadeInicial.Minimum; // ou 0, dependendo do seu controle
-            nIdadeFinal.Value = nIdadeFinal.Minimum; // ou 0, dependendo do seu controle
-            SetSelectedValue(gbGenero, string.Empty); // Limpa o gênero
-            cboNivelAcademico.SelectedIndex = -1; // Limpa a seleção do ComboBox
-            txtPropostaValor.Clear();
-
-            // Limpa os interesses e ocupações
-            lstInteresses.LimparLista();
-            lstOcupacoes.LimparLista();
-            lstDores.LimparLista();
-            lstDiferenciais.LimparLista();
-
-            // Limpa o nível de consciência e outras informações
-            SetSelectedValue(gbNivelConsciencia, string.Empty); // Limpa o nível de consciência
-            txtOutrasInf.Clear();
+            //LIMPAR CAMPOS BRIEFING 
+            briefingCopyControl1.LimparCampos();
+            //LIMPA CAMPOS DE PUBLICO ALVO
+            publicoAlvoControl1.LimparCampos();
 
             // Limpa os controles de criação
             nEntonacao.Value = nEntonacao.Minimum; // ou 0, dependendo do seu controle
             nOriginalidade.Value = nOriginalidade.Minimum; // ou 0, dependendo do seu controle
-            SetSelectedValue(gbPerspectiva, string.Empty); // Limpa a perspectiva
+            utils.SetSelectedValue(gbPerspectiva, string.Empty); // Limpa a perspectiva
             lstPalavrasChave.LimparLista();
-            SetSelectedValue(ckSentimentos, new List<string>());
+            utils.SetSelectedValue(ckSentimentos, new List<string>());
 
             // Cria um novo objeto promptCopy vazio
             promptCopy = new PromptCopy(); // Supondo que PromptCopy é a classe que você está usando
@@ -828,38 +445,6 @@ namespace AIBAM
 
         }
 
-        private void toolStripButtonAdicionarArquivo_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.Filter = "Todos os Arquivos (*.*)|*.*";
-            SetStatus("Carregando imagem");
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                // Armazena o caminho no Briefing atual
-                promptCopy.briefing.ArquivoImportado = openFileDialog1.FileName;
-
-                // Obtém apenas o nome do arquivo sem caminho e sem extensão
-                string fileNameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
-
-                // Exibe o nome do arquivo sem extensão na label
-                lblArquivo.Text = "Item carregado: " + fileNameWithoutExtension;
-                toolStripButtonRemoverArquivo.Visible = true;
-            }
-            SetStatus("Pronto");
-        }
-
-        private void toolStripButtonRemoverArquivo_Click(object sender, EventArgs e)
-        {
-            // Remove o arquivo do Briefing
-            promptCopy.briefing.ArquivoImportado = string.Empty;
-
-            // Atualiza a label e oculta o botão de remoção
-            lblArquivo.Text = string.Empty;
-            toolStripButtonRemoverArquivo.Visible = false;
-        }
-
-
-
-
         private void toolViewMarkdown_Click(object sender, EventArgs e)
         {
             Settings.Default.TipoChat = "MD";
@@ -882,14 +467,31 @@ namespace AIBAM
 
         private void novaToolStripButton_Click(object sender, EventArgs e)
         {
-            FrmPrincipal frm = new();
-            frm.Show();
+            //FrmPrincipal frm = new();
+            //frm.Show();
         }
 
         private void catalogoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmCatalogoProdServ frm = new();
             frm.OnStatusUpdate += SetStatus;
+            frm.Show();
+        }
+
+        private void abrirToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void publicoAlvoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmPublicoAlvo frm = new();
+            frm.Show();
+        }
+
+        private void produtoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmProduto frm = new();
             frm.Show();
         }
     }
