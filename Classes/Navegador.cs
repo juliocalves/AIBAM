@@ -8,8 +8,8 @@ namespace AIBAM.Classes
 {
     public class Navegador<T>
     {
-        private readonly IList<T> _itens;
-        private int _indiceAtual;
+        public readonly IList<T> _itens;
+        public int _indiceAtual;
 
         public Navegador(IList<T> itens)
         {
@@ -54,6 +54,18 @@ namespace AIBAM.Classes
 
         // Método para verificar se há item anterior
         public bool TemAnterior() => _indiceAtual > 0;
+        // Adiciona um método para selecionar diretamente um item
+        public bool SelecionarItem(T item)
+        {
+            int indice = _itens.IndexOf(item);
+            if (indice >= 0)
+            {
+                _indiceAtual = indice;
+                return true;
+            }
+            return false; // Item não encontrado
+        }
+
     }
 
 }

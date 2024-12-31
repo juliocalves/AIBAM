@@ -11,5 +11,8 @@
     <Setting Name="TipoChat" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="modelosPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">A:\DESKTOP\WSocket\modelos.json</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

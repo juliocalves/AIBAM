@@ -7,9 +7,9 @@ namespace AIBAM.Classes.Servicos
     {
         private readonly AibamDbContext _db;
 
-        public PromptCopyService(AibamDbContext db)
+        public PromptCopyService()
         {
-            _db = db;
+            _db = new AibamDbContextFactory().CreateDbContext();
         }
         public async Task AdcionarPromptCopy(PromptCopy PromptCopy)
         {

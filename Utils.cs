@@ -8,10 +8,12 @@ namespace AIBAM
     public class Utils
     {
         private readonly Action<string> statusUpdater;
+        private readonly Action atualizaBarraProgresso;
         // Construtor que aceita uma função para atualizar o status
-        public Utils(Action<string> statusUpdater)
+        public Utils(Action<string> statusUpdater, Action atualizaBarraProgresso)
         {
             this.statusUpdater = statusUpdater;
+            this.atualizaBarraProgresso = atualizaBarraProgresso;
         }
 
         public string ObterTextoGroupBox(GroupBox groupBox)
@@ -168,6 +170,41 @@ namespace AIBAM
             if (e.KeyChar == ',' && txtBox.Text.Contains(","))
             {
                 e.Handled = true;
+            }
+        }
+        public void AbrirFormulario<T>(Form parent, Action<T> configuracao = null, bool IsIndependent = false) where T : Form, new()
+        {
+            if (IsIndependent)
+            {
+                T form = new T();
+                form.Show();
+                return;
+            }
+
+            // Verifica se o formulário já está aberto
+            var formAberto = Application.OpenForms.OfType<T>().FirstOrDefault();
+            if (formAberto == null)
+            {
+                // Cria uma nova instância do formulário
+                T form = new T();
+
+                if (parent.IsMdiContainer)
+                {
+                    // Configura como filho MDI se o pai for um container MDI
+                    form.MdiParent = parent;
+                    form.WindowState = FormWindowState.Normal; // Opcional: abrir maximizado
+                }
+
+                // Aplica configurações adicionais, se fornecidas
+                configuracao?.Invoke(form);
+
+                form.Show(); // Exibe o formulário
+            }
+            else
+            {
+                formAberto.WindowState = FormWindowState.Normal;
+                // Traz o formulário existente para frente
+                formAberto.Focus();
             }
         }
     }

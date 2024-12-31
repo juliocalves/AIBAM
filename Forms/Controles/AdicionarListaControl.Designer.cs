@@ -46,10 +46,11 @@
             // 
             // txtItem
             // 
+            txtItem.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtItem.CharacterCasing = CharacterCasing.Upper;
-            txtItem.Location = new Point(3, 17);
+            txtItem.Location = new Point(0, 17);
             txtItem.Name = "txtItem";
-            txtItem.Size = new Size(203, 23);
+            txtItem.Size = new Size(206, 23);
             txtItem.TabIndex = 1;
             txtItem.KeyDown += txtItem_KeyDown;
             // 
@@ -64,10 +65,11 @@
             // 
             // ckList
             // 
+            ckList.Dock = DockStyle.Bottom;
             ckList.FormattingEnabled = true;
-            ckList.Location = new Point(3, 48);
+            ckList.Location = new Point(0, 54);
             ckList.Name = "ckList";
-            ckList.Size = new Size(320, 94);
+            ckList.Size = new Size(326, 94);
             ckList.TabIndex = 7;
             ckList.TabStop = false;
             ckList.KeyDown += ckList_KeyDown;

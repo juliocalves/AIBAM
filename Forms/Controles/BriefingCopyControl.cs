@@ -389,6 +389,13 @@ namespace AIBAM.Forms.Controles
         private void abrirToolStripButton1_Click(object sender, EventArgs e)
         {
             CarregarDadosAsync();
+        }
+
+        private async void CarregarDadosAsync()
+        {
+            briefingList = new();
+            BriefingCopyService briefingCopyService = new();
+            briefingList = await briefingCopyService.ListarBriefingCopyAsync();
             if (briefingList == null || briefingList.Count == 0)
             {
                 MessageBox.Show("Não há itens a listar");
@@ -405,18 +412,13 @@ namespace AIBAM.Forms.Controles
 
                         if (selectedBriefing != null)
                         {
+                            MetasCampanhaService metasCampanhaService = new();
+                            selectedBriefing.metasCampanhas = await metasCampanhaService.ObterMetasCampanhaPorIdAsync(selectedBriefing.metasCampanhasId);
                             AtribuirBriefing(selectedBriefing); // Processar o objeto no formulário principal
                         }
                     }
                 }
             }
-        }
-
-        private async void CarregarDadosAsync()
-        {
-            briefingList = new();
-            BriefingCopyService briefingCopyService = new();
-            briefingList = await briefingCopyService.ListarBriefingCopyAsync();
         }
     }
 }

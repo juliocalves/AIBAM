@@ -17,9 +17,12 @@
         public string DescricaoProd { get; set; }
         public List<string> TagsProd { get; set; }
         public bool DescontoPix { get; set; }
-        public int CatalotoId { get; set; }
+        public Decimal PercentualDescontoPix { get; set; } = 3;
+        public Decimal LucroUnidadePix { get; set; } = Decimal.Zero;
+        public int? ColecaoId { get; set; }
         // Relacionamento muitos-para-muitos
-        // public ICollection<CatalogoProduto> Catalogos { get; set; } = new List<CatalogoProduto>();
+        public ICollection<CatalogoProduto> Catalogos { get; set; } = new List<CatalogoProduto>();
+        public List<string>? Imagens { get; set; }
         #endregion
 
         /// <summary>
@@ -56,31 +59,26 @@
             );
         }
 
-        /// <summary>
-        /// Aplica o desconto adicional de 3% para pagamentos via Pix.
-        /// </summary>
         public void AplicarDescontoPix()
         {
-            if (ValorVendaPromocional <= 0)
-            {
-                ValorVendaPromocional = ValorVendaProd; // Assume o valor original de venda
-            }
-
+            
             if (DescontoPix)
             {
-                // Aplica o desconto Pix ao valor promocional, arredondado para duas casas decimais
-                ValorVendaPromocional = Math.Round(ValorVendaPromocional * 0.97m, 2);
+                if (ValorVendaPromocional > 0)
+                {
+                    LucroUnidadePix = Math.Round((ValorVendaPromocional -
+                        (ValorVendaPromocional * (PercentualDescontoPix / 100))-CustoProd), 2);
+                }
+                else
+                {
+                    LucroUnidadePix = Math.Round((ValorVendaProd - 
+                        (ValorVendaProd * (PercentualDescontoPix / 100)) - CustoProd), 2);
+                }
             }
             else
             {
-                // Remove o desconto Pix (apenas se o valor promocional estiver ativo)
-                ValorVendaPromocional = Math.Round(ValorVendaPromocional / 0.97m, 2);
-
-                // Reseta o valor promocional caso ele seja igual ao valor de venda
-                if (Math.Abs(ValorVendaProd - ValorVendaPromocional) < 0.01m) // Comparação para evitar erros de precisão
-                {
-                    ValorVendaPromocional = 0;
-                }
+                LucroUnidadePix = 0;
+                DescontoPix = false;
             }
         }
     }

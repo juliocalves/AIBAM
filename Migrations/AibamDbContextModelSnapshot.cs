@@ -75,7 +75,7 @@ namespace AIBAM.Migrations
                     b.Property<string>("TipoVenda")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("metasCampanhasId")
+                    b.Property<int>("metasCampanhasId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -231,6 +231,42 @@ namespace AIBAM.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Catalogos");
+                });
+
+            modelBuilder.Entity("AIBAM.Classes.CatalogoProduto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CatalogoId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ProdutoId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CatalogoId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("CatalogoProdutos");
+                });
+
+            modelBuilder.Entity("AIBAM.Classes.Colecao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<bool>("AtivoInativo")
                         .HasColumnType("tinyint(1)");
 
@@ -244,7 +280,6 @@ namespace AIBAM.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("LucroMedio")
@@ -254,17 +289,17 @@ namespace AIBAM.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ProdutoCount")
+                    b.Property<int?>("ProdutoCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("PublicoAlvoId")
+                    b.Property<int?>("PublicoAlvoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PublicoAlvoId");
 
-                    b.ToTable("Catalogos");
+                    b.ToTable("Colecoes");
                 });
 
             modelBuilder.Entity("AIBAM.Classes.ControlesCopy", b =>
@@ -350,15 +385,12 @@ namespace AIBAM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int?>("CatalogoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CatalotoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CategoriaProd")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("ColecaoId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("CustoProd")
                         .HasColumnType("decimal(65,30)");
@@ -374,6 +406,9 @@ namespace AIBAM.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Imagens")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("LinkProd")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -381,11 +416,17 @@ namespace AIBAM.Migrations
                     b.Property<decimal>("LucroUnidade")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<decimal>("LucroUnidadePix")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<string>("NomeProd")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("PercentualDesconto")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("PercentualDescontoPix")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("TagsProd")
@@ -400,7 +441,7 @@ namespace AIBAM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CatalogoId");
+                    b.HasIndex("ColecaoId");
 
                     b.ToTable("Produtos");
                 });
@@ -540,7 +581,9 @@ namespace AIBAM.Migrations
                 {
                     b.HasOne("AIBAM.Classes.MetasCampanha", "metasCampanhas")
                         .WithMany()
-                        .HasForeignKey("metasCampanhasId");
+                        .HasForeignKey("metasCampanhasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("metasCampanhas");
                 });
@@ -563,22 +606,39 @@ namespace AIBAM.Migrations
                         .HasForeignKey("BriefingPesquisaId");
                 });
 
-            modelBuilder.Entity("AIBAM.Classes.Catalogo", b =>
+            modelBuilder.Entity("AIBAM.Classes.CatalogoProduto", b =>
+                {
+                    b.HasOne("AIBAM.Classes.Catalogo", "Catalogo")
+                        .WithMany("Produtos")
+                        .HasForeignKey("CatalogoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AIBAM.Classes.Produto", "Produto")
+                        .WithMany("Catalogos")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Catalogo");
+
+                    b.Navigation("Produto");
+                });
+
+            modelBuilder.Entity("AIBAM.Classes.Colecao", b =>
                 {
                     b.HasOne("AIBAM.Classes.PublicoAlvo", "PublicoAlvo")
                         .WithMany()
-                        .HasForeignKey("PublicoAlvoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PublicoAlvoId");
 
                     b.Navigation("PublicoAlvo");
                 });
 
             modelBuilder.Entity("AIBAM.Classes.Produto", b =>
                 {
-                    b.HasOne("AIBAM.Classes.Catalogo", null)
+                    b.HasOne("AIBAM.Classes.Colecao", null)
                         .WithMany("ProdutoList")
-                        .HasForeignKey("CatalogoId");
+                        .HasForeignKey("ColecaoId");
                 });
 
             modelBuilder.Entity("AIBAM.Classes.PromptCopy", b =>
@@ -626,7 +686,17 @@ namespace AIBAM.Migrations
 
             modelBuilder.Entity("AIBAM.Classes.Catalogo", b =>
                 {
+                    b.Navigation("Produtos");
+                });
+
+            modelBuilder.Entity("AIBAM.Classes.Colecao", b =>
+                {
                     b.Navigation("ProdutoList");
+                });
+
+            modelBuilder.Entity("AIBAM.Classes.Produto", b =>
+                {
+                    b.Navigation("Catalogos");
                 });
 #pragma warning restore 612, 618
         }

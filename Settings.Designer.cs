@@ -58,5 +58,14 @@ namespace AIBAM {
                 this["TipoChat"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("A:\\DESKTOP\\WSocket\\modelos.json")]
+        public string modelosPath {
+            get {
+                return ((string)(this["modelosPath"]));
+            }
+        }
     }
 }

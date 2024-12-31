@@ -26,7 +26,8 @@
         public string? Observacoes { get; set; }
         public string? DestinoCopy { get; set; }
         public string? MensagemTransmitida { get; set; }
-        public MetasCampanha? metasCampanhas { get; set; }
+        public MetasCampanha metasCampanhas { get; set; }
+        public int metasCampanhasId { get; set; }
         public string? ArquivoImportado { get; set; } = string.Empty;
         #endregion
     }

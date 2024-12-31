@@ -44,6 +44,7 @@
             toolStrip4 = new ToolStrip();
             btnLimpar = new ToolStripButton();
             btnSalvar = new ToolStripButton();
+            btnAplicarMarkup = new ToolStripButton();
             txtCusto = new TextBox();
             txtVenda = new TextBox();
             adicionarListaControl1 = new AdicionarListaControl();
@@ -55,6 +56,10 @@
             txtLuc = new TextBox();
             label10 = new Label();
             lblId = new Label();
+            txtDescontoPix = new TextBox();
+            label11 = new Label();
+            txtLucroComPix = new TextBox();
+            label12 = new Label();
             toolStrip4.SuspendLayout();
             SuspendLayout();
             // 
@@ -83,11 +88,12 @@
             cboCategoriaProd.FlatStyle = FlatStyle.System;
             cboCategoriaProd.FormattingEnabled = true;
             cboCategoriaProd.ItemHeight = 15;
-            cboCategoriaProd.Items.AddRange(new object[] { "CAMISETA", "ECOBAG" });
+            cboCategoriaProd.Items.AddRange(new object[] { "CAMISETA", "CAMISETA ALGODÃO PERUANO", "CAMISETA INFANTIL", "CAMISETA OVERSIZED", "BODY INFANTIL", "CROPPED", "CROPPED MOLETOM", "HOODIE MOLETOM", "REGATA", "SUÉTER MOLETOM", "" });
             cboCategoriaProd.Location = new Point(11, 118);
             cboCategoriaProd.Name = "cboCategoriaProd";
             cboCategoriaProd.Size = new Size(332, 23);
             cboCategoriaProd.TabIndex = 6;
+            cboCategoriaProd.SelectedIndexChanged += cboCategoriaProd_SelectedIndexChanged;
             // 
             // label6
             // 
@@ -105,7 +111,7 @@
             txtDescricao.Multiline = true;
             txtDescricao.Name = "txtDescricao";
             txtDescricao.ScrollBars = ScrollBars.Vertical;
-            txtDescricao.Size = new Size(287, 123);
+            txtDescricao.Size = new Size(388, 123);
             txtDescricao.TabIndex = 8;
             // 
             // label5
@@ -119,7 +125,6 @@
             // 
             // txtLinkProd
             // 
-            txtLinkProd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtLinkProd.Location = new Point(11, 76);
             txtLinkProd.Name = "txtLinkProd";
             txtLinkProd.Size = new Size(335, 23);
@@ -138,12 +143,12 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(457, 15);
+            label3.Location = new Point(437, 15);
             label3.Name = "label3";
             label3.RightToLeft = RightToLeft.Yes;
-            label3.Size = new Size(84, 15);
+            label3.Size = new Size(62, 15);
             label3.TabIndex = 49;
-            label3.Text = "VALOR VENDA";
+            label3.Text = "VR VENDA";
             // 
             // label2
             // 
@@ -157,7 +162,6 @@
             // 
             // txtNomeProd
             // 
-            txtNomeProd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNomeProd.CharacterCasing = CharacterCasing.Upper;
             txtNomeProd.Location = new Point(10, 33);
             txtNomeProd.Name = "txtNomeProd";
@@ -179,11 +183,11 @@
             toolStrip4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip4.Items.AddRange(new ToolStripItem[] { btnLimpar, btnSalvar });
-            toolStrip4.Location = new Point(923, 28);
+            toolStrip4.Items.AddRange(new ToolStripItem[] { btnLimpar, btnSalvar, btnAplicarMarkup });
+            toolStrip4.Location = new Point(1001, 28);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip4.Size = new Size(49, 25);
+            toolStrip4.Size = new Size(72, 25);
             toolStrip4.TabIndex = 54;
             toolStrip4.Text = "toolStrip4";
             // 
@@ -209,21 +213,32 @@
             btnSalvar.ToolTipText = "Salvar Produto";
             btnSalvar.Click += btnSalvar_Click;
             // 
+            // btnAplicarMarkup
+            // 
+            btnAplicarMarkup.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnAplicarMarkup.Image = Properties.Resources.tag;
+            btnAplicarMarkup.ImageTransparentColor = Color.Magenta;
+            btnAplicarMarkup.Name = "btnAplicarMarkup";
+            btnAplicarMarkup.Size = new Size(23, 22);
+            btnAplicarMarkup.Text = "&APLICAR MARKUP";
+            btnAplicarMarkup.Click += btnAplicarMarkup_Click;
+            // 
             // txtCusto
             // 
             txtCusto.Location = new Point(349, 33);
             txtCusto.Name = "txtCusto";
-            txtCusto.Size = new Size(100, 23);
+            txtCusto.Size = new Size(80, 23);
             txtCusto.TabIndex = 2;
             txtCusto.TextAlign = HorizontalAlignment.Right;
+            txtCusto.TextChanged += txtCusto_TextChanged;
             txtCusto.KeyPress += txtCusto_KeyPress;
             txtCusto.Leave += txtCusto_Leave;
             // 
             // txtVenda
             // 
-            txtVenda.Location = new Point(455, 33);
+            txtVenda.Location = new Point(435, 33);
             txtVenda.Name = "txtVenda";
-            txtVenda.Size = new Size(100, 23);
+            txtVenda.Size = new Size(80, 23);
             txtVenda.TabIndex = 3;
             txtVenda.TextAlign = HorizontalAlignment.Right;
             txtVenda.KeyPress += txtVenda_KeyPress;
@@ -231,8 +246,9 @@
             // 
             // adicionarListaControl1
             // 
+            adicionarListaControl1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             adicionarListaControl1.Descricao = "TAGS";
-            adicionarListaControl1.Location = new Point(642, 58);
+            adicionarListaControl1.Location = new Point(743, 58);
             adicionarListaControl1.Name = "adicionarListaControl1";
             adicionarListaControl1.NomeLista = "TAGS_PRODUTO";
             adicionarListaControl1.Size = new Size(326, 154);
@@ -252,9 +268,9 @@
             // 
             // txtVrPromo
             // 
-            txtVrPromo.Location = new Point(561, 33);
+            txtVrPromo.Location = new Point(521, 33);
             txtVrPromo.Name = "txtVrPromo";
-            txtVrPromo.Size = new Size(100, 23);
+            txtVrPromo.Size = new Size(80, 23);
             txtVrPromo.TabIndex = 4;
             txtVrPromo.TextAlign = HorizontalAlignment.Right;
             txtVrPromo.KeyPress += txtVrPromo_KeyPress;
@@ -263,17 +279,17 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(560, 15);
+            label8.Location = new Point(520, 15);
             label8.Name = "label8";
             label8.RightToLeft = RightToLeft.Yes;
-            label8.Size = new Size(99, 15);
+            label8.Size = new Size(67, 15);
             label8.TabIndex = 59;
-            label8.Text = "$PROMOCIONAL";
+            label8.Text = "VR PROMO";
             // 
             // txtDesc
             // 
             txtDesc.Enabled = false;
-            txtDesc.Location = new Point(667, 33);
+            txtDesc.Location = new Point(683, 33);
             txtDesc.Name = "txtDesc";
             txtDesc.Size = new Size(100, 23);
             txtDesc.TabIndex = 62;
@@ -282,17 +298,17 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(666, 15);
+            label9.Location = new Point(682, 15);
             label9.Name = "label9";
             label9.RightToLeft = RightToLeft.Yes;
-            label9.Size = new Size(78, 15);
+            label9.Size = new Size(45, 15);
             label9.TabIndex = 61;
-            label9.Text = "%DESCONTO";
+            label9.Text = "%DESC";
             // 
             // txtLuc
             // 
             txtLuc.Enabled = false;
-            txtLuc.Location = new Point(773, 33);
+            txtLuc.Location = new Point(789, 33);
             txtLuc.Name = "txtLuc";
             txtLuc.Size = new Size(100, 23);
             txtLuc.TabIndex = 64;
@@ -301,7 +317,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(772, 15);
+            label10.Location = new Point(788, 15);
             label10.Name = "label10";
             label10.RightToLeft = RightToLeft.Yes;
             label10.Size = new Size(65, 15);
@@ -317,10 +333,54 @@
             lblId.TabIndex = 65;
             lblId.Visible = false;
             // 
+            // txtDescontoPix
+            // 
+            txtDescontoPix.Location = new Point(607, 33);
+            txtDescontoPix.Name = "txtDescontoPix";
+            txtDescontoPix.Size = new Size(70, 23);
+            txtDescontoPix.TabIndex = 5;
+            txtDescontoPix.Text = "3,00";
+            txtDescontoPix.TextAlign = HorizontalAlignment.Right;
+            txtDescontoPix.KeyPress += txtDescontoPix_KeyPress;
+            txtDescontoPix.Leave += txtDescontoPix_Leave;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(606, 15);
+            label11.Name = "label11";
+            label11.RightToLeft = RightToLeft.Yes;
+            label11.Size = new Size(68, 15);
+            label11.TabIndex = 67;
+            label11.Text = "% DESC PIX";
+            // 
+            // txtLucroComPix
+            // 
+            txtLucroComPix.Enabled = false;
+            txtLucroComPix.Location = new Point(895, 33);
+            txtLucroComPix.Name = "txtLucroComPix";
+            txtLucroComPix.Size = new Size(100, 23);
+            txtLucroComPix.TabIndex = 69;
+            txtLucroComPix.TextAlign = HorizontalAlignment.Right;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(894, 15);
+            label12.Name = "label12";
+            label12.RightToLeft = RightToLeft.Yes;
+            label12.Size = new Size(96, 15);
+            label12.TabIndex = 68;
+            label12.Text = "LUCRO UN C PIX";
+            // 
             // ProdutoControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(txtLucroComPix);
+            Controls.Add(label12);
+            Controls.Add(txtDescontoPix);
+            Controls.Add(label11);
             Controls.Add(lblId);
             Controls.Add(txtLuc);
             Controls.Add(label10);
@@ -346,7 +406,7 @@
             Controls.Add(txtNomeProd);
             Controls.Add(label1);
             Name = "ProdutoControl";
-            Size = new Size(972, 203);
+            Size = new Size(1073, 218);
             Load += ProdutoControl_Load;
             KeyDown += ProdutoControl_KeyDown;
             toolStrip4.ResumeLayout(false);
@@ -383,5 +443,10 @@
         private TextBox txtLuc;
         private Label label10;
         private Label lblId;
+        private TextBox txtDescontoPix;
+        private Label label11;
+        private TextBox txtLucroComPix;
+        private Label label12;
+        private ToolStripButton btnAplicarMarkup;
     }
 }

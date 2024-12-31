@@ -120,74 +120,106 @@ Para isso, você emprega técnicas de redação persuasiva e estratégias de mar
 
             texto.AppendLine("## Público-Alvo:");
 
-            // Faixa de idade
-            texto.AppendLine($"**Idade:** de {promptCopy.publicoAlvo.IdadeInicial} a {promptCopy.publicoAlvo.IdadeFinal} anos.\n");
+            // Informações Gerais
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Nome))
+                texto.AppendLine($"**Nome:** {promptCopy.publicoAlvo.Nome}\n");
 
-            // Gênero
-            texto.AppendLine($"**Gênero:** {promptCopy.publicoAlvo.Genero}\n");
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Descricao))
+                texto.AppendLine($"**Descrição:** {promptCopy.publicoAlvo.Descricao}\n");
 
-            // Nível Acadêmico
-            texto.AppendLine($"**Nível Acadêmico:** {promptCopy.publicoAlvo.NivelAcademico}\n");
-
-            // Proposta de Valor
             if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.PropostaValor))
+                texto.AppendLine($"**Proposta de Valor:** {promptCopy.publicoAlvo.PropostaValor}\n");
+
+            // Segmentação Geográfica
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Pais) ||
+                !string.IsNullOrEmpty(promptCopy.publicoAlvo.Estado) ||
+                !string.IsNullOrEmpty(promptCopy.publicoAlvo.Cidade) ||
+                !string.IsNullOrEmpty(promptCopy.publicoAlvo.Regiao))
             {
-                texto.AppendLine($"**Proposta de Valor:** {promptCopy.publicoAlvo.PropostaValor}");
+                texto.AppendLine("### Segmentação Geográfica:");
+                if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Pais))
+                    texto.AppendLine($"- **País:** {promptCopy.publicoAlvo.Pais}");
+                if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Estado))
+                    texto.AppendLine($"- **Estado:** {promptCopy.publicoAlvo.Estado}");
+                if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Cidade))
+                    texto.AppendLine($"- **Cidade:** {promptCopy.publicoAlvo.Cidade}");
+                if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Regiao))
+                    texto.AppendLine($"- **Região:** {promptCopy.publicoAlvo.Regiao}");
+                texto.AppendLine();
             }
 
-            // Interesses
-            if (promptCopy.publicoAlvo.Interesses?.Count > 0)
-            {
-                texto.AppendLine("### Interesses:");
-                foreach (var interesse in promptCopy.publicoAlvo.Interesses)
-                {
-                    texto.AppendLine($"- {interesse}");
-                }
-            }
+            // Segmentação Demográfica
+            texto.AppendLine($"**Idade:** de {promptCopy.publicoAlvo.IdadeInicial} a {promptCopy.publicoAlvo.IdadeFinal} anos.\n");
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.Genero))
+                texto.AppendLine($"**Gênero:** {promptCopy.publicoAlvo.Genero}\n");
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.NivelAcademico))
+                texto.AppendLine($"**Nível Acadêmico:** {promptCopy.publicoAlvo.NivelAcademico}\n");
 
             // Ocupações
             if (promptCopy.publicoAlvo.Ocupacoes?.Count > 0)
             {
                 texto.AppendLine("### Ocupações:");
                 foreach (var ocupacao in promptCopy.publicoAlvo.Ocupacoes)
-                {
                     texto.AppendLine($"- {ocupacao}");
-                }
+                texto.AppendLine();
             }
 
-            // Dores
+            // Segmentação Comportamental
+            if (promptCopy.publicoAlvo.Interesses?.Count > 0)
+            {
+                texto.AppendLine("### Interesses:");
+                foreach (var interesse in promptCopy.publicoAlvo.Interesses)
+                    texto.AppendLine($"- {interesse}");
+                texto.AppendLine();
+            }
+
             if (promptCopy.publicoAlvo.Dores?.Count > 0)
             {
                 texto.AppendLine("### Dores do público:");
                 foreach (var dor in promptCopy.publicoAlvo.Dores)
-                {
                     texto.AppendLine($"- {dor}");
-                }
+                texto.AppendLine();
             }
 
-            // Diferenciais Competitivos
             if (promptCopy.publicoAlvo.DiferenciaisCompetitivos?.Count > 0)
             {
                 texto.AppendLine("### Diferenciais Competitivos:");
                 foreach (var diferencial in promptCopy.publicoAlvo.DiferenciaisCompetitivos)
-                {
                     texto.AppendLine($"- {diferencial}");
-                }
+                texto.AppendLine();
             }
 
             // Nível de Consciência
-            texto.AppendLine($"### Nível de Consciência: ");
-            texto.AppendLine($"- {promptCopy.publicoAlvo.NivelConsciencia}");
+            if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.NivelConsciencia))
+                texto.AppendLine($"**Nível de Consciência:** {promptCopy.publicoAlvo.NivelConsciencia}\n");
 
             // Outras Informações
             if (!string.IsNullOrEmpty(promptCopy.publicoAlvo.OutrasInformacoes))
             {
-                texto.AppendLine($"### Outras Informações: ");
+                texto.AppendLine("### Outras Informações:");
                 texto.AppendLine($"- {promptCopy.publicoAlvo.OutrasInformacoes}");
-;            }
+                texto.AppendLine();
+            }
+
+            // Segmentação de Volume
+            if (promptCopy.publicoAlvo.TamanhoMercado > 0 ||
+                promptCopy.publicoAlvo.ReceitaAnualMedia.HasValue ||
+                promptCopy.publicoAlvo.TicketMedio.HasValue)
+            {
+                texto.AppendLine("### Segmentação de Volume:");
+                if (promptCopy.publicoAlvo.TamanhoMercado > 0)
+                    texto.AppendLine($"- **Tamanho do Mercado:** {promptCopy.publicoAlvo.TamanhoMercado}");
+                if (promptCopy.publicoAlvo.ReceitaAnualMedia.HasValue)
+                    texto.AppendLine($"- **Receita Anual Média:** {promptCopy.publicoAlvo.ReceitaAnualMedia.Value:C}");
+                if (promptCopy.publicoAlvo.TicketMedio.HasValue)
+                    texto.AppendLine($"- **Ticket Médio:** {promptCopy.publicoAlvo.TicketMedio.Value:C}");
+                texto.AppendLine();
+            }
 
             return texto.ToString();
         }
+
+
 
         public string GerarTextoBriefing()
         {

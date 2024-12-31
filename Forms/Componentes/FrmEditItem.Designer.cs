@@ -88,7 +88,7 @@
             MinimizeBox = false;
             Name = "FrmEditItem";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Editar item";
+            Text = "AIBAM | Editar item";
             ResumeLayout(false);
             PerformLayout();
         }

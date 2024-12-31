@@ -19,13 +19,14 @@ namespace AIBAM.Controles
         public Utils? utils;
         // Delegado para atualizar o status no Form principal
         public Action<string>? statusUpdater;
+        public event Action AtualizaBarraProgresso;
         //private readonly PublicoAlvoService _publicoAlvoService;
         public PublicoAlvoControl()
         {
             InitializeComponent();
             // Instanciar manualmente o PublicoAlvoService
             // _publicoAlvoService = new ();
-            utils = new Utils(message => statusUpdater?.Invoke(message));
+            utils = new Utils(message => statusUpdater?.Invoke(message), AtualizaBarraProgresso);
         }
 
         private void ParsePublicoAlvo()

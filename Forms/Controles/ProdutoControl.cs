@@ -1,34 +1,38 @@
 ﻿using AIBAM.Classes;
+using AIBAM.Classes.Servicos;
 using AIBAM.Forms;
 using System.ComponentModel;
+using System.Net;
+
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace AIBAM.Controles
 {
     public partial class ProdutoControl : UserControl
     {
         internal Produto prod;
-        private Utils util;
+        public Utils util;
         internal bool isUpdate = false;
         private bool isSetItem = false;
 
         // Delegado para atualizar o status no Form principal
         public event Action<string> OnStatusChanged;
         // private readonly ProdutoService _produtoService;
-
+        public event Action AtualizaBarraProgresso;
         public ProdutoControl()
         {
-
             //  _produtoService = new();
             InitializeComponent();
             prod = new Produto();
-            util = new Utils(message => OnStatusChanged?.Invoke(message));
         }
         private void ProdutoControl_Load(object sender, EventArgs e)
         {
-            CarregarDadosComboBox();
+            _ = CarregarDadosComboBoxAsync();
         }
         public Produto ParseProduto()
         {
+            AtualizaBarraProgresso?.Invoke();
+            OnStatusChanged?.Invoke("Processamento iniciado");
             if (isUpdate)
             {
                 prod.Id = Guid.Parse(lblId.Text);
@@ -50,6 +54,10 @@ namespace AIBAM.Controles
             prod.DescontoPix = checkBox1.Checked;
             prod.LucroUnidade = Convert.ToDecimal(txtLuc.Text);
             prod.TagsProd = adicionarListaControl1.GetItensSelecionados();
+            prod.PercentualDescontoPix = Convert.ToDecimal(txtDescontoPix.Text);
+            prod.LucroUnidadePix = Convert.ToDecimal(txtLucroComPix.Text);
+            OnStatusChanged?.Invoke("Fim de Processamento.");
+            AtualizaBarraProgresso?.Invoke();
             return prod;
         }
 
@@ -59,13 +67,26 @@ namespace AIBAM.Controles
         }
         public void DesabilitaAcoes()
         {
-            toolStrip4.Enabled = false;
+            toolStrip4.Enabled = !toolStrip4.Enabled;
+            txtNomeProd.ReadOnly = !txtNomeProd.ReadOnly;
+            txtCusto.ReadOnly = !txtCusto.ReadOnly;
+            txtVenda.ReadOnly = !txtVenda.ReadOnly;
+            checkBox1 .Enabled = !checkBox1.Enabled;
+            txtVrPromo.ReadOnly = !txtVrPromo.ReadOnly;
+            txtDescontoPix.ReadOnly = !txtDescontoPix.ReadOnly;
+            txtLinkProd.ReadOnly = !txtLinkProd.ReadOnly;
+            cboCategoriaProd.Enabled = !cboCategoriaProd.Enabled;
+            cboGrupoProd.Enabled = !cboGrupoProd.Enabled;
+            txtDescricao.ReadOnly = !txtDescricao.ReadOnly;
+
             adicionarListaControl1.DesabilitaAcoes();
         }
 
         public void Salvar()
         {
             ParseProduto();
+            AtualizaBarraProgresso?.Invoke();
+            OnStatusChanged?.Invoke("Executando açõo de banco de dados.");
             ProdutoService _produtoService = new();
 
             if (!isUpdate)
@@ -81,7 +102,7 @@ namespace AIBAM.Controles
                 // Atualiza o status após salvar
                 isUpdate = false;
             }
-
+            AtualizaBarraProgresso?.Invoke();
             btnLimpar.PerformClick();
         }
 
@@ -104,6 +125,8 @@ namespace AIBAM.Controles
             txtLuc.Text = string.Empty;
             txtVrPromo.Text = string.Empty;
             checkBox1.Checked = false;
+            txtDescontoPix.Text = string.Empty;
+            txtLucroComPix.Text = string.Empty;
             adicionarListaControl1.LimparLista();
             if (isUpdate)
             {
@@ -138,46 +161,10 @@ namespace AIBAM.Controles
             util.ApenasDecimal(sender, e);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-            prod.DescontoPix = checkBox1.Checked;
-            prod.AplicarDescontoPix();
-            AtualizarValores();
-        }
-
-        private void AtualizarValores()
-        {
-            prod.CalcularDescontoELucro();
-            txtDesc.Text = prod.PercentualDesconto.ToString("N2");
-            txtLuc.Text = prod.LucroUnidade.ToString("N2");
-            txtVrPromo.Text = prod.ValorVendaPromocional.ToString("N2");
-        }
-
-        private void txtCusto_Leave(object sender, EventArgs e)
-        {
-            prod.CustoProd = !String.IsNullOrEmpty(txtCusto.Text) ?
-                Convert.ToDecimal(txtCusto.Text) : 0;
-            txtCusto.Text = prod.CustoProd.ToString("N2");
-            AtualizarValores();
-        }
-
-        private void txtVenda_Leave(object sender, EventArgs e)
-        {
-            prod.ValorVendaProd = !String.IsNullOrEmpty(txtVenda.Text) ?
-                Convert.ToDecimal(txtVenda.Text) : 0;
-            txtVenda.Text = prod.ValorVendaProd.ToString("N2");
-            AtualizarValores();
-        }
-
-        private void txtVrPromo_Leave(object sender, EventArgs e)
-        {
-            prod.ValorVendaPromocional = !String.IsNullOrEmpty(txtVrPromo.Text) ?
-                Convert.ToDecimal(txtVrPromo.Text) : 0;
-            AtualizarValores();
-        }
         public void SetProd(Produto _prod)
         {
+            AtualizaBarraProgresso?.Invoke();
+            OnStatusChanged?.Invoke("Atualizando interface.");
             btnLimpar.PerformClick();
             isSetItem = true;
             lblId.Text = _prod.Id.ToString();
@@ -199,65 +186,13 @@ namespace AIBAM.Controles
             {
                 adicionarListaControl1.SetItensSelecionados(_prod.TagsProd);
             }
+            txtDescontoPix.Text = _prod.PercentualDescontoPix.ToString("N2");
+            txtLucroComPix.Text = _prod.LucroUnidadePix.ToString("N2");
             isUpdate = true;
             isSetItem = false;
             ParseProduto();
-        }
-        private void CarregarDadosComboBox()
-        {
-            string filePath = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS/GRUPOPRODUTO.txt");
-
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    // Clear existing items in ComboBox
-                    cboGrupoProd.Items.Clear();
-
-                    // Read each line from the file and add it to the ComboBox
-                    foreach (string line in File.ReadLines(filePath))
-                    {
-                        cboGrupoProd.Items.Add(line.Trim());
-                    }
-
-                    OnStatusChanged?.Invoke("Dados carregados com sucesso.");
-                }
-                catch (Exception ex)
-                {
-                    OnStatusChanged?.Invoke($"Erro ao carregar dados: {ex.Message}");
-                }
-            }
-            else
-            {
-                OnStatusChanged?.Invoke("Arquivo não encontrado.");
-            }
-        }
-
-
-        private void cboGrupoProd_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                string groupName = cboGrupoProd.Text;
-                string filePath = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS/GRUPOPRODUTO.txt");
-
-                try
-                {
-                    // Check if file exists; if not, create it, then append the group name.
-                    using (StreamWriter writer = new StreamWriter(filePath, true))
-                    {
-                        writer.WriteLine(groupName);
-                    }
-
-                    OnStatusChanged?.Invoke("Nome de grupo salvo com sucesso!.");
-                }
-                catch (Exception ex)
-                {
-                    OnStatusChanged?.Invoke($"Erro ao salvar nome de grupo: {ex.Message}");
-                }
-
-            }
+            OnStatusChanged?.Invoke("Interface pronta!");
+            AtualizaBarraProgresso?.Invoke();
         }
 
         private void txtLinkProd_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -284,6 +219,193 @@ namespace AIBAM.Controles
                 txtLinkProd.Text = $"https://reserva.ink/peralta/{nomeFormatado}";
             }
         }
+        private async Task CarregarDadosComboBoxAsync()
+        {
+            try
+            {
+                // Limpa os itens existentes no ComboBox
+                cboGrupoProd.Items.Clear();
 
+                // Obtém os itens do ColecaoService
+                ColecaoService colecaoService = new ColecaoService();
+                var colecoes = await colecaoService.ListarColecaoAsync();
+
+                // Adiciona os nomes das coleções ao ComboBox
+                foreach (var colecao in colecoes)
+                {
+                    cboGrupoProd.Items.Add(colecao.Nome.Trim());
+                }
+
+                OnStatusChanged?.Invoke("Dados carregados com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                OnStatusChanged?.Invoke($"Erro ao carregar dados: {ex.Message}");
+            }
+        }
+
+        private void cboGrupoProd_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Verifica se a tecla pressionada foi Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Obtém o texto atual do ComboBox
+                string texto = cboGrupoProd.Text.Trim();
+
+                // Verifica se o texto não está vazio e não é um item existente
+                if (!string.IsNullOrEmpty(texto) && !cboGrupoProd.Items.Contains(texto))
+                {
+                    try
+                    {
+                        // Adiciona o novo item ao ComboBox
+                        cboGrupoProd.Items.Add(texto);
+
+                        _ = CriaNovaColecaoAsync(texto);
+
+                        OnStatusChanged?.Invoke("Nova coleção adicionada com sucesso.");
+                    }
+                    catch (Exception ex)
+                    {
+                        OnStatusChanged?.Invoke($"Erro ao adicionar nova coleção: {ex.Message}");
+                    }
+                }
+                else if (string.IsNullOrEmpty(texto))
+                {
+                    OnStatusChanged?.Invoke("O texto não pode estar vazio.");
+                }
+                else
+                {
+                    OnStatusChanged?.Invoke("O item já existe no ComboBox.");
+                }
+
+                // Previne o som padrão ao pressionar Enter
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private async Task CriaNovaColecaoAsync(string texto)
+        {
+            // Opcional: Atualiza o ColecaoService para salvar a nova coleção
+            ColecaoService colecaoService = new ColecaoService();
+            Colecao colecao = new();
+            colecao.Nome = texto;
+            await colecaoService.AdicionarColecao(colecao);
+        }
+
+        private void cboCategoriaProd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Define os valores de custo associados a cada item
+            Dictionary<string, decimal> custos = new Dictionary<string, decimal>
+            {
+                { "CAMISETA", 59 },
+                { "CAMISETA ALGODÃO PERUANO", 79 },
+                { "CAMISETA OVERSIZED", 80 },
+                { "CAMISETA INFANTIL", 59},
+                { "BODY INFANTIL",59},
+                { "CROPPED",59 },
+                { "CROPPED MOLETOM",119 },
+                { "HOODIE MOLETOM", 159 },
+                { "SUÉTER MOLETOM", 139}
+            };
+
+            // Obtém o item selecionado
+            string itemSelecionado = cboCategoriaProd.SelectedItem?.ToString();
+
+            // Verifica se o item está no dicionário de custos
+            if (!string.IsNullOrEmpty(itemSelecionado) && custos.TryGetValue(itemSelecionado, out decimal custo))
+            {
+                // Atualiza o campo txtCusto com o valor correspondente
+                txtCusto.Text = custo.ToString("F2"); // Formata como moeda (2 casas decimais)
+            }
+            else
+            {
+                // Caso o item não esteja na lista, limpa o campo txtCusto
+                txtCusto.Clear();
+            }
+        }
+        private void AtualizarValores()
+        {
+            txtVenda.Text = prod.ValorVendaProd.ToString("N2");
+            txtDesc.Text = prod.PercentualDesconto.ToString("N2");
+            txtLuc.Text = prod.LucroUnidade.ToString("N2");
+            txtVrPromo.Text = prod.ValorVendaPromocional.ToString("N2");
+            txtDescontoPix.Text = prod.PercentualDescontoPix.ToString("N2");
+            txtLucroComPix.Text = prod.LucroUnidadePix.ToString("N2");
+        }
+
+        private void txtCusto_Leave(object sender, EventArgs e)
+        {
+            prod.CustoProd = !String.IsNullOrEmpty(txtCusto.Text) ?
+                Convert.ToDecimal(txtCusto.Text) : 0;
+            txtCusto.Text = prod.CustoProd.ToString("N2");
+            prod.CalcularDescontoELucro();
+            AtualizarValores();
+        }
+
+        private void txtVenda_Leave(object sender, EventArgs e)
+        {
+            prod.ValorVendaProd = !String.IsNullOrEmpty(txtVenda.Text) ?
+                Convert.ToDecimal(txtVenda.Text) : 0;
+            txtVenda.Text = prod.ValorVendaProd.ToString("N2");
+            prod.CalcularDescontoELucro();
+            AtualizarValores();
+        }
+
+        private void txtVrPromo_Leave(object sender, EventArgs e)
+        {
+            prod.ValorVendaPromocional = !String.IsNullOrEmpty(txtVrPromo.Text) ?
+                Convert.ToDecimal(txtVrPromo.Text) : 0;
+            prod.CalcularDescontoELucro();
+            AtualizarValores();
+        }
+        private void txtCusto_TextChanged(object sender, EventArgs e)
+        {
+            if (!isSetItem)
+            {
+                prod.CustoProd = !String.IsNullOrEmpty(txtCusto.Text) ?
+                Convert.ToDecimal(txtCusto.Text) : 0;
+                prod.CalcularDescontoELucro();
+                AtualizarValores();
+            }
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isSetItem)
+            {
+                prod.DescontoPix = checkBox1.Checked;
+                prod.PercentualDescontoPix = !String.IsNullOrEmpty(txtDescontoPix.Text) ?
+                        Convert.ToDecimal(txtDescontoPix.Text) : 3;
+                prod.AplicarDescontoPix();
+                AtualizarValores();
+            }
+        }
+
+        private void txtDescontoPix_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            util.ApenasDecimal(sender, e);
+        }
+
+        private void txtDescontoPix_Leave(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(txtDescontoPix.Text) &&
+                Convert.ToDecimal(txtDescontoPix.Text) > 0)
+            {
+                prod.PercentualDescontoPix = !String.IsNullOrEmpty(txtDescontoPix.Text) ?
+                    Convert.ToDecimal(txtDescontoPix.Text) : 3;
+
+                prod.AplicarDescontoPix();
+                AtualizarValores();
+            }
+        }
+
+        private void btnAplicarMarkup_Click(object sender, EventArgs e)
+        {
+            double markup = 2.1;
+            prod.ValorVendaProd = prod.CustoProd * Convert.ToDecimal( markup);
+            prod.AplicarDescontoPix();
+            prod.CalcularDescontoELucro();
+            AtualizarValores();
+        }
     }
 }

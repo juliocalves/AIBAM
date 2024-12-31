@@ -18,15 +18,17 @@ namespace AIBAM.Classes.BancoDados
         public DbSet<PromptPesquisa> PromptsPesquisa { get; set; }
         public DbSet<BriefingCopy> BriefingsCopy { get; set; }
         public DbSet<BriefingPesquisa> BriefingsPesquisa { get; set; }
-        public DbSet<Catalogo> Catalogos { get; set; }
+        public DbSet<Colecao> Colecoes { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Catalogo> Catalogos { get; set; }
+        public DbSet<CatalogoProduto> CatalogoProdutos { get; set; }
         public DbSet<MetasCampanha> MetasCampanha {get;set;}
         public DbSet<PublicoAlvo> PublicosAlvo{get;set;}
         public DbSet<ControlesCopy> ControlesCopy {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam;User=coffeejazz;Password=@maiden08berry;",
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam_producao;User=coffeejazz;Password=@maiden08berry;",
                         new MySqlServerVersion(new Version(8, 0, 32)));
         }
 
@@ -42,7 +44,7 @@ namespace AIBAM.Classes.BancoDados
             var optionsBuilder = new DbContextOptionsBuilder<AibamDbContext>();
 
             // Configure a string de conexão aqui
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam;User=coffeejazz;Password=@maiden08berry;",
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam_producao;User=coffeejazz;Password=@maiden08berry;",
                 new MySqlServerVersion(new Version(8, 0, 32)));
 
             return new AibamDbContext(optionsBuilder.Options);
@@ -52,7 +54,7 @@ namespace AIBAM.Classes.BancoDados
             var optionsBuilder = new DbContextOptionsBuilder<AibamDbContext>();
 
             // Configure a string de conexão aqui
-            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam;User=coffeejazz;Password=@maiden08berry;",
+            optionsBuilder.UseMySql("Server=localhost;Port=3306;Database=aibam_producao;User=coffeejazz;Password=@maiden08berry;",
                 new MySqlServerVersion(new Version(8, 0, 32)));
 
             return new AibamDbContext(optionsBuilder.Options);

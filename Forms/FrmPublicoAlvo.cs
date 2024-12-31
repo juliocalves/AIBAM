@@ -17,6 +17,9 @@ namespace AIBAM.Forms
         private PublicoAlvo _publicoAlvo;
         private bool _verApenas;
         private bool _novoItem;
+        public Utils utils;
+        public event Action<string> OnStatusChanged;
+        public event Action AtualizaBarraProgresso;
         public FrmPublicoAlvo()
         {
             InitializeComponent();
@@ -71,7 +74,7 @@ namespace AIBAM.Forms
 
         private void FrmPublicoAlvo_Load(object sender, EventArgs e)
         {
-            
+            publicoAlvoControl1.utils = this.utils;
         }
     }
 }

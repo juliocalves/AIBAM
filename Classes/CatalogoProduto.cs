@@ -8,7 +8,8 @@ namespace AIBAM.Classes
 {
     public class CatalogoProduto
     {
-        public int ProdutoId { get; set; }
+        public int Id { get; set; }
+        public Guid ProdutoId { get; set; }
         public Produto Produto { get; set; }
 
         public int CatalogoId { get; set; }

@@ -521,10 +521,10 @@
             toolStrip5.Dock = DockStyle.None;
             toolStrip5.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip5.Items.AddRange(new ToolStripItem[] { toolStripButtonAdicionarArquivo, toolStripButtonRemoverArquivo });
-            toolStrip5.Location = new Point(1007, 74);
+            toolStrip5.Location = new Point(953, 74);
             toolStrip5.Name = "toolStrip5";
             toolStrip5.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip5.Size = new Size(26, 25);
+            toolStrip5.Size = new Size(80, 25);
             toolStrip5.TabIndex = 155;
             toolStrip5.Text = "toolStrip5";
             // 
@@ -567,10 +567,10 @@
             toolStrip4.Dock = DockStyle.None;
             toolStrip4.GripStyle = ToolStripGripStyle.Hidden;
             toolStrip4.Items.AddRange(new ToolStripItem[] { novaToolStripButton1, abrirToolStripButton1, salvarToolStripButton });
-            toolStrip4.Location = new Point(934, 0);
+            toolStrip4.Location = new Point(965, 0);
             toolStrip4.Name = "toolStrip4";
             toolStrip4.RenderMode = ToolStripRenderMode.Professional;
-            toolStrip4.Size = new Size(103, 25);
+            toolStrip4.Size = new Size(72, 25);
             toolStrip4.TabIndex = 157;
             toolStrip4.Text = "toolStrip4";
             // 

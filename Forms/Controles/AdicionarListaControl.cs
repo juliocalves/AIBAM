@@ -20,7 +20,9 @@ namespace AIBAM
         }
         public void DesabilitaAcoes()
         {
-            toolStrip4.Enabled = false;
+            toolStrip4.Enabled = !toolStrip4.Enabled;
+            txtItem.Enabled = !txtItem.Enabled;
+            ckList.Enabled = !ckList.Enabled;
         }
         public string NomeLista
         {
@@ -185,6 +187,10 @@ namespace AIBAM
             }
 
             return itensSelecionados;
+        }
+        public void OcultarAcoes()
+        {
+            toolStrip4.Visible = false;
         }
 
         private void toolSalvarLista_Click(object sender, EventArgs e)

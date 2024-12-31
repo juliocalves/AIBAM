@@ -1,9 +1,12 @@
 ﻿using AIBAM.Classes;
+
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
+using System.Windows.Forms;
 
 namespace AIBAM
 {
@@ -24,39 +27,27 @@ namespace AIBAM
             _serverPort = serverPort;
         }
 
-        public async Task Connect()
+        public async Task Connect(Func<Task> onConnected)
         {
             int maxRetries = 3; // Número máximo de tentativas
             int delayBetweenRetries = 10000; // Tempo de espera entre tentativas (em milissegundos)
-            string serviceName = "aibam_service.exe"; // Nome do executável
-            string executionDirectory = @"A:\\DESKTOP\\WSocket\\dist";//AppDomain.CurrentDomain.BaseDirectory; // Diretório do executável
-            string servicePath = Path.Combine(executionDirectory, serviceName); // Caminho completo do serviço
 
             for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 try
                 {
-                    // Verifica se o processo está em execução
-                    if (!IsProcessRunning(serviceName))
-                    {
-                        if (File.Exists(servicePath))
-                        {
-                            // Inicia o processo se ele não estiver em execução
-                            Process.Start(servicePath);
-                            OnConect?.Invoke($"{serviceName} iniciado.");
-                            await Task.Delay(5000); // Aguarda 5 segundos para o serviço iniciar
-                        }
-                        else
-                        {
-                            throw new FileNotFoundException($"O arquivo {serviceName} não foi encontrado no diretório {executionDirectory}.");
-                        }
-                    }
-
                     // Tenta conectar ao servidor
                     _client = new TcpClient();
                     await _client.ConnectAsync(_serverAddress, _serverPort);
                     _stream = _client.GetStream();
                     OnConect?.Invoke("Conectado ao servidor com sucesso!");
+
+                    // Chama o método para executar após a conexão bem-sucedida
+                    if (onConnected != null)
+                    {
+                        await onConnected();
+                    }
+
                     break; // Sai do loop se a conexão for bem-sucedida
                 }
                 catch (Exception ex)
@@ -74,14 +65,31 @@ namespace AIBAM
             }
         }
 
+
         // Método para verificar se o processo está em execução
         private bool IsProcessRunning(string processName)
         {
             return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(processName)).Length > 0;
         }
+        public string AppendToJson(string json, object appendData)
+        {
+            // Converte o JSON existente em um JObject
+            JObject jsonObject = JObject.Parse(json);
 
+            // Converte o objeto a ser adicionado em um JObject
+            JObject appendObject = JObject.FromObject(appendData);
 
-        public async Task SendMessage(string message)
+            // Faz o "append" das propriedades do novo objeto ao JSON original
+            foreach (var property in appendObject.Properties())
+            {
+                jsonObject[property.Name] = property.Value;
+            }
+
+            // Retorna o JSON atualizado como string
+            return jsonObject.ToString(Formatting.Indented);
+        }
+
+        public async Task SendMessage(ChatData message, Modelo modelo = null)
         {
             if (_stream == null)
             {
@@ -91,8 +99,14 @@ namespace AIBAM
 
             try
             {
+                string json = JsonConvert.SerializeObject(message, Newtonsoft.Json.Formatting.Indented);
+                if (modelo != null)
+                {
+                    json = AppendToJson(json, modelo);
+                }
+                
                 // Enviar mensagem
-                byte[] data = Encoding.UTF8.GetBytes(message);
+                byte[] data = Encoding.UTF8.GetBytes(json);
                 await _stream.WriteAsync(data, 0, data.Length);
 
                 // Buffer para armazenar a resposta
@@ -128,5 +142,77 @@ namespace AIBAM
             _stream?.Close();
             _client?.Close();
         }
+
+        public async Task<string> CarregarListaAsync()
+        {
+            try
+            {
+                // Conecta ao servidor, se ainda não conectado
+                if (_client == null || !_client.Connected)
+                {
+                    await Connect(async () =>
+                    {
+                        OnConect?.Invoke("Conexão estabelecida para listar modelos.");
+                    });
+                }
+
+                // Envia o comando listar_modelos
+                var chatData = new ChatData
+                {
+                    Command = "listar_modelos"
+                };
+
+                string json = JsonConvert.SerializeObject(chatData, Newtonsoft.Json.Formatting.Indented);
+                // Enviar mensagem
+                byte[] data = Encoding.UTF8.GetBytes(json);
+                await _stream.WriteAsync(data, 0, data.Length);
+
+                // Buffer para armazenar a resposta
+                byte[] responseBuffer = new byte[1024];
+                int bytesRead;
+                string response = "";
+              
+                bytesRead = await _stream.ReadAsync(responseBuffer, 0, responseBuffer.Length);
+                if (bytesRead > 0)
+                {
+                    // Converte o buffer UTF-8 para string
+                    string partialResponse = Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
+                    // Dispara o evento para o trecho de mensagem recebido
+                    response = partialResponse;
+                }
+              
+
+              
+
+                // Envia o comando sair
+                var sairData = new ChatData
+                {
+                    Command = "sair"
+                };
+                await SendMessage(sairData);
+                json = JsonConvert.SerializeObject(sairData, Newtonsoft.Json.Formatting.Indented);
+                // Enviar mensagem
+                data = Encoding.UTF8.GetBytes(json);
+                await _stream.WriteAsync(data, 0, data.Length);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                OnConect?.Invoke($"Erro ao carregar a lista de modelos: {ex.Message}");
+                return $"Erro: {ex.Message}";
+            }
+        }
+
+
+        public class ChatData() {
+            public string? Command { get; set; }
+            public string? Modelo { get; set; }
+            public string? OpcaoModelo { get; set; }
+            public string? Prompt { get; set; }
+            public string? Path { get; set; }
+            public string?ImgPath {get;set;}
+        }
+
     }
 }
