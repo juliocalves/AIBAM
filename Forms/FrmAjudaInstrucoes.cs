@@ -75,6 +75,11 @@ namespace AIBAM.Forms
 
 Dica: Combine instruções claras e regras bem definidas para obter resultados consistentes e alinhados ao objetivo.";
         }
+
+        private void InitializeComponent()
+        {
+
+        }
     }
 
 }

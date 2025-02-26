@@ -1,0 +1,121 @@
+﻿/* Variáveis (em CSS, usamos variáveis CSS ou custom properties) */
+:root {
+    --font-family: 'Roboto', sans-serif;
+    --color-body: #333;
+    --color-background: #f9f9f9;
+    --color-user-message: #007bff;
+    --color-user-bg: #e9f7ff;
+    --color-bot-bg: #fff;
+    --color-header: #555;
+}
+
+/* Estilos globais */
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    padding: 20px;
+    color: var(--color-body);
+}
+
+/* Container principal do chat */
+.chat-container {
+    /*max-width: 800px;*/
+    margin: 0 auto;
+}
+
+.chat-container .chat-header { /* Ou simplesmente .chat-header */
+    text-align: center;
+    margin-bottom: 2em;
+    font-weight: bold;
+    color: var(--color-header);
+}
+
+/* Estilos para mensagens do usuário */
+.user-message {
+    text-align: left;
+    color: var(--color-user-message);
+    margin: 1em 0;
+    padding: 0.75em 1em;
+    background-color: var(--color-user-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para mensagens do bot */
+.bot-message {
+    text-align: left;
+    color: var(--color-body);
+    margin: 1em 0;
+    padding: 0.75em 1em;
+    background-color: var(--color-bot-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para código e listas */
+code {
+    background-color: #f4f4f4;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+ul, ol {
+    padding-left: 1.5em;
+}
+
+ul li, ol li { /* Combinando os seletores para evitar repetição */
+    margin-bottom: 0.5em;
+}
+.sugestao-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:1em;
+}
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 220px;
+    max-width:220px;
+    padding: 15px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+.card-text {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.card-button {
+    background-color: #2e8b57;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    height:1.8em;
+    transition: background-color 0.2s;
+}
+
+    .card-button:hover {
+        background-color: #256d45;
+    }
+
+.carousel {
+    scrollbar-width: thin;
+}
+.container {
+    max-width: fit-content;
+}

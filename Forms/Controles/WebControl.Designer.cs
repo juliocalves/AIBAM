@@ -48,6 +48,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             Controls.Add(webView);
             Name = "WebControl";
             ((System.ComponentModel.ISupportInitialize)webView).EndInit();

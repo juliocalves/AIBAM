@@ -1,5 +1,7 @@
 ﻿using AIBAM.Classes;
+using AIBAM.Classes.Servicos;
 using AIBAM.Controles;
+using AIBAM.Forms;
 
 using System;
 using System.Collections.Generic;
@@ -20,12 +22,17 @@ namespace AIBAM
         private List<BriefingCopy> _briefingList;
         private List<Produto> _produtos;
         private List<Colecao> _colecoes;
+        private List<Modelo> _modelos;
         private List<PublicoAlvo> _publicosAlvo;
+        public event Action<string> OnStatusChanged;
+        public event Action AtualizaBarraProgresso;
+        public Utils utils;
         public BriefingCopy SelectedBriefing { get; private set; }
         public Produto SelectedProduto { get; internal set; }
         public Colecao SelectedColecao { get; internal set; }
         public PublicoAlvo SelectedPublicoAlvo { get; internal set; }
         private List<Produto> produtosSelecionados = new List<Produto>();
+        public Modelo _modelo { get; set; } = new();
         string objeto = "";
 
         public FrmListar(List<BriefingCopy> briefingList)
@@ -111,13 +118,13 @@ namespace AIBAM
                     break;
                 case "MODELOS":
                     var modeloManager = new ModeloManager();
-                    var modelos = modeloManager.CarregarModelos();
+                    _modelos = modeloManager.CarregarModelos();
                     splitContainer1.Panel1Collapsed = true;
                     // Ocultar a coluna de seleção, se existir
                     dgvView.Columns["Select"].Visible = false;
 
                     // Converter a lista de detalhes em uma string concatenada
-                    var modelosFormatados = modelos.Select(m => new
+                    var modelosFormatados = _modelos.Select(m => new
                     {
                         NomeModelo = m.NomeModelo,
                         IdentificacaoModelo = m.IdentificacaoModelo,
@@ -153,6 +160,14 @@ namespace AIBAM
                         break;
                     case "PUBLICO ALVO":
                         SelectedPublicoAlvo = _publicosAlvo[index];
+                        break;
+                    case "MODELOS":
+                        _modelo = _modelos[index];
+                        FrmChat frm = new(_modelo.NomeModelo, _modelo.IdentificacaoModelo);
+                        frm.utils = this.utils;  // Passando outros dados, se necessário
+                        frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                        frm.Show();
+                        this.Close();
                         break;
                 }
                 this.DialogResult = DialogResult.OK; // Indica que o formulário foi concluído com sucesso

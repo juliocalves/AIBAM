@@ -168,6 +168,7 @@ namespace AIBAM.Forms
             modelo.Temperatura = Convert.ToDouble(txtTemperatura.Text);
             modelo.Temperatura = Convert.ToDouble(txtTemperatura.Text);
             modelo.LimiteTokens = Convert.ToInt32(txtTokens.Text);
+            modelo.Separador = txtSeparador.Text;
         }
         private void AtribuirModelo()
         {
@@ -192,6 +193,7 @@ namespace AIBAM.Forms
             AtribuirExemplosEntradaSaida(modeloSugestao.Modelo.ExemplosEntradaSaida);
             cboFormatoSaida.SelectedItem = modeloSugestao.FormatoSaida;
             numericUpDown1.Value = modeloSugestao.Quantidade;
+            txtSeparador.Text = modelo.Separador;
         }
         private void tbTemperatura_Scroll(object sender, EventArgs e)
         {

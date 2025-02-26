@@ -693,6 +693,7 @@
             adicionarListaControl1.Location = new Point(383, 19);
             adicionarListaControl1.Name = "adicionarListaControl1";
             adicionarListaControl1.NomeLista = "label1";
+            adicionarListaControl1.SeparaPorVirgula = true;
             adicionarListaControl1.Size = new Size(326, 140);
             adicionarListaControl1.TabIndex = 10;
             // 
@@ -904,6 +905,7 @@
             adicionarListaControl3.Location = new Point(3, 174);
             adicionarListaControl3.Name = "adicionarListaControl3";
             adicionarListaControl3.NomeLista = "label1";
+            adicionarListaControl3.SeparaPorVirgula = false;
             adicionarListaControl3.Size = new Size(311, 155);
             adicionarListaControl3.TabIndex = 1;
             // 
@@ -914,6 +916,7 @@
             adicionarListaControl2.Location = new Point(3, 19);
             adicionarListaControl2.Name = "adicionarListaControl2";
             adicionarListaControl2.NomeLista = "label1";
+            adicionarListaControl2.SeparaPorVirgula = false;
             adicionarListaControl2.Size = new Size(311, 155);
             adicionarListaControl2.TabIndex = 0;
             // 

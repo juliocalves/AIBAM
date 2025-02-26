@@ -1,4 +1,5 @@
 ﻿using AIBAM.Classes;
+using AIBAM.Classes.Servicos;
 
 using System;
 using System.Collections.Generic;

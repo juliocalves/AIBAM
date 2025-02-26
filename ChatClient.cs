@@ -110,7 +110,7 @@ namespace AIBAM
                 await _stream.WriteAsync(data, 0, data.Length);
 
                 // Buffer para armazenar a resposta
-                byte[] responseBuffer = new byte[1024];
+                byte[] responseBuffer = new byte[8192];
                 int bytesRead;
 
                 // Continue lendo enquanto houver dados

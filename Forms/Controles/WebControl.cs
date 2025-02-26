@@ -1,149 +1,134 @@
-﻿using Markdig;
+﻿using AIBAM.Forms;
+
+using Markdig;
+
+using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Web.WebView2.Core;
 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Speech.Synthesis;
+using System.Speech.AudioFormat;
 namespace AIBAM
 {
     public partial class WebControl : UserControl
     {
-
-        //StringBuilder html;
-        private string html = "";
-        private string htmlContent = ""; // Acumula o conteúdo HTML completo
-        StringBuilder _botRes;
-        Guid currentId;
-        private bool isFirst = true;
+        private string htmlFilePath = @"A:\DESKTOP\AIBAM\src\html\ChatPage.html"; // Caminho para o arquivo HTML
         public WebControl()
         {
             InitializeComponent();
-            // Inicializa o WebView2
-            ConfigureWebView();
-        }
-        private async void ConfigureWebView()
-        {
-            // Inicializa o WebView2
-            await webView.EnsureCoreWebView2Async();
-        }
-      
-        public void SetaTexto(string texto)
-        {
-            // Separar e formatar mensagens
-            string formattedHtml = ProcessMessages(texto);
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-            htmlContent = Markdown.ToHtml(formattedHtml, pipeline);
-            // Envolver conteúdo HTML em estrutura básica
-            var markdownHtml = WrapHtmlContent(htmlContent);
-
-            
-
-            // Renderizar o conteúdo formatado no WebView
-            webView.NavigateToString(markdownHtml);
-            // Garantir que a página role automaticamente para a última mensagem
-            //string scrollScript = "window.scrollTo(0, document.body.scrollHeight);";
-            //webView.ExecuteScriptAsync(scrollScript);
+            InitializeWebViewAsync(); // Inicialização assíncrona
+            CarregaHtmlBase();
         }
 
-        private string ProcessMessages(string texto)
+        private void CarregaHtmlBase()
         {
-            StringBuilder htmlBuilder = new StringBuilder();
-
-            // Separar mensagens por delimitadores
-            string[] lines = texto.Split(new[] { "**Você :**", "**AIBAM :**" }, StringSplitOptions.None);
-
-            // Alternar entre classes de usuário e bot
-            bool isUser = true; // Assume que o texto começa com uma mensagem de usuário
-
-            foreach (string line in lines)
+            // Navega para o arquivo HTML
+            if (File.Exists(htmlFilePath))
             {
-                string trimmedLine = line.Trim();
-                if (string.IsNullOrWhiteSpace(trimmedLine))
-                    continue;
-
-                // Determinar a classe CSS com base no remetente
-                string cssClass = isUser ? "user-message" : "bot-message";
-                string identifica = isUser ? "**Você:** " : "**AIBAM:** ";
-                // Construir o elemento HTML
-                htmlBuilder.AppendLine($"<div class='{cssClass}'>" +
-                       
-                    $"{trimmedLine}</div>");
-
-                // Alternar remetente
-                isUser = !isUser;
+                webView.Source = new Uri(htmlFilePath);
             }
-
-            return htmlBuilder.ToString();
+            else
+            {
+                MessageBox.Show("O arquivo HTML não foi encontrado!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-
-        // Envolve o conteúdo HTML em uma estrutura básica
-        private string WrapHtmlContent(string htmlContent)
+        private async Task InitializeWebViewAsync()
         {
-            return $@"
-                  <html>
-                    <head>
-                        <meta charset=""UTF-8"">
-                        <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
-                        <title>Chat Style</title>
-                        <link href=""https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"" rel=""stylesheet"">
-                        <style>
-                            body {{
-                                font-family: 'Roboto', sans-serif;
-                                background-color: #f9f9f9;
-                                padding: 20px;
-                                color: #333;
-                            }}
-                            .chat-container {{
-                                max-width: 800px;
-                                margin: 0 auto;
-                            }}
-                            .user-message {{
-                                text-align: left;
-                                color: #007bff;
-                                margin: 1em 0;
-                                padding: 0.75em 1em;
-                                background-color: #e9f7ff;
-                                border-radius: 8px;
-                                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                            }}
-                            .bot-message {{
-                                text-align: left;
-                                color: #333;
-                                margin: 1em 0;
-                                padding: 0.75em 1em;
-                                background-color: #fff;
-                                border-radius: 8px;
-                                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                            }}
-                            .chat-header {{
-                                text-align: center;
-                                margin-bottom: 2em;
-                                font-weight: bold;
-                                color: #555;
-                            }}
-                            code {{
-                                background-color: #f4f4f4;
-                                padding: 0.2em 0.4em;
-                                border-radius: 3px;
-                                font-family: 'Courier New', monospace;
-                            }}
-                            ul, ol {{
-                                padding-left: 1.5em;
-                            }}
-                            li {{
-                                margin-bottom: 0.5em;
-                            }}
-                        </style>
-                    </head>
-                    <body>{htmlContent}</body>
-                </html>";
+            await webView.EnsureCoreWebView2Async();
+            //SelecionarVoz();
+            // Configurar tratamento de links externos (seu código existente)
+            string filtroDeUrl = @"^(https?://)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$";
+            webView.NavigationStarting += (sender, e) =>
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(e.Uri, filtroDeUrl))
+                {
+                    e.Cancel = true;
+                    FrmWeb frm = new(e.Uri);
+                    frm.Show();
+                }
+            };
         }
+
+      
+
+        public async Task AddUserInput(string texto)
+        {
+            // Substitui os caracteres especiais para evitar problemas de parsing
+            var safeTexto = texto.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+            await webView.CoreWebView2.ExecuteScriptAsync($"addUserMessage('{safeTexto}');");
+        }
+        internal string Voice { get; set; }
+        private void SelecionarVoz()
+        {
+            SelecionarVozForm selecionarVozForm = new SelecionarVozForm();
+            if (selecionarVozForm.ShowDialog() == DialogResult.OK)
+            {
+                // A voz foi selecionada e está armazenada na propriedade Voice
+                Voice = selecionarVozForm.Voice;
+            }
+        }
+        public async Task SpeakText(string text)
+        {
+            // Cria uma instância do sintetizador de fala
+            SpeechSynthesizer synth = new SpeechSynthesizer();
+            synth.SelectVoice(Voice);
+            synth.SetOutputToDefaultAudioDevice();
+            // Reproduz o texto em voz alta
+            synth.Speak(text);
+        }
+        string builder = "";
+        public async Task ScrollToBottomAsync()
+        {
+            // Este script obtém a altura total do documento e define o scroll para o final
+            string script = @"
+        (function() {
+            window.scroll(0, document.body.scrollHeight);
+            return document.body.scrollHeight;
+        })();";
+
+            // Executa o script no WebView2
+            await webView.CoreWebView2.ExecuteScriptAsync(script);
+        }
+
+        public async Task AddBotResponse(string jsonResponse)
+        {
+            var res = JsonSerializer.Deserialize<ResJsonBody>(jsonResponse);
+            builder += res.content;
+            if (res.type == "data")
+            {
+                //// Converte o Markdown para HTML e escapa caracteres problemáticos
+                //var htmlContent = Markdown.ToHtml(res.content, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+                //    .Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                //await SpeakText(res.content.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", ""));
+                var htmlContent = res.content.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                // Injeta o fragmento no WebView
+                await webView.CoreWebView2.ExecuteScriptAsync($"addOrUpdateBotMessage('{htmlContent}', false);");
+                await ScrollToBottomAsync();
+
+            }
+            else if (res.type == "end")
+            {
+                // Converte o Markdown para HTML e escapa caracteres problemáticos
+                var htmlContent = Markdown.ToHtml(builder, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+                    .Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                // Finaliza a mensagem atual
+                await webView.CoreWebView2.ExecuteScriptAsync($"addOrUpdateBotMessage('{htmlContent}', true);");
+                await ScrollToBottomAsync();
+
+                builder = "";
+            }
+        }
+
     }
 }

@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfigSugestao));
             pnlModelSettings = new Panel();
             groupBox4 = new GroupBox();
             tbPerigoso = new TrackBar();
             label8 = new Label();
-            tbSexual = new TrackBar();
             label7 = new Label();
             tbDiscurso = new TrackBar();
             label6 = new Label();
@@ -67,12 +67,14 @@
             adicionarListaControl3 = new AdicionarListaControl();
             adicionarListaControl2 = new AdicionarListaControl();
             splitContainer4 = new SplitContainer();
-            btnSalvar = new Button();
             btnCancelar = new Button();
+            btnSalvar = new Button();
+            groupBox11 = new GroupBox();
+            tbSexual = new TrackBar();
+            txtSeparador = new TextBox();
             pnlModelSettings.SuspendLayout();
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbPerigoso).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)tbSexual).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbDiscurso).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tbAssedio).BeginInit();
             groupBox2.SuspendLayout();
@@ -103,6 +105,8 @@
             splitContainer4.Panel1.SuspendLayout();
             splitContainer4.Panel2.SuspendLayout();
             splitContainer4.SuspendLayout();
+            groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tbSexual).BeginInit();
             SuspendLayout();
             // 
             // pnlModelSettings
@@ -158,18 +162,6 @@
             label8.Size = new Size(62, 15);
             label8.TabIndex = 12;
             label8.Text = "PERIGOSO";
-            // 
-            // tbSexual
-            // 
-            tbSexual.Dock = DockStyle.Top;
-            tbSexual.LargeChange = 32;
-            tbSexual.Location = new Point(3, 154);
-            tbSexual.Maximum = 5;
-            tbSexual.Name = "tbSexual";
-            tbSexual.Size = new Size(186, 45);
-            tbSexual.TabIndex = 9;
-            tbSexual.TickStyle = TickStyle.None;
-            tbSexual.Scroll += tbSexual_Scroll;
             // 
             // label7
             // 
@@ -352,6 +344,7 @@
             adicionarListaControl1.Location = new Point(428, 19);
             adicionarListaControl1.Name = "adicionarListaControl1";
             adicionarListaControl1.NomeLista = "label1";
+            adicionarListaControl1.SeparaPorVirgula = true;
             adicionarListaControl1.Size = new Size(323, 136);
             adicionarListaControl1.TabIndex = 10;
             // 
@@ -453,6 +446,7 @@
             // 
             // splitContainer3.Panel1
             // 
+            splitContainer3.Panel1.Controls.Add(groupBox11);
             splitContainer3.Panel1.Controls.Add(groupBox7);
             splitContainer3.Panel1.Controls.Add(groupBox6);
             // 
@@ -523,6 +517,7 @@
             adicionarListaControl3.Location = new Point(340, 19);
             adicionarListaControl3.Name = "adicionarListaControl3";
             adicionarListaControl3.NomeLista = "label1";
+            adicionarListaControl3.SeparaPorVirgula = true;
             adicionarListaControl3.Size = new Size(326, 155);
             adicionarListaControl3.TabIndex = 1;
             // 
@@ -533,6 +528,7 @@
             adicionarListaControl2.Location = new Point(3, 19);
             adicionarListaControl2.Name = "adicionarListaControl2";
             adicionarListaControl2.NomeLista = "label1";
+            adicionarListaControl2.SeparaPorVirgula = true;
             adicionarListaControl2.Size = new Size(326, 155);
             adicionarListaControl2.TabIndex = 0;
             // 
@@ -555,19 +551,6 @@
             splitContainer4.SplitterDistance = 383;
             splitContainer4.TabIndex = 28;
             // 
-            // btnSalvar
-            // 
-            btnSalvar.BackColor = Color.DarkSeaGreen;
-            btnSalvar.Dock = DockStyle.Right;
-            btnSalvar.ForeColor = SystemColors.ControlLightLight;
-            btnSalvar.Location = new Point(825, 0);
-            btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(152, 32);
-            btnSalvar.TabIndex = 0;
-            btnSalvar.Text = "Salvar Configuração";
-            btnSalvar.UseVisualStyleBackColor = false;
-            btnSalvar.Click += btnSalvar_Click;
-            // 
             // btnCancelar
             // 
             btnCancelar.BackColor = Color.IndianRed;
@@ -581,13 +564,58 @@
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
+            // btnSalvar
+            // 
+            btnSalvar.BackColor = Color.DarkSeaGreen;
+            btnSalvar.Dock = DockStyle.Right;
+            btnSalvar.ForeColor = SystemColors.ControlLightLight;
+            btnSalvar.Location = new Point(825, 0);
+            btnSalvar.Name = "btnSalvar";
+            btnSalvar.Size = new Size(152, 32);
+            btnSalvar.TabIndex = 0;
+            btnSalvar.Text = "Salvar Configuração";
+            btnSalvar.UseVisualStyleBackColor = false;
+            btnSalvar.Click += btnSalvar_Click;
+            // 
+            // groupBox11
+            // 
+            groupBox11.Controls.Add(txtSeparador);
+            groupBox11.Dock = DockStyle.Top;
+            groupBox11.Location = new Point(0, 114);
+            groupBox11.Name = "groupBox11";
+            groupBox11.Size = new Size(298, 57);
+            groupBox11.TabIndex = 5;
+            groupBox11.TabStop = false;
+            groupBox11.Text = "Seperador";
+            // 
+            // tbSexual
+            // 
+            tbSexual.Dock = DockStyle.Top;
+            tbSexual.LargeChange = 32;
+            tbSexual.Location = new Point(3, 154);
+            tbSexual.Maximum = 5;
+            tbSexual.Name = "tbSexual";
+            tbSexual.Size = new Size(186, 45);
+            tbSexual.TabIndex = 9;
+            tbSexual.TickStyle = TickStyle.None;
+            tbSexual.Scroll += tbSexual_Scroll;
+            // 
+            // txtSeparador
+            // 
+            txtSeparador.Location = new Point(9, 22);
+            txtSeparador.Name = "txtSeparador";
+            txtSeparador.Size = new Size(100, 23);
+            txtSeparador.TabIndex = 0;
+            // 
             // FrmConfigSugestao
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnCancelar;
             ClientSize = new Size(977, 419);
             Controls.Add(splitContainer4);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FrmConfigSugestao";
             StartPosition = FormStartPosition.CenterScreen;
@@ -597,7 +625,6 @@
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbPerigoso).EndInit();
-            ((System.ComponentModel.ISupportInitialize)tbSexual).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbDiscurso).EndInit();
             ((System.ComponentModel.ISupportInitialize)tbAssedio).EndInit();
             groupBox2.ResumeLayout(false);
@@ -631,6 +658,9 @@
             splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer4).EndInit();
             splitContainer4.ResumeLayout(false);
+            groupBox11.ResumeLayout(false);
+            groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tbSexual).EndInit();
             ResumeLayout(false);
         }
 
@@ -640,7 +670,6 @@
         private GroupBox groupBox4;
         private TrackBar tbPerigoso;
         private Label label8;
-        private TrackBar tbSexual;
         private Label label7;
         private TrackBar tbDiscurso;
         private Label label6;
@@ -677,5 +706,8 @@
         private SplitContainer splitContainer4;
         private Button btnSalvar;
         private Button btnCancelar;
+        private GroupBox groupBox11;
+        private TrackBar tbSexual;
+        private TextBox txtSeparador;
     }
 }

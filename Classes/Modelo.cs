@@ -19,6 +19,8 @@ namespace AIBAM.Classes
         public string? FiltroPerigoso { get; set; }
         public string? FiltroSexualmente { get; set; }
         public Tuple<List<string>, List<string>>? ExemplosEntradaSaida { get; set; } = new Tuple<List<string>, List<string>>(new List<string>(), new List<string>());
+       
+        public string? Separador { get; set; }
         public class ModeloManager
         {
             public List<Modelo> CarregarModelos()
@@ -79,6 +81,7 @@ namespace AIBAM.Classes
                                     var filtroPerigoso = filtros?["perigoso"]?.ToString() ?? "N/A";
                                     var temperatura = Convert.ToDouble(propriedades?["temperatura"]?.ToString());
                                     var tokens = Convert.ToInt32(propriedades?["limite_tokens"]?.ToString());
+                                    var separador = propriedades?["separador"]?.ToString();
                                     modelos.Add(new Modelo
                                     {
                                         NomeModelo = nomeModelo,
@@ -92,7 +95,8 @@ namespace AIBAM.Classes
                                         FiltroPerigoso = filtroPerigoso,
                                         Temperatura = temperatura,
                                         LimiteTokens = tokens,
-                                        ExemplosEntradaSaida = inputOutput
+                                        ExemplosEntradaSaida = inputOutput,
+                                        Separador = separador     
                                     });
                                 }
                             }
@@ -158,7 +162,7 @@ namespace AIBAM.Classes
                                 ["entrada"] = new JArray(exemplosEntrada),
                                 ["saida"] = new JArray(exemplosSaida)
                             };
-
+                            propriedades["separador"] = modelo.Separador;
                             // Adiciona ao JSON de propriedades
                             propriedades["exemplos_entrada_saida"] = exemplosEntradaSaida;
                         }

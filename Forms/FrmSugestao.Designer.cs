@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSugestao));
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            chatControl1 = new ChatControl();
+            webView = new Microsoft.Web.WebView2.WinForms.WebView2();
             label1 = new Label();
             btnCancelar = new Button();
             progressBar1 = new ProgressBar();
@@ -47,6 +47,7 @@
             splitContainer2.Panel2.SuspendLayout();
             splitContainer2.SuspendLayout();
             toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webView).BeginInit();
             SuspendLayout();
             // 
             // splitContainer1
@@ -82,8 +83,7 @@
             // 
             // splitContainer2.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(flowLayoutPanel1);
-            splitContainer2.Panel2.Controls.Add(chatControl1);
+            splitContainer2.Panel2.Controls.Add(webView);
             splitContainer2.Size = new Size(838, 417);
             splitContainer2.SplitterDistance = 25;
             splitContainer2.TabIndex = 1;
@@ -117,33 +117,26 @@
             toolStripButton2.Text = "&Gerar Mais";
             toolStripButton2.Click += toolStripButton2_Click;
             // 
-            // flowLayoutPanel1
+            // webView
             // 
-            flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(0, 0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(838, 388);
-            flowLayoutPanel1.TabIndex = 1;
-            // 
-            // chatControl1
-            // 
-            chatControl1.Dock = DockStyle.Fill;
-            chatControl1.Location = new Point(0, 0);
-            chatControl1.Name = "chatControl1";
-            chatControl1.Size = new Size(838, 388);
-            chatControl1.TabIndex = 0;
-            chatControl1.Visible = false;
+            webView.AllowExternalDrop = true;
+            webView.CreationProperties = null;
+            webView.DefaultBackgroundColor = Color.White;
+            webView.Dock = DockStyle.Fill;
+            webView.Location = new Point(0, 0);
+            webView.Name = "webView";
+            webView.Size = new Size(838, 388);
+            webView.TabIndex = 0;
+            webView.ZoomFactor = 1D;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
             label1.Location = new Point(3, 7);
             label1.Name = "label1";
-            label1.Size = new Size(38, 15);
+            label1.Size = new Size(0, 15);
             label1.TabIndex = 3;
-            label1.Text = "label1";
             // 
             // btnCancelar
             // 
@@ -161,6 +154,7 @@
             // progressBar1
             // 
             progressBar1.Dock = DockStyle.Left;
+            progressBar1.ForeColor = SystemColors.GradientInactiveCaption;
             progressBar1.Location = new Point(0, 0);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(490, 29);
@@ -172,6 +166,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(838, 450);
             Controls.Add(splitContainer1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FrmSugestao";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmSugestao";
@@ -188,6 +183,7 @@
             splitContainer2.ResumeLayout(false);
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)webView).EndInit();
             ResumeLayout(false);
         }
 
@@ -198,10 +194,9 @@
         private SplitContainer splitContainer2;
         private Label label1;
         private ProgressBar progressBar1;
-        private ChatControl chatControl1;
-        private FlowLayoutPanel flowLayoutPanel1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
         private ToolStripButton toolStripButton2;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView;
     }
 }

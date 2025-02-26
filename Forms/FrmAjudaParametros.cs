@@ -66,6 +66,11 @@ namespace AIBAM.Forms
             }
         }
 
+        private void InitializeComponent()
+        {
+
+        }
+
         private void AtualizarConteudo()
         {
             lblTitulo.Text = titulos[indiceAtual];

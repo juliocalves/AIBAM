@@ -2,7 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
-namespace AIBAM.Classes
+namespace AIBAM.Classes.Servicos
 {
     public class BriefingCopyService
     {

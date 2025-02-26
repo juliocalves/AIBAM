@@ -313,7 +313,7 @@ namespace AIBAM
                 if (!string.IsNullOrEmpty(linkProd))
                 {
                     // Abre o link em uma nova janela com o WebView2
-                    FrmWebView frmWebView = new FrmWebView(linkProd);
+                    FrmWeb frmWebView = new FrmWeb(linkProd);
                     frmWebView.Show();
                 }
                 else

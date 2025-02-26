@@ -207,5 +207,77 @@ namespace AIBAM
                 formAberto.Focus();
             }
         }
+
+        // Método para configurar temas
+        public void SetarThema(Form form, string tema)
+        {
+            if (tema.Equals("black", StringComparison.OrdinalIgnoreCase))
+            {
+                // Configurações para o tema escuro
+                form.BackColor = Color.FromArgb(30, 30, 30);
+                form.ForeColor = Color.White;
+
+                foreach (Control control in form.Controls)
+                {
+                    AplicarTemaEscuro(control);
+                }
+            }
+            else if (tema.Equals("white", StringComparison.OrdinalIgnoreCase))
+            {
+                // Configurações para o tema claro
+                form.BackColor = Color.White;
+                form.ForeColor = Color.Black;
+
+                foreach (Control control in form.Controls)
+                {
+                    AplicarTemaClaro(control);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Tema inválido. Use 'black' ou 'white'.");
+            }
+        }
+
+        private void AplicarTemaEscuro(Control control)
+        {
+            control.BackColor = Color.FromArgb(30, 30, 30);
+            control.ForeColor = Color.White;
+
+            if (control is TabControl tabControl)
+            {
+                tabControl.Appearance = TabAppearance.FlatButtons;
+                tabControl.ItemSize = new Size(100, 30);
+                tabControl.SizeMode = TabSizeMode.Fixed;
+                tabControl.BackColor = Color.FromArgb(45, 45, 45);
+                tabControl.ForeColor = Color.White;
+            }
+
+            foreach (Control child in control.Controls)
+            {
+                AplicarTemaEscuro(child);
+            }
+        }
+
+        private void AplicarTemaClaro(Control control)
+        {
+            control.BackColor = Color.White;
+            control.ForeColor = Color.Black;
+
+            if (control is TabControl tabControl)
+            {
+                tabControl.Appearance = TabAppearance.FlatButtons;
+                tabControl.ItemSize = new Size(100, 30);
+                tabControl.SizeMode = TabSizeMode.Fixed;
+                tabControl.BackColor = Color.LightGray;
+                tabControl.ForeColor = Color.Black;
+            }
+
+            foreach (Control child in control.Controls)
+            {
+                AplicarTemaClaro(child);
+            }
+        }
+
     }
 }

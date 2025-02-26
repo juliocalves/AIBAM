@@ -155,7 +155,7 @@
             // 
             produtoControl1.Location = new Point(3, 17);
             produtoControl1.Name = "produtoControl1";
-            produtoControl1.Size = new Size(1067, 203);
+            produtoControl1.Size = new Size(1067, 213);
             produtoControl1.TabIndex = 1;
             // 
             // toolStrip4
@@ -330,7 +330,6 @@
             // btnPesquisarProdutosSimilares
             // 
             btnPesquisarProdutosSimilares.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btnPesquisarProdutosSimilares.Enabled = false;
             btnPesquisarProdutosSimilares.Image = Properties.Resources.procurar1;
             btnPesquisarProdutosSimilares.ImageTransparentColor = Color.Magenta;
             btnPesquisarProdutosSimilares.Name = "btnPesquisarProdutosSimilares";

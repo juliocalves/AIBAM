@@ -4,6 +4,7 @@ namespace AIBAM
 {
     public partial class AdicionarListaControl : UserControl
     {
+        public bool SeparaPorVirgula { get; set; } = true;
         public event Action<string> OnExecutaAcao;
 #pragma warning disable CS8618 // O campo não anulável precisa conter um valor não nulo ao sair do construtor. Considere adicionar o modificador "obrigatório" ou declarar como anulável.
         public AdicionarListaControl()
@@ -29,14 +30,19 @@ namespace AIBAM
             get { return lblNomeLista.Text; }
             set { lblNomeLista.Text = value; }
         }
-
+        public void SetaItens(string txt)
+        {
+            LimparLista();
+            txtItem.Text = txt;
+            AdicionaItemLista();
+        }
         // Método para adicionar o item à lista com check automático
         private void AdicionaItemLista()
         {
             string item = txtItem.Text.Trim();
 
             // Verifica se há itens separados por vírgula
-            if (!string.IsNullOrEmpty(item) && item.Contains(","))
+            if (!string.IsNullOrEmpty(item) && item.Contains(",") && SeparaPorVirgula)
             {
                 // Divide a string por vírgula e itera sobre cada item
                 var itens = item.Split(',');

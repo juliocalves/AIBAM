@@ -42,8 +42,9 @@ namespace AIBAM.Forms
                 CarregarNavegacaoItem();
                 HabilitaDesabilitaEdicaoItem();
                 this.Text = "AIBAM | Ler Modelos";
-                btnEditar.Visible = !btnEditar.Visible;
+                btnEditar.Enabled = !btnEditar.Enabled;
                 splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
+                btnAbrirChat.Enabled = !btnAbrirChat.Enabled;
             }
            
         }
@@ -205,7 +206,7 @@ namespace AIBAM.Forms
         {
             splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
             HabilitaDesabilitaBotoesNavegacao();
-            btnEditar.Visible = !btnEditar.Visible;
+            btnEditar.Enabled = !btnEditar.Enabled;
             HabilitaDesabilitaEdicaoItem();
         }
 
@@ -213,8 +214,12 @@ namespace AIBAM.Forms
         {
             splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
             HabilitaDesabilitaBotoesNavegacao();
-            btnEditar.Visible = !btnEditar.Visible;
+            btnEditar.Enabled = !btnEditar.Enabled;
             HabilitaDesabilitaEdicaoItem();
+            if (!isViewItemItem)
+            {
+                this.Close();
+            }
         }
 
         private void btnAplicar_Click(object sender, EventArgs e)
@@ -222,7 +227,7 @@ namespace AIBAM.Forms
             ParseModelo();
             modeloManager.SalvarModelo(modelo);
             HabilitaDesabilitaBotoesNavegacao();
-            btnEditar.Visible = !btnEditar.Visible;
+            btnEditar.Enabled = !btnEditar.Enabled;
             HabilitaDesabilitaEdicaoItem();
             splitContainer2.Panel2Collapsed = !splitContainer2.Panel2Collapsed;
             CarregarNavegacaoItem();

@@ -20,6 +20,7 @@ namespace AIBAM
         {
             InitializeComponent();
             utils = new(SetStatus, AtualizaBarraProgresso);
+            //utils.SetarThema(this,"black");
         }
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
@@ -111,7 +112,7 @@ namespace AIBAM
 
         private void webToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmWebView web = new();
+            FrmWeb web = new();
             web.Show();
         }
 

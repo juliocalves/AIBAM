@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AIBAM": {
+      "commandName": "Project",
+      "jsWebView2Debugging": false,
+      "nativeDebugging": true
+    }
+  }
+}

@@ -102,6 +102,7 @@
             adicionarListaControl1.Location = new Point(0, 221);
             adicionarListaControl1.Name = "adicionarListaControl1";
             adicionarListaControl1.NomeLista = "label1";
+            adicionarListaControl1.SeparaPorVirgula = true;
             adicionarListaControl1.Size = new Size(350, 148);
             adicionarListaControl1.TabIndex = 5;
             // 
@@ -148,9 +149,9 @@
             btnExcluir.BackColor = Color.IndianRed;
             btnExcluir.Dock = DockStyle.Right;
             btnExcluir.ForeColor = SystemColors.ControlLightLight;
-            btnExcluir.Location = new Point(125, 0);
+            btnExcluir.Location = new Point(-75, 0);
             btnExcluir.Name = "btnExcluir";
-            btnExcluir.Size = new Size(75, 30);
+            btnExcluir.Size = new Size(75, 46);
             btnExcluir.TabIndex = 10;
             btnExcluir.TabStop = false;
             btnExcluir.Text = "EXCLUIR";
@@ -160,9 +161,9 @@
             // btnProximo
             // 
             btnProximo.Dock = DockStyle.Right;
-            btnProximo.Location = new Point(275, 0);
+            btnProximo.Location = new Point(75, 0);
             btnProximo.Name = "btnProximo";
-            btnProximo.Size = new Size(75, 30);
+            btnProximo.Size = new Size(75, 46);
             btnProximo.TabIndex = 9;
             btnProximo.Text = "PRÓXIMO";
             btnProximo.UseVisualStyleBackColor = true;
@@ -172,9 +173,9 @@
             // 
             btnAnterior.Dock = DockStyle.Right;
             btnAnterior.Enabled = false;
-            btnAnterior.Location = new Point(200, 0);
+            btnAnterior.Location = new Point(0, 0);
             btnAnterior.Name = "btnAnterior";
-            btnAnterior.Size = new Size(75, 30);
+            btnAnterior.Size = new Size(75, 46);
             btnAnterior.TabIndex = 8;
             btnAnterior.Text = "ANTERIOR";
             btnAnterior.UseVisualStyleBackColor = true;
@@ -182,17 +183,18 @@
             // 
             // btnEditar
             // 
+            btnEditar.Enabled = false;
             btnEditar.Image = Properties.Resources.editar;
             btnEditar.Location = new Point(320, 3);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(27, 23);
             btnEditar.TabIndex = 10;
             btnEditar.UseVisualStyleBackColor = true;
-            btnEditar.Visible = false;
             btnEditar.Click += btnEditar_Click;
             // 
             // btnAbrirChat
             // 
+            btnAbrirChat.Enabled = false;
             btnAbrirChat.Image = Properties.Resources.toque;
             btnAbrirChat.Location = new Point(292, 3);
             btnAbrirChat.Name = "btnAbrirChat";

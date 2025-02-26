@@ -1,14 +1,21 @@
-﻿using System;
+﻿using Markdig;
+
+using Microsoft.Web.WebView2.Core;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using static AIBAM.ChatClient;
+using static AIBAM.WebControl;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 using Button = System.Windows.Forms.Button;
@@ -24,125 +31,264 @@ namespace AIBAM.Forms
         public string imgPath;
         public string prompt;
         public string SugestaoSelecionada ="";
+        private string htmlFilePath = @"A:\DESKTOP\AIBAM\src\html\SugestaoPage.html"; // Caminho para o arquivo HTML
         public FrmSugestao()
         {
             InitializeComponent();
+            InitializeWebViewAsync();
             chatClient.OnConect += ChatClient_Status;
             chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
             this.FormClosing += FrmConfiguracoes_FormClosing;
+            CarregaHtmlBase();
+        }
+        private bool IsProdutoSimilar = false;
+        public FrmSugestao(string html)
+        {
+            InitializeComponent();
+            InitializeWebViewAsync();
+            htmlFilePath = html;
+            chatClient.OnConect += ChatClient_Status;
+            chatClient.OnMessageReceived += ChatClient_OnMessageReceived;
+            this.FormClosing += FrmConfiguracoes_FormClosing;
+            CarregaHtmlBase();
+            IsProdutoSimilar = true;
+            splitContainer1.Panel2Collapsed = true;
+            splitContainer2.Panel1Collapsed = true;
         }
         private async void FrmSugestao_Load(object sender, EventArgs e)
         {
             // Conecta ao servidor e inicializa o chat após a conexão
             await chatClient.Connect(InicializarChat);
         }
+        private async Task InicializarChat()
+        {
+            //try
+            //{
+            //    chatData.Command = "instanciar_chat";
+            //    await chatClient.SendMessage(chatData);
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Log ou exibição de erro
+            //    MessageBox.Show($"Erro ao inicializar o chat: {ex.Message}");
+            //}
+        }
+        private async Task InitializeWebViewAsync()
+        {
+            await webView.EnsureCoreWebView2Async();
+            //SelecionarVoz();
+            // Configurar tratamento de links externos (seu código existente)
+            string filtroDeUrl = @"^(https?://)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$";
+            webView.NavigationStarting += (sender, e) =>
+            {
+                if (System.Text.RegularExpressions.Regex.IsMatch(e.Uri, filtroDeUrl))
+                {
+                    e.Cancel = true;
+                    FrmWeb frm = new(e.Uri);
+                    frm.Show();
+                }
+               
+            };
+        }
+  
+
+        private void CarregaHtmlBase()
+        {
+            // Navega para o arquivo HTML
+            if (File.Exists(htmlFilePath))
+            {
+                webView.Source = new Uri(htmlFilePath);
+            }
+            else
+            {
+                MessageBox.Show("O arquivo HTML não foi encontrado!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void ChatClient_OnMessageReceived(string response)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => chatControl1.AddSugestResponse(response)));
-                PreencherFlowLayoutComTexto();
+                if (IsProdutoSimilar)
+                {
+                    CarregarWebViewSimilares(response);
+                }
+                else
+                {
+                    PreencherWebViewComTexto(response);
+                    FinalizaStatus();
+                }
             }
             else
             {
-                chatControl1.AddSugestResponse(response);
-                PreencherFlowLayoutComTexto();
+                if (IsProdutoSimilar)
+                {
+                    CarregarWebViewSimilares(response);
+                }
+                else
+                {
+                    PreencherWebViewComTexto(response);
+                    FinalizaStatus();
+                }
+            }
+            
+        }
+        string builder = "";
+        public async Task ScrollToBottomAsync()
+        {
+            // Este script obtém a altura total do documento e define o scroll para o final
+            string script = @"
+        (function() {
+            window.scroll(0, document.body.scrollHeight);
+            return document.body.scrollHeight;
+        })();";
+
+            // Executa o script no WebView2
+            await webView.CoreWebView2.ExecuteScriptAsync(script);
+        }
+        private async void CarregarWebViewSimilares(string jsonResponse)
+        {
+            var res = JsonSerializer.Deserialize<ResJsonBody>(jsonResponse);
+            builder += res.content;
+            if (res.type == "data")
+            {
+                //// Converte o Markdown para HTML e escapa caracteres problemáticos
+                //var htmlContent = Markdown.ToHtml(res.content, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+                //    .Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                //await SpeakText(res.content.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", ""));
+                var htmlContent = res.content.Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                // Injeta o fragmento no WebView
+                await webView.CoreWebView2.ExecuteScriptAsync($"addProdutosSimilares('{htmlContent}', false);");
+                await ScrollToBottomAsync();
+
+            }
+            else if (res.type == "end")
+            {
+                // Converte o Markdown para HTML e escapa caracteres problemáticos
+                var htmlContent = Markdown.ToHtml(builder, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+                    .Replace("'", "\\'").Replace("\n", "\\n").Replace("\r", "");
+                // Finaliza a mensagem atual
+                await webView.CoreWebView2.ExecuteScriptAsync($"addProdutosSimilares('{htmlContent}', true);");
+                await ScrollToBottomAsync();
+
+                builder = "";
             }
         }
-        private void PreencherFlowLayoutComTexto()
-        {
-            // Obtém o texto do chat control
-            string texto = chatControl1.RetornaTexto();
 
-            if (string.IsNullOrWhiteSpace(texto))
+        private void FinalizaStatus()
+        {
+            label1.Text = "Sugestões Carregadas";
+            progressBar1.Style = ProgressBarStyle.Continuous;
+            progressBar1.Value = 100;
+        }
+
+        private async void PreencherWebViewComTexto(string jsonResponse)
+        {
+            var res = JsonSerializer.Deserialize<ResJsonBody>(jsonResponse);
+            string texto = res?.content;
+
+            if (string.IsNullOrWhiteSpace(texto) || res?.type != "data")
             {
-                MessageBox.Show("Nenhum texto encontrado para exibir.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            // Limpa o FlowLayoutPanel antes de adicionar novos itens
-            flowLayoutPanel1.Controls.Clear();
 
             // Divide o texto em linhas
             string[] linhas = texto.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-            // Itera pelas linhas para criar os "cards"
-            foreach (string linha in linhas)
+            // Remove números iniciais e formata cada linha
+            var cards = linhas.Select(linha =>
             {
-                // Cria o painel para o card
-                Panel card = new Panel
+                // Remove prefixos numéricos, como "1.", "2.", etc.
+                string textoLimpo = System.Text.RegularExpressions.Regex.Replace(linha, @"^\d+\.\s*", "");
+
+                return new
                 {
-                    BorderStyle = BorderStyle.FixedSingle,
-                    Padding = new Padding(10),
+                    text = Markdown.ToHtml(textoLimpo, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())
+                    .Replace("'", "\\'").Replace("\n", "").Replace("<p>","")
+                    .Replace("\r", "").Replace("</p>",""), // Codifica o texto para HTML
+                    action = System.Web.HttpUtility.JavaScriptStringEncode(textoLimpo) // Codifica o texto para JavaScript
                 };
-                card.Width = 200;
-                card.Height = 200;
+            });
 
-                // Adiciona um Label para o texto
-                Label lblTexto = new Label
-                {
-                    Text = linha,
-                    AutoSize = false,
-                    Dock = DockStyle.Fill,
-                    TextAlign = ContentAlignment.MiddleLeft,
-                    Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                    ForeColor = Color.Black
-                };
+            // Converte os cards para JSON
+            string cardsJson = JsonSerializer.Serialize(cards);
 
-                // Adiciona um botão para interagir com o card
-                Button btnInteragir = new Button
-                {
-                    Text = "Selecionar",
-                    Dock = DockStyle.Bottom,
-                    BackColor = Color.DarkSeaGreen,
-                    ForeColor = SystemColors.ControlLightLight,
-                    Size = new Size(152, 29)
-                };
+            // Gera o script para invocar a função JavaScript
+            string script = $@"
+            (function() {{
+                if (typeof addCards !== 'function') {{
+                    console.error('Função addCards não encontrada no contexto do WebView2.');
+                    return;
+                }}
+                addCards({cardsJson});
+            }})();";
 
-                btnInteragir.Click += (sender, e) =>
-                {
-                    //MessageBox.Show($"Você selecionou: {linha}", "Item Selecionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Selecionar(linha);
-                };
-
-                // Adiciona os controles ao painel
-                card.Controls.Add(lblTexto);
-                card.Controls.Add(btnInteragir);
-
-                // Adiciona o card ao FlowLayoutPanel
-                flowLayoutPanel1.Controls.Add(card);
-            }
+            // Executa o script no WebView2
+            await webView.CoreWebView2.ExecuteScriptAsync(script);
+            // Register for messages from JavaScript
+            webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+            
         }
 
+        private void CoreWebView2_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            string receivedText = args.WebMessageAsJson;
 
+            // Exibe uma caixa de diálogo para confirmar a alteração
+            var result = MessageBox.Show(
+                $"Você deseja confirmar a alteração para:\n\n\"{receivedText}\"?",
+                "Confirmação de Alteração",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-
+            if (result == DialogResult.Yes)
+            {
+                // Processa a alteração se confirmado
+                Selecionar(receivedText);
+            }
+        }
         private void ChatClient_Status(string response)
         {
             if (InvokeRequired)
             {
+               
                 Invoke(new Action(() => SetarStatus(response)));
                 Invoke(new Action(() => CarregarSugestoes()));
+                SetaStatusBusca();
             }
             else
             {
                 SetarStatus(response);
                 CarregarSugestoes();
+                SetaStatusBusca();
             }
         }
+
+        private void SetaStatusBusca()
+        {
+            label1.Text = "Gerando Sugestões";
+            progressBar1.Style = ProgressBarStyle.Marquee; // Indicador de progresso indefinido
+        }
+
         private void FrmConfiguracoes_FormClosing(object? sender, FormClosingEventArgs e)
         {
             var chatData = new ChatData();
             chatData.Command = "sair";
-            chatClient.SendMessage(chatData);
+            _=chatClient.SendMessage(chatData);
         }
         private async void CarregarSugestoes()
         {
-            chatData.Command = "carregar_sugestao";
-            chatData.OpcaoModelo = ConfigModelo.Modelo.IdentificacaoModelo;
-            chatData.Modelo = ConfigModelo.Modelo.NomeModelo;
-            chatData.Path = path;
+            if (IsProdutoSimilar)
+            {
+                chatData.Command = "carregar_produtos_similares";
+            }
+            else
+            {
+                chatData.Command = "carregar_sugestao";
+                chatData.OpcaoModelo = ConfigModelo.Modelo.IdentificacaoModelo;
+                chatData.Modelo = ConfigModelo.Modelo.NomeModelo;
+                chatData.Path = path;
+            }
             chatData.Prompt = prompt;
 
             if (!string.IsNullOrEmpty(imgPath))
@@ -151,6 +297,7 @@ namespace AIBAM.Forms
             }
 
             await chatClient.SendMessage(chatData);
+           
         }
 
         private void SetarStatus(string response)
@@ -166,7 +313,7 @@ namespace AIBAM.Forms
                 }
 
                 // Atualiza o texto do label com a resposta
-                label1.Text = response;
+                label1.Text = "";
 
                 // Define o progresso com base no status da resposta
                 if (response.Contains("Conectado"))
@@ -197,19 +344,7 @@ namespace AIBAM.Forms
         }
 
 
-        private async Task InicializarChat()
-        {
-            //try
-            //{
-            //    chatData.Command = "instanciar_chat";
-            //    await chatClient.SendMessage(chatData);
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Log ou exibição de erro
-            //    MessageBox.Show($"Erro ao inicializar o chat: {ex.Message}");
-            //}
-        }
+       
 
         private void Selecionar(string select)
         {
@@ -237,6 +372,7 @@ namespace AIBAM.Forms
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             CarregarSugestoes();
+            SetaStatusBusca();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AIBAM.Classes;
 using AIBAM.Classes.Servicos;
 using AIBAM.Forms;
+
 using System.ComponentModel;
 using System.Net;
 
@@ -59,6 +60,14 @@ namespace AIBAM.Controles
             OnStatusChanged?.Invoke("Fim de Processamento.");
             AtualizaBarraProgresso?.Invoke();
             return prod;
+        }
+        public void SetaDescricao(string txt)
+        {
+            txtDescricao.Text = txt;
+        }
+        public void SetaTags(string tags)
+        {
+            adicionarListaControl1.SetaItens(tags);
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -200,7 +209,7 @@ namespace AIBAM.Controles
             if (!string.IsNullOrEmpty(txtLinkProd.Text))
             {
                 // Abre o link em uma nova janela com o WebView2
-                FrmWebView frmWebView = new FrmWebView(txtLinkProd.Text);
+                FrmWeb frmWebView = new FrmWeb(txtLinkProd.Text);
                 frmWebView.Show();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using AIBAM.Classes.BancoDados;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace AIBAM.Classes.Servicos

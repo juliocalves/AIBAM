@@ -112,6 +112,7 @@ namespace AIBAM.Forms
             produtoControl1.util = this.utils;
             produtoControl1.AtualizaBarraProgresso += this.AtualizaBarraProgresso;
             produtoControl1.OnStatusChanged += this.OnStatusChanged;
+            //utils.SetarThema(this, "black");
         }
         private void novaToolStripButton1_Click(object sender, EventArgs e)
         {
@@ -567,14 +568,14 @@ namespace AIBAM.Forms
             CarregarSugestao("descricao");
         }
 
+        ConfigModeloSugestao configModelo = null;
         private void CarregarSugestao(string tipo)
         {
             FrmSugestao frm = new();
-            ConfigModeloSugestao configModelo = null;
             frm.Text = $"AIBAM | SUGESTÕES {tipo.ToUpper()}";
             frm.path = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS", $"modelo_sugestao_{tipo}.json");
             frm.prompt = GerarPrompt(tipo);
-            if(produto.Imagens != null && produto.Imagens.Count > 0)
+            if (produto.Imagens != null && produto.Imagens.Count > 0)
             {
                 frm.imgPath = produto.Imagens.First();
             }
@@ -596,13 +597,42 @@ namespace AIBAM.Forms
                 frm.ConfigModelo = configModelo;
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    // Implementar lógica para tratar o retorno do formulário
-                    MessageBox.Show("Sugestão carregada com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var text = frm.SugestaoSelecionada;
+                    switch (tipo)
+                    {
+                        case "descricao":
+                            produtoControl1.SetaDescricao(text.Trim('\"'));
+                            break;
+                        case "tags":
+                            produtoControl1.SetaTags(text.Trim('\"'));
+                            break;
+                    }
+                    configModelo.Modelo.ExemplosEntradaSaida.Item1.Add(frm.prompt);
+                    configModelo.Modelo.ExemplosEntradaSaida.Item2.Add(text.Trim('\"'));
+                    try
+                    {
+                        // Define o nome do arquivo com base no tipo de sugestão
+                        string fileName = $"modelo_sugestao_{tipo.ToLower()}.json"; // Supondo que o modelo tenha uma propriedade "Tipo"
+                        string filePath = Path.Combine(Settings.Default.DiretorioRaiz, "DATASETS", fileName);
+
+                        // Serializa o modelo em formato JSON
+                        string jsonContent = JsonConvert.SerializeObject(configModelo, Formatting.Indented);
+
+                        // Garante que o diretório existe antes de salvar
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                        // Salva o arquivo JSON no local especificado
+                        File.WriteAllText(filePath, jsonContent);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao salvar o modelo de sugestão: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Modelo de sugestão não encontrado ou configurado.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                {
+                    MessageBox.Show("Modelo de sugestão não encontrado ou configurado.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -620,7 +650,6 @@ namespace AIBAM.Forms
                 _ => throw new NotSupportedException($"Tipo de prompt '{tipo}' não é suportado."),
             };
         }
-
 
         private ConfigModeloSugestao VerificaModeloSugestao(string name)
         {
@@ -678,7 +707,24 @@ namespace AIBAM.Forms
 
         private void btnPesquisarProdutosSimilares_Click(object sender, EventArgs e)
         {
+            FrmSugestao frm = new(@"A:\DESKTOP\AIBAM\src\html\ProdutosSimilaresPage.html");
+            if (produto.Imagens != null && produto.Imagens.Count > 0)
+            {
+                frm.imgPath = produto.Imagens.First();
+            }
+            frm.Text = $"AIBAM | PRODUTOS SIMILARES";
+            frm.prompt = MontaPromptPesquisaProdutosSimilares();
+            frm.Show();
 
+        }
+
+        private string MontaPromptPesquisaProdutosSimilares()
+        {
+            string produto = navegador.ItemAtual.NomeProd;
+            string linkProduto = navegador.ItemAtual.LinkProd;
+            string tipoProduto = navegador.ItemAtual.CategoriaProd;
+            return $"Encontre camisetas similares à {tipoProduto} {produto} com o link {linkProduto} na loja. " +
+                $"Considere semelhanças em estilo, cor, material, design e estampa. Apresente uma lista de opções com links para cada produto.";
         }
     }
 }

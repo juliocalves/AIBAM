@@ -44,6 +44,7 @@ namespace AIBAM.Forms
         private ModeloManager modeloManager = new ModeloManager();
         public FrmChat(string Modelo = "livre", string OpcaoModelo = "")
         {
+            
             InitializeComponent();
             // Após a inicialização, carrega os dados para o ComboBox
             ChatModel = Modelo;
@@ -64,6 +65,7 @@ namespace AIBAM.Forms
             }
             splitContainer7.Panel2Collapsed = !splitContainer7.Panel2Collapsed;
             splitContainer8.Panel1Collapsed = !splitContainer8.Panel1Collapsed;
+           
         }
 
         private async Task InicializarChat()
@@ -92,7 +94,7 @@ namespace AIBAM.Forms
 
             // Exibe o prompt (mensagem do usuário) no ChatControl
             chatControl1.AddUserMessage(txtPrompt.Text);
-            webControl1.SetaTexto(chatControl1.RetornaTexto());
+            webControl1.AddUserInput(txtPrompt.Text);
             //webControl1.AddUserMessage(txtPrompt.Text);
             var chatData = CarregarChatData(TipoChat);
             // Envia a mensagem para o servidor via socket
@@ -115,7 +117,7 @@ namespace AIBAM.Forms
 
             // Conecta ao servidor e inicializa o chat após a conexão
             await chatClient.Connect(InicializarChat);
-
+            //utils.SetarThema(this, "black");
         }
         private async Task CarregarComboBoxAsync()
         {
@@ -169,21 +171,20 @@ namespace AIBAM.Forms
             if (InvokeRequired)
             {
                 Invoke(new Action(() => chatControl1.AddBotResponse(response)));
-                //Invoke(new Action(() => webControl1.AddBotResponse(response)));
-                webControl1.SetaTexto(chatControl1.RetornaTexto());
+                Invoke(new Action(() => webControl1.AddBotResponse(response)));
             }
             else
             {
                 chatControl1.AddBotResponse(response);
                 //webControl1.AddBotResponse(response);
-                webControl1.SetaTexto(chatControl1.RetornaTexto());
+                webControl1.AddBotResponse(response);
             }
         }
         private void FrmConfiguracoes_FormClosing(object? sender, FormClosingEventArgs e)
         {
             var chatData = new ChatData();
             chatData.Command = "sair";
-            chatClient.SendMessage(chatData);
+            _=chatClient.SendMessage(chatData);
         }
 
         private void btnMic_Click(object sender, EventArgs e)
@@ -210,7 +211,7 @@ namespace AIBAM.Forms
         // Detecta Enter ou Ctrl+Enter no campo de texto
         private void txtPrompt_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.Enter)
+            if (e.Shift && e.KeyCode == Keys.Enter)
             {
                 // Adiciona uma quebra de linha no texto sem enviar a mensagem
                 int selectionStart = txtPrompt.SelectionStart;
