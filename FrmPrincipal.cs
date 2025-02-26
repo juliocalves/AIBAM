@@ -1,195 +1,200 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using AIBAM.Classes;
+using AIBAM.Forms;
+using AIBAM.Templates;
+
+using Newtonsoft.Json;
+
+using System.Runtime.InteropServices;
+using System.Text;
+
+using static AIBAM.Classes.Modelo;
 
 namespace AIBAM
 {
     public partial class FrmPrincipal : Form
     {
-        // Caminho para o ambiente virtual Python e o script
-        string pythonExePath = System.IO.Path.Combine(@"A:\DESKTOP\mars\venv", "Scripts", "python.exe");
-        private string scriptPath = @"A:\DESKTOP\mars\gemini.py";
-        Process process = new Process();
+        internal Utils utils;
+        private string textoPromptCopy = "";
 
         public FrmPrincipal()
         {
             InitializeComponent();
-            lstPrompts.AutoScroll = true; // Ativa a rolagem automática
+            utils = new(SetStatus, AtualizaBarraProgresso);
+            //utils.SetarThema(this,"black");
+        }
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+            AtualizaBarraProgresso();
+            SetStatus("Carregando ferramentas...");
+
+            SetStatus("Preparando UI...");
+            CarregarMenuModelos();
+            AtualizaBarraProgresso();
+            SetStatus("Pronto!");
         }
 
-        private async Task ExecutePythonChat()
+        private void AtualizaBarraProgresso()
         {
-            toolStripProgressBar1.Style = ProgressBarStyle.Marquee;
-            // Configuração do processo Python
-            process.StartInfo.FileName = pythonExePath;
-            process.StartInfo.Arguments = $"\"{scriptPath}\" \"{txtPrompt.Text}\"";
-            process.StartInfo.WorkingDirectory = System.IO.Path.GetDirectoryName(scriptPath);
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
+            toolStripProgressBar1.Visible = !toolStripProgressBar1.Visible;
+            toolStripProgressBar1.Style = toolStripProgressBar1.Style == ProgressBarStyle.Marquee ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
+        }
+        // Função para definir o status no ToolStripStatusLabel
+        public void SetStatus(string message)
+        {
+            toolStripStatusLabel1.Text = message;
+        }
 
-            // Inicia o processo
-            process.Start();
+        private void opçõesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmConfiguracoes frm = new FrmConfiguracoes();
+            DialogResult result = frm.ShowDialog();
+            if (result == DialogResult.OK) { }
+            else if (result == DialogResult.Cancel) { }
+        }
 
-            // Exibe a mensagem do usuário no RichTextBox
-            AppendMessageToRichTextBox(txtPrompt.Text, true);
-
-            // Processamento da saída em streaming
-            while (!process.StandardOutput.EndOfStream)
+        private void catalogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils.AbrirFormulario<FrmCatalogo>(this, frm =>
             {
-                string fragment = await process.StandardOutput.ReadLineAsync();
-                if (!string.IsNullOrWhiteSpace(fragment))
+                frm.OnStatusChanged += SetStatus; // Configura evento de status
+                frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                frm.utils = this.utils;          // Configura a instância de utils
+            });
+        }
+        private void publicoAlvoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils.AbrirFormulario<FrmPublicoAlvo>(this, frm =>
+            {
+                frm.OnStatusChanged += SetStatus; // Configura evento de status
+                frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                frm.utils = this.utils;          // Configura a instância de utils
+            });
+
+        }
+
+        private void produtoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils.AbrirFormulario<FrmProduto>(this, frm =>
+            {
+                frm.OnStatusChanged += SetStatus; // Configura evento de status
+                frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                frm.utils = this.utils;          // Configura a instância de utils
+            });
+        }
+
+        private void copyWriterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils.AbrirFormulario<FrmPromptCopy>(this, frm =>
+            {
+                frm.OnStatusChanged += SetStatus; // Configura evento de status
+                frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                frm.utils = this.utils;          // Configura a instância de utils
+            });
+        }
+
+        private void colecaoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            utils.AbrirFormulario<FrmColecao>(this, frm =>
+            {
+                frm.OnStatusChanged += SetStatus; // Configura evento de status
+                frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+                frm.utils = this.utils;          // Configura a instância de utils
+            });
+        }
+        private void novoProdutoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmProduto frm = new(true);
+            frm.OnStatusChanged += SetStatus; // Configura evento de status
+            frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+            frm.utils = this.utils;          // Configura a instância de utils
+            frm.Show();
+        }
+
+        private void webToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmWeb web = new();
+            web.Show();
+        }
+
+        private void listaProdutosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmListar frm = new FrmListar("PRODUTOS");
+            frm.Show();
+        }
+
+        private void novaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmModelo frm = new();
+            frm.utils = this.utils;
+            frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+            frm.ShowDialog();
+        }
+
+        private void listaDeModelosToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FrmListar frm = new("MODELOS");
+            frm.Show();
+        }
+
+        private void exibirModelosItemAItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmModelo frm = new(true);
+            frm.utils = this.utils;
+            frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+            frm.ShowDialog();
+        }
+
+        private void livreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmChat frm = new();
+            frm.utils = this.utils;
+            frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+            frm.Show();
+        }
+        private void CarregarMenuModelos()
+        {
+            var modeloManager = new ModeloManager();
+            var modelos = modeloManager.CarregarModelos();
+
+            // Agrupar os modelos por nome
+            var modelosAgrupados = modelos
+                .GroupBy(m => m.NomeModelo) // Agrupa os modelos pelo nome
+                .ToDictionary(g => g.Key, g => g.ToList()); // Cria um dicionário com nome do modelo como chave e lista de modelos como valor
+
+            // Iterando sobre cada grupo de modelos agrupados por nome
+            foreach (var modeloGroup in modelosAgrupados)
+            {
+                // Tratar o nome do modelo (transformar em maiúsculas e substituir _ por espaço)
+                string nomeModelo = modeloGroup.Key.Replace('_', ' ').Replace("modelo", "assis. ").ToUpper();
+
+                // Criar o item de menu principal com o nome tratado
+                var itemMenuModelo = new ToolStripMenuItem(nomeModelo);
+
+                // Iterando sobre os modelos do grupo
+                foreach (var modelo in modeloGroup.Value)
                 {
-                    // Adiciona fragmentos da resposta do bot conforme são recebidos
-                    AppendMessageToRichTextBox(fragment.Trim(), false);
-                    first = false;
+                    // Criando um submenu para cada identificação do modelo
+                    var itemSubMenu = new ToolStripMenuItem(modelo.IdentificacaoModelo.Replace('_', ' ').ToUpper());  // Substituindo _ por espaço e colocando em maiúsculas
+                    itemSubMenu.Click += (sender, e) => ModeloMenuItem_Click(sender, e, modelo, modelo.IdentificacaoModelo);
+
+                    // Adicionando o item de submenu ao item do menu principal
+                    itemMenuModelo.DropDownItems.Add(itemSubMenu);
                 }
-            }
 
-            // Captura e exibe erros, se houver
-            string errorOutput = await process.StandardError.ReadToEndAsync();
-            if (!string.IsNullOrEmpty(errorOutput))
-            {
-                MessageBox.Show($"Erro no script Python: {errorOutput}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Adicionando o item de menu principal ao menu principal (arquivoToolStripMenuItem)
+                arquivoToolStripMenuItem.DropDownItems.Add(itemMenuModelo);
             }
-            toolStripProgressBar1.Style = ProgressBarStyle.Blocks; // Volta para o estilo padrão quando desativada
-            first = true;
-            //AppendFormattedText();
-            txtPrompt.Clear();
-            txtPrompt.Focus(); // Foca no campo de entrada
         }
-        private bool first = true;
-        // Adiciona mensagens ao RichTextBox
-        private void AppendMessageToRichTextBox(string message, bool isUser)
+
+        private void ModeloMenuItem_Click(object sender, EventArgs e, Modelo modelo, string identificacao)
         {
-            if (first)
-            {
-                string prefix = isUser ? "** Você: " : "** AIBAM: ";
-                rTxtResponse.AppendText(Environment.NewLine + prefix + message);
-            }
-            else
-            {
-                rTxtResponse.AppendText(message);
-            }
-            // Rolagem automática até o final do RichTextBox
-            rTxtResponse.SelectionStart = rTxtResponse.Text.Length;
-            rTxtResponse.ScrollToCaret();
+            // Aqui você cria o formulário e passa o modelo e a identificação que foi clicada
+            FrmChat frm = new(modelo.NomeModelo, identificacao);
+            frm.utils = this.utils;  // Passando outros dados, se necessário
+            frm.AtualizaBarraProgresso += AtualizaBarraProgresso;
+            frm.Show();
         }
 
-        // Detecta Enter para enviar o prompt
-        private void txtPrompt_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                AtualizaCursor(true);
-                e.SuppressKeyPress = true;
-                ExecutePythonChat();
-                AtualizaCursor(false);
-            }
-        }
-
-        // Função para salvar a conversa
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            SaveConversationAsMarkdown();
-        }
-
-
-        // Atualiza o cursor entre o cursor de espera e o cursor padrão
-        private void AtualizaCursor(bool esperando)
-        {
-            if (esperando)
-            {
-                Cursor = Cursors.WaitCursor; // Define o cursor como cursor de espera (relógio de areia)
-            }
-            else
-            {
-                Cursor = Cursors.Default; // Volta para o cursor padrão
-            }
-        }
-
-
-        // Salva a conversação em um arquivo Markdown
-        private void SaveConversationAsMarkdown()
-        {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                saveFileDialog.Filter = "Markdown files (*.md)|*.md|Text files (*.txt)|*.txt";
-                saveFileDialog.Title = "Salvar Conversação";
-                saveFileDialog.DefaultExt = "md";
-                saveFileDialog.AddExtension = true;
-
-                // Exibir o diálogo de salvamento
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = saveFileDialog.FileName;
-
-                    try
-                    {
-                        // Capturar o texto do RichTextBox
-                        string conversationText = rTxtResponse.Text;
-
-                        // Salvar a conversa no arquivo selecionado
-                        File.WriteAllText(filePath, conversationText);
-
-                        // Mensagem de sucesso
-                        MessageBox.Show($"Conversação salva em: {filePath}", "Salvo com Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Mensagem de erro
-                        MessageBox.Show($"Erro ao salvar a conversação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-
-            // Limpar o campo de entrada e focar nele
-            txtPrompt.Clear();
-            txtPrompt.Focus();
-        }
-
-        // Método para adicionar texto formatado ao RichTextBox
-        private void AppendFormattedText()
-        {
-            string inputText = rTxtResponse.Text;
-            // Limpa o RichTextBox para nova formatação
-            rTxtResponse.Clear();
-
-            // Remove caracteres indesejados
-            inputText = inputText.Replace("[", "").Replace("]", "").Replace("'", "");
-
-            // Fragmenta o texto em partes, usando "\n" como indicador de nova linha
-            string[] lines = inputText.Split(new[] { "\n" }, StringSplitOptions.None);
-
-            foreach (string line in lines)
-            {
-                // Trim para remover espaços em branco no início e no fim
-                string trimmedLine = line.Trim();
-
-                // Verifica se a linha é um título
-                if (trimmedLine.StartsWith("####"))
-                {
-                    rTxtResponse.SelectionFont = new Font(rTxtResponse.Font.FontFamily, 14, FontStyle.Bold); // Título
-                    rTxtResponse.AppendText(trimmedLine.Substring(4) + Environment.NewLine); // Adiciona texto do título
-                }
-                else if (trimmedLine.StartsWith("* ") || trimmedLine.StartsWith("** "))
-                {
-                    rTxtResponse.SelectionFont = new Font(rTxtResponse.Font.FontFamily, rTxtResponse.Font.Size, FontStyle.Bold); // Subtítulo
-                    rTxtResponse.AppendText(trimmedLine.Substring(trimmedLine.StartsWith("** ") ? 3 : 2) + Environment.NewLine); // Adiciona texto do subtítulo
-                }
-                else
-                {
-                    // Define o texto como normal
-                    rTxtResponse.SelectionFont = new Font(rTxtResponse.Font.FontFamily, rTxtResponse.Font.Size, FontStyle.Regular);
-                    rTxtResponse.AppendText(trimmedLine + Environment.NewLine); // Adiciona texto normal
-                }
-            }
-
-            // Desabilita a rolagem automática para o topo
-            rTxtResponse.ScrollToCaret();
-        }
+       
     }
 }

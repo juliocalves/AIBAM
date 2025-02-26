@@ -1,3 +1,11 @@
+using AIBAM.Classes;
+using AIBAM.Controles;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+using System.Diagnostics;
+
 namespace AIBAM
 {
     internal static class Program
@@ -8,9 +16,8 @@ namespace AIBAM
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+           
             Application.Run(new FrmPrincipal());
         }
     }
